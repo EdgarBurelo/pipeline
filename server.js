@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const db = require("./models");
 //const routes = require("./routes");
 const app = express();
 const router = require("express").Router();
@@ -20,8 +21,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
-// db.sequelize.sync({ force: false }).then(function () {
+db.sequelize.sync({ force: false }).then(function () {
     app.listen(PORT, function () {
         console.log("App listening on PORT " + PORT);
     });
-// });
+});
