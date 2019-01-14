@@ -15,7 +15,8 @@ class Button extends Component {
 
     // Retrieves the list of items from the Express app
     getList = () => {
-        axios.get('/api').then(res => {
+        axios.get('/api/example').then(res => {
+            console.log(res);
             this.setState({users:res.data})
         });
     }
@@ -32,12 +33,18 @@ class Button extends Component {
                             return (
                                 <div key={user.id}>
                                     {user.name}
+                                    <br />
+                                    {user.email}
+                                    <br />
+                                    {user.profile}
+                                    <br />
+                                    {user.password}
                                 </div>
                             );
                         })}
                     </div>
             
-                ):""}
+                 ):""}
              </div>
             // <div className="Container">algo</div>
         );
