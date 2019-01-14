@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 //const routes = require("./routes");
 const app = express();
@@ -7,6 +8,8 @@ let PORT = process.env.PORT || 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(express.static("client/build"));
 
 app.get("/api",(req,res) => {
     console.log("Resolved");
