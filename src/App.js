@@ -6,7 +6,7 @@ import About from "./components/About";
 
  class App extends Component {
   render() {  
-    return (
+  return (
       <Router>
         <div >
           <Nav />
@@ -15,6 +15,7 @@ import About from "./components/About";
             <Route path="/about" component={About} />
             
           </Switch>
+          
         </div>
       </Router>
     );

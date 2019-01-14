@@ -1,14 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 
-const About = () => {
-    return (
-        <div  className="container">
-            <p>
-                about
-            </p>
-        </div>
+class About extends Component {
+    render() {
+        return ( 
+            <div  className="container">
+                <p>
+                    about
+                </p>
+            </div>
 
-    );
+        );
+    }
 }
 
 export default About;
