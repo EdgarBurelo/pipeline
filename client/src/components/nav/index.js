@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Nav = () => {
+
+const Nav = props => {
     return (
         <nav className="navbar sticky-top navbar-expand-lg navbar-light bg-light" >
             <Link className="navbar-brand" to="./" >CRM</Link>
@@ -18,6 +19,7 @@ const Nav = () => {
                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
            </div>
+           
         </nav>
 
     );
