@@ -1,0 +1,8 @@
+#flowName {
+  border:none;
+  background-image: linear-gradient(to right, gray 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+  outline: none;
+}

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Button from "./components/button";
 import Nav from "./components/nav"
 import About from "./components/About";
+import Creator from "./components/Creator"
 
  class App extends Component {
   render() {  
@@ -13,6 +14,7 @@ import About from "./components/About";
           <Switch >
             <Route path="/" exact component={Button} />
             <Route path="/about" component={About} />
+            <Route path="/create" component={Creator} />
             
           </Switch>
           
