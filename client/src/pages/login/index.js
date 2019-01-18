@@ -10,6 +10,7 @@ class Login extends Component {
     // }
 
     render(){
+        
         return(
             <Segment
                 
@@ -35,10 +36,10 @@ class Login extends Component {
                             fontWeight: 'normal',
                             marginTop: '1.5em',
                         }} />
-                        
+                            
                     </Grid.Column>
                     <Grid.Column>
-                        <Userform />
+                            <Userform clickHandlerFn={this.props.clickHandlerFn} handleInputChange={this.props.handleInputChange} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

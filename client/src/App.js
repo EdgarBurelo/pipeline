@@ -13,10 +13,36 @@ import "./style.css";
   constructor(props) {
     super(props);
     this.state = {
-      logged: false
+      logged: false,
+      user:{
+        usrname:"",
+        password:""
+      }
     };
+
+    
   }
-  
+  logginclickHandler = event => {
+    event.preventDefault();
+    console.log(this.state);
+  }
+
+   handleInputChange = event => {
+     // Getting the value and name of the input which triggered the change
+     let value = event.target.value;
+     const name = event.target.name;
+
+     if (name === "password") {
+       value = value.substring(0, 15);
+     }
+     // Updating the input's state
+     this.setState((previousState) => {
+       previousState.user[name] = value;
+       return previousState;
+     });
+     console.log(this.state);
+   };
+
   render() {  
     const logged = this.state.logged;
     //console.log(logged);
@@ -28,7 +54,7 @@ import "./style.css";
           <div style={{marginLeft:"150px"}}>
             <Action />
             <Switch >
-              <Route path="/login" component={Login} />
+            <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
               <Redirect from='/' to='/login' />
             </Switch>
