@@ -1,24 +1,36 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Button from "./components/button";
-import Nav from "./components/nav"
+import Action from "./components/Actionbar"
 import About from "./components/About";
 import Sidebarn from "./components/Sidebar";
+import Login from "./pages/login";
 import { Container } from "semantic-ui-react";
 import ".";
 import "./style.css";
 
  class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logged: false
+    };
+  }
+  
   render() {  
+    const logged = this.state.logged;
+    //console.log(logged);
   return (
+    
       <Router>
         <Container fluid={true} style={{padding:"0px"}}>
-          <Sidebarn />
+          <Sidebarn status={this.state.logged} />
           <div style={{marginLeft:"150px"}}>
-            <Nav />
+            <Action />
             <Switch >
-              <Route path="/" exact component={Button} />
+              <Route path="/login" component={Login} />
               <Route path="/about" component={About} />
+              <Redirect from='/' to='/login' />
             </Switch>
           </div>
         </Container>

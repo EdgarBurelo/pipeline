@@ -3,7 +3,25 @@ import { Link } from "react-router-dom";
 import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 
 class Sidebarn extends Component {
+    
+    renderSidebarElements() {
+        if(this.props.status) {
+            return(
+                <Menu.Item as='a'>
+                    <Icon name='home' />
+                    Home
+                </Menu.Item>
+            );
+        } else {
+            return(
+                <Menu.Item>
+                    Create a User<br /> or Login
+                </Menu.Item>
+            );
+        }
+    }
     render(){
+        //console.log(this.props.status);
         return (
                 <Sidebar
                     as={Menu}
@@ -13,18 +31,8 @@ class Sidebarn extends Component {
                     visible= {true}
                     width='thin'
                 >
-                    <Menu.Item as='a'>
-                        <Icon name='home' />
-                        Home
-                    </Menu.Item>
-                    <Menu.Item as='a'>
-                        <Icon name='home' />
-                        about
-                    </Menu.Item>
-                    <Menu.Item as='a'>
-                        <Icon name='camera' />
-                        anything
-                    </Menu.Item>
+                {this.renderSidebarElements()}
+                    
                 </Sidebar>
         );
     }
