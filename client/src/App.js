@@ -31,6 +31,7 @@ import "./style.css";
             <Switch >
               <Route path="/login" component={Login} />
               <Route path="/about" component={About} />
+              <Route path="/create" component={Creator} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>

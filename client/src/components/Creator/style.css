@@ -6,3 +6,8 @@
   background-repeat: repeat-x;
   outline: none;
 }
+
+button {
+  background-color: #0aabe2;
+  color: white;
+}
