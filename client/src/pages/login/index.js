@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {Grid, Header, Button, Icon, Segment} from "semantic-ui-react";
-import axios from "axios";
+import {Grid, Header, Segment} from "semantic-ui-react";
 import Userform from "../../components/Userform";
 
 
@@ -10,6 +9,7 @@ class Login extends Component {
     // }
 
     render(){
+        
         return(
             <Segment
                 
@@ -35,10 +35,10 @@ class Login extends Component {
                             fontWeight: 'normal',
                             marginTop: '1.5em',
                         }} />
-                        
+                            
                     </Grid.Column>
                     <Grid.Column>
-                        <Userform />
+                            <Userform clickHandlerFn={this.props.clickHandlerFn} handleInputChange={this.props.handleInputChange} />
                     </Grid.Column>
                 </Grid.Row>
             </Grid>

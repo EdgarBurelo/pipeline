@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const exaplecontroller = require("../../controllers/exaplecontroller");
 
-// Matches with "/api/books"
-router.route("/")
+// Matches with "/api/example"
+router.route("/:id")
     .get(exaplecontroller.findAll)
 
 
