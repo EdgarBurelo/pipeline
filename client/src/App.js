@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Action from "./components/Actionbar"
 import About from "./components/About";
+import Creator from "./pages/Creator"
 import Sidebarn from "./components/Sidebar";
 import Login from "./pages/login";
 import { Container } from "semantic-ui-react";
@@ -66,6 +67,7 @@ import "./style.css";
             <Switch >
             <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
+              <Route path="/create" component={Creator} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>
