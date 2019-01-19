@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 const Nav = props => {
     return (
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark" style={{ backgroundColor: "#0c0c17"}} >

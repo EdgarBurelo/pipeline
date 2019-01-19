@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {Grid, Header, Button, Icon, Segment} from "semantic-ui-react";
-import axios from "axios";
+import {Grid, Header, Segment} from "semantic-ui-react";
 import Userform from "../../components/Userform";
 
 

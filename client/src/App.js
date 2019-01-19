@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import Button from "./components/button";
 import Action from "./components/Actionbar"
 import About from "./components/About";
 import Sidebarn from "./components/Sidebar";
@@ -24,11 +23,22 @@ import "./style.css";
   }
   logginclickHandler = event => {
     event.preventDefault();
+    
     console.log(this.state);
+    switch (event.target.name) {
+      case "Login":
+        console.log(event.target.name);
+        break;
+      case "Sign":
+        console.log(event.target.name);
+        break;
+      default:
+        console.log("default");
+        break;
+    }
   }
 
    handleInputChange = event => {
-     // Getting the value and name of the input which triggered the change
      let value = event.target.value;
      const name = event.target.name;
 
@@ -44,7 +54,7 @@ import "./style.css";
    };
 
   render() {  
-    const logged = this.state.logged;
+    
     //console.log(logged);
   return (
     
