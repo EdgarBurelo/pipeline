@@ -1,5 +1,6 @@
 const db = require("../models");
 const login = require("./login");
+const signup = require('./signup');
 
 module.exports = (passport) => {
     passport.serializeUser((user, done) => {
@@ -24,7 +25,7 @@ module.exports = (passport) => {
 
     // Setting up Passport Strategies for Login and SignUp/Registration
     login(passport);
-    //signup(passport);
+    signup(passport);
 
 
 }

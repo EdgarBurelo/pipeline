@@ -32,6 +32,11 @@ import "./style.css";
         break;
       case "Sign":
         console.log(event.target.name);
+        
+        let username = this.state.user.username;
+        let password = this.state.user.password;
+        console.log(username,password);
+        API.signup(username,password);
         break;
       default:
         console.log("default");
