@@ -4,6 +4,7 @@ import Action from "./components/Actionbar"
 import About from "./components/About";
 import Sidebarn from "./components/Sidebar";
 import Login from "./pages/login";
+import Admin from "./pages/admin";
 import { Container } from "semantic-ui-react";
 import ".";
 import "./style.css";
@@ -66,6 +67,7 @@ import "./style.css";
             <Switch >
             <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
+              <Route path="/admin" component={Admin} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>
