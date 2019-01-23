@@ -20,7 +20,6 @@ export default {
     },
 
     newUser: (fname, femail, fprofile) => {
-
         return axios.post("/api/admin", {
             name: fname,
             email: femail,
@@ -39,9 +38,11 @@ export default {
         });
 
     },
+
     userStatus: () => {
         return axios.get("/api/userStatus");
     },
+    
     logout: () => {
         return axios.post("/api/logout");
     },
