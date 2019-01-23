@@ -17,8 +17,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 app.use(express.static("client/build"));
+
+let initPassport = require('./passport/init');
+initPassport(passport);
 
 app.use(routes);
 

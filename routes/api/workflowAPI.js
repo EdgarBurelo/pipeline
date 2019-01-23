@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const controller = require("../../controllers/workflowsController");
 
-router.route("/api/workflows")
+router.route("/")
     .post(controller.save);
 
 

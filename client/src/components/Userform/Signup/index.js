@@ -7,7 +7,7 @@ class Signup extends Component {
         return (
             <div>
                 <Header as="h5">Enter your email:</Header>
-                <Input name="usrname" onChange={this.props.handleInputChange} fluid icon='mail' placeholder='email@mail.com' />
+                <Input name="username" onChange={this.props.handleInputChange} fluid icon='mail' placeholder='email@mail.com' />
                 <Header as="h5" style={{ margin: "0.5em 0px" }}>Enter your password:</Header>
                 <Input fluid type="password" name="password" onChange={this.props.handleInputChange} placeholder='password' />
                 <Header as="h5" style={{margin:"0.5em 0px"}}>Enter your password:</Header>

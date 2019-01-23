@@ -25,11 +25,6 @@ class Creator extends Component {
     }
   }
 
-  handleName = event => {
-    event.preventDefault();
-    API.saveWorkflow(this.state);
-  }
-
   handleChoice = event => {
     console.log(event.target.value);
     console.log(event.target.getAttribute("data-action"));
@@ -41,6 +36,7 @@ class Creator extends Component {
   saveWorkflow = event => {
     event.preventDefault();
     console.log(this.state);
+    API.saveWorkflow(this.state);
   }
 
   render() {

@@ -1,8 +1,12 @@
 const router = require("express").Router();
 const exaplecontroller = require("../../controllers/exaplecontroller");
 
-// Matches with "/api/example"
+// Matches with "/api/login"
 router.route("/")
-    .get(exaplecontroller.findAll)
+    .post((req,res,next) => {
+        console.log("endpoingHIT");
+        res.json("A");
+    })
+
 
 module.exports = router;

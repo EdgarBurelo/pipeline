@@ -24,7 +24,6 @@ module.exports = function(sequelize, DataTypes) {
 
     action2PosDays: {
       type: DataTypes.INTEGER,
-      allowNull: false
     },
 
     action2Neg: {
@@ -34,7 +33,6 @@ module.exports = function(sequelize, DataTypes) {
 
     action2NegDays: {
       type: DataTypes.INTEGER,
-      allowNull: false
     },
 
     action2None: {
@@ -44,7 +42,6 @@ module.exports = function(sequelize, DataTypes) {
 
     action2NoneDays: {
       type: DataTypes.INTEGER,
-      allowNull: false
     }
 
   });
