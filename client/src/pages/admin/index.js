@@ -169,7 +169,7 @@ class Admin extends Component {
         <Table celled striped>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colSpan="3">Users</Table.HeaderCell>
+              <Table.HeaderCell colSpan="4">Users</Table.HeaderCell>
             </Table.Row>
 
             <Table.Row>
