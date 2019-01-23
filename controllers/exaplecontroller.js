@@ -17,6 +17,7 @@ module.exports = {
 
         db.users.create(req.body).then(function (result) {
     
+    
             res.json(result);
     
         });
