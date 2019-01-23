@@ -5,5 +5,4 @@ const exaplecontroller = require("../../controllers/exaplecontroller");
 router.route("/:id")
     .get(exaplecontroller.findAll)
 
-
 module.exports = router;
