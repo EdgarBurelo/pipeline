@@ -10,11 +10,13 @@ router.route("/")
         res.json("B");
         next();
         
-    }
-    ,
+    },
+
     passport.authenticate('signup'),
     (req,res) => {
+
         console.log(`User ${req.user.email} signed up`);
+        
         res.json(
             {
                 status: 'ok',

@@ -17,7 +17,36 @@ export default {
       console.log("miado");
       console.log(res);
     });
-  },
+},
+
+newUser: (fname, femail, fprofile) => {
+
+    return axios.post("/api/admin", {
+
+        name: fname,
+        email: femail,
+        profile: fprofile,
+        company: "test",
+        password: "test123"
+
+    }).then(res => {
+
+        console.log(res);
+
+    }).catch(err => {
+
+        console.log(err);
+
+    });
+
+},
+
+allUsers: () => {
+
+    return axios.get("/api/admin");
+
+},
+  
 
   //Save workflow
   saveWorkflow: (flowData) => {
