@@ -1,10 +1,6 @@
 import axios from "axios";
 
 export default {
-  //Save workflow
-  saveWorkflow: function (flowData) {
-    return axios.post("/api/workflow", flowData);
-  },
 
   login: () => {
     return axios.post("/api/login").then(res => {
@@ -12,7 +8,7 @@ export default {
       console.log(res);
     });
   },
-  
+
   signup: (username, password) => {
     return axios.post("/api/signup", {
       "username": username,
@@ -21,6 +17,16 @@ export default {
       console.log("miado");
       console.log(res);
     });
+  },
+
+  //Save workflow
+  saveWorkflow: function (flowData) {
+    return axios.post("/api/workflow", flowData);
+  },
+
+  //Save lead
+  saveLead: function(leadData) {
+    return axios.post("/api/leads", leadData);
   }
 
 };
