@@ -2,6 +2,7 @@ const router = require("express").Router();
 const example = require("./example");
 const login = require("./login");
 const signup = require("./signup");
+const admin = require("./admin");
 const workflow = require("./workflowAPI");
 const leads = require("./leadsAPI");
 
@@ -9,6 +10,7 @@ const leads = require("./leadsAPI");
 router.use("/example", example);
 router.use("/login", login);
 router.use("/signup",signup);
+router.use("/admin", admin);
 router.use("/workflow", workflow);
 router.use("/leads", leads);
 

@@ -6,7 +6,6 @@ router.route("/")
     .post((req,res,next) => {
         console.log("endpoingHIT");
         res.json("A");
-    })
-
+    });
 
 module.exports = router;
