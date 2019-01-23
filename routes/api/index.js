@@ -12,6 +12,7 @@ router.use("/login", login);
 router.use("/signup",signup);
 router.use("/admin", admin);
 router.use("/workflow", workflow);
+router.use("/workflows", workflow);
 router.use("/leads", leads);
 
 module.exports = router;
