@@ -76,11 +76,8 @@ import "./style.css";
             <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
               <Route path="/create" component={Creator} />
-<<<<<<< HEAD
               <Route path="/admin" component={Admin} />
-=======
               <Route path="/leads" component={Leads} />
->>>>>>> 3502f84c3a5dede035e328e5db2f5cf5a9d0d98c
               <Redirect from='/' to='/login' />
             </Switch>
           </div>
