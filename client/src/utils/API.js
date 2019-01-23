@@ -20,8 +20,12 @@ export default {
   },
 
   //Save workflow
-  saveWorkflow: function (flowData) {
+  saveWorkflow: (flowData) => {
     return axios.post("/api/workflow", flowData);
+  },
+
+  getWorkflows: () => {
+    return axios.get("/api/workflows");
   },
 
   //Save lead
