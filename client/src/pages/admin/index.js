@@ -17,32 +17,55 @@ class Admin extends Component {
 
     super(props);
 
-    this.state = {};
+    this.state = {
+
+      users: []
+
+    };
 
   }
 
   componentDidMount() {
 
-    this.renderUsers();
+    this.stateUsers();
 
   }
 
-
-  renderUsers = () => {
+  stateUsers = () => {
 
     API.allUsers().then((data) => {
 
       let stateArr = data.data;
 
-      this.setState(stateArr);
+      this.setState(prevState => {
 
-      console.log(this.state);
+        prevState.users = stateArr;
+
+        return prevState;
+      
+      });
+
+      this.renderUsers();
 
     }).catch(err => {
 
       console.log(err);
 
-    })
+    });
+
+  }
+
+  renderUsers = () => {
+
+    // console.log(this.state);
+
+    let arrRows = this.state.users.map(rows => {
+
+      console.log(rows);
+
+      return arrRows;
+
+    });
 
   }
 
