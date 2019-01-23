@@ -1,5 +1,4 @@
 import axios from "axios";
-import { type } from "os";
 
 export default {
 login: () => {
@@ -37,6 +36,12 @@ newUser: (fname, femail, fprofile) => {
         console.log(err);
 
     });
+
+},
+
+allUsers: () => {
+
+    return axios.get("/api/admin");
 
 }
 
