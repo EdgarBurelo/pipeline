@@ -39,9 +39,34 @@ export default {
         });
 
     },
+
+    editUser: (fid, fname, femail, fprofile) => {
+
+        return axios.put("/api/admin", {
+
+            id: fid,
+            name: fname,
+            email: femail,
+            profile: fprofile,
+            company: "test",
+            password: "test123"
+
+        }).then(res => {
+
+            console.log(res);
+
+        }).catch(err => {
+
+            console.log(err);
+
+        });
+
+    },
+
     userStatus: () => {
         return axios.get("/api/userStatus");
     },
+
     logout: () => {
         return axios.post("/api/logout");
     },

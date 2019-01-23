@@ -55,6 +55,24 @@ class Admin extends Component {
 
   };
 
+  deleteClick = event => {
+
+    event.preventDefault();
+
+    console.log(newObj);
+
+  }
+
+  editClick = event => {
+
+    event.preventDefault();
+
+    console.log(newObj);
+
+    console.log(event.target.parentElement.parentElement);
+
+  }
+
   nameChange = event => {
     event.preventDefault();
 
@@ -89,6 +107,12 @@ class Admin extends Component {
 
           <Table.Cell>
 
+            {rows.id}
+
+          </Table.Cell>
+
+          <Table.Cell>
+
             {rows.name}
 
           </Table.Cell>
@@ -102,6 +126,10 @@ class Admin extends Component {
           <Table.Cell>
 
             {rows.profile}
+
+            <Button type="submit" onClick={this.deleteClick}>
+              Delete
+            </Button>
 
           </Table.Cell>
 
@@ -145,6 +173,8 @@ class Admin extends Component {
             </Table.Row>
 
             <Table.Row>
+              <Table.HeaderCell>#</Table.HeaderCell>
+
               <Table.HeaderCell>Name</Table.HeaderCell>
 
               <Table.HeaderCell>Email</Table.HeaderCell>
