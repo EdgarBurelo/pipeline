@@ -40,7 +40,7 @@ export default {
 
     },
     userStatus: () => {
-        return axios.get("/api");
+        return axios.get("/api/userStatus");
     },
     logout: () => {
         return axios.post("/api/logout");
