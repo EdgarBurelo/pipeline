@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown } from 'semantic-ui-react'
+import { Button, Form, Dropdown } from 'semantic-ui-react';
+import API from "../../utils/API";
 
 const userTypes = [
   
@@ -17,6 +18,8 @@ class Admin extends Component {
     event.preventDefault();
   
     console.log(newObj);
+
+    API.newUser(newObj.name, newObj.email, newObj.type);
   
   }
 

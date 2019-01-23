@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Action from "./components/Actionbar"
 import About from "./components/About";
+import Creator from "./pages/Creator"
 import Sidebarn from "./components/Sidebar";
 import Login from "./pages/login";
 import Admin from "./pages/admin";
 import { Container } from "semantic-ui-react";
-import ".";
+import API from "./utils/API";
 import "./style.css";
 
  class App extends Component {
@@ -15,7 +16,7 @@ import "./style.css";
     this.state = {
       logged: false,
       user:{
-        usrname:"",
+        username:"",
         password:""
       }
     };
@@ -29,9 +30,15 @@ import "./style.css";
     switch (event.target.name) {
       case "Login":
         console.log(event.target.name);
+        API.login();
         break;
       case "Sign":
         console.log(event.target.name);
+        
+        let username = this.state.user.username;
+        let password = this.state.user.password;
+        console.log(username,password);
+        API.signup(username,password);
         break;
       default:
         console.log("default");
@@ -67,6 +74,7 @@ import "./style.css";
             <Switch >
             <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
+              <Route path="/create" component={Creator} />
               <Route path="/admin" component={Admin} />
               <Redirect from='/' to='/login' />
             </Switch>
