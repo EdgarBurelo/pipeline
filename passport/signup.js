@@ -1,6 +1,6 @@
 const localStrategy = require("passport-local").Strategy;
 const db = require("../models");
-//const bycrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 
 module.exports = passport => {
     passport.use('signup', new localStrategy({
@@ -12,9 +12,13 @@ module.exports = passport => {
                 if(user) {
                     return done(null, false);
                 } else {
+                    console.log(req.body);
                     let newUser = db.users.build({
                         email: username,
-                        password: db.users.generateHash(password),
+                        password: generateHash(password),
+                        profile: "admin",
+                        name: "pedro",
+                        company: "perro",
                     });
                     return newUser.save();
                 }
@@ -29,4 +33,7 @@ module.exports = passport => {
         })
     }
     ));
+    let generateHash = (password) => {
+        return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+    }
 }

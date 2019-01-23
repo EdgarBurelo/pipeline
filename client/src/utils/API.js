@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export default {
-login: () => {
-    return axios.post("/api/login").then(res => {
-        console.log("algo");
-        console.log(res);
+login: (username, password) => {
+    return axios.post("/api/login",{
+        "username": username,
+        "password":password
     });
 },
 signup: (username, password) => {
@@ -15,6 +15,12 @@ signup: (username, password) => {
         console.log("miado");
         console.log(res);
     });
+},
+user: () => {
+    return axios.get("/api");
+},
+logout: () => {
+    return axios.post("/api/logout");
 }
 
 };
