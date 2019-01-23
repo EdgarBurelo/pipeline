@@ -31,6 +31,11 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         isNumeric: true
       }
+    },
+
+    workflow: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
     
   });

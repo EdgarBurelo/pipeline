@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form } from "semantic-ui-react";
+import WorkflowDropdown from "../../components/WorkflowDropdown";
 import API from "../../utils/API";
+
+/* let flowList = [{
+  flowName: "asdf",
+  asdf: "asdfasdf"
+}]; */
 
 class Leads extends Component {
   constructor(props) {
@@ -9,7 +15,9 @@ class Leads extends Component {
       firstName: undefined,
       lastName: undefined,
       email: undefined,
-      phone: undefined
+      phone: undefined,
+      workflow: undefined,
+      flowList: []
     }
   }
 
@@ -27,28 +35,46 @@ class Leads extends Component {
     API.saveLead(this.state);
   }
 
+  getWorkflows = () => {
+    API.getWorkflows().then((res) => {
+      this.setState((prevState) => {
+        prevState.flowList = res.data;
+        return prevState;
+      });
+    });
+    console.log("got workflows")
+    console.log(this.state.flowList);
+  }
+
+  componentDidMount() {
+    this.getWorkflows();
+  }
+
 
   render() {
     return (
-      <Form>
-        <Form.Field>
-          <label>First name</label>
-          <input id="firstName" placeholder='First name' onChange={this.handleInput} />
-        </Form.Field>
-        <Form.Field>
-          <label>Last name</label>
-          <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
-        </Form.Field>
-        <Form.Field>
-          <label>Email Address</label>
-          <input id="email" placeholder='Email address' onChange={this.handleInput} />
-        </Form.Field>
-        <Form.Field>
-          <label>Phone number</label>
-          <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
-        </Form.Field>
-        <Button type='submit' onClick={this.saveLead}>Submit</Button>
-      </Form>
+      <div>
+        <Form>
+          <Form.Field>
+            <label>First name</label>
+            <input id="firstName" placeholder='First name' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Last name</label>
+            <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Email Address</label>
+            <input id="email" placeholder='Email address' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Phone number</label>
+            <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
+          </Form.Field>
+          <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflow"></WorkflowDropdown>
+          <Button type='submit' onClick={this.saveLead}>Submit</Button>
+        </Form>
+      </div>
     );
   };
 };
