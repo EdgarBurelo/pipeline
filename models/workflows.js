@@ -7,44 +7,41 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
 
-    flow_name: {
+    flowName: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    action_1: {
+    action1: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    action_2_pos: {
+    action2Pos: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    action_2_pos_days: {
+    action2PosDays: {
       type: DataTypes.INTEGER,
-      allowNull: false
     },
 
-    action_2_neg: {
+    action2Neg: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    action_2_neg_days: {
+    action2NegDays: {
       type: DataTypes.INTEGER,
-      allowNull: false
     },
 
-    action_2_none: {
+    action2None: {
       type: DataTypes.STRING,
       allowNull: false
     },
 
-    action_2_none_days: {
+    action2NoneDays: {
       type: DataTypes.INTEGER,
-      allowNull: false
     }
 
   });
