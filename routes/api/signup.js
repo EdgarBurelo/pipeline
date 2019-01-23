@@ -7,11 +7,9 @@ router.route("/")
     .post((req, res, next) => {
         console.log("endpoingHITm");
         console.log(req.body);
-        res.json("B");
         next();
         
     },
-
     passport.authenticate('signup'),
     (req,res) => {
 

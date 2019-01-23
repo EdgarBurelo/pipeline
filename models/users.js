@@ -1,4 +1,3 @@
-const bcrypt = require("bcrypt");
 module.exports =  (sequelize, DataTypes) => {
     
     const User = sequelize.define("users",{
@@ -46,17 +45,6 @@ module.exports =  (sequelize, DataTypes) => {
             // validate: {
             //     isAlphanumeric: true
             // }
-        }
-    },{
-        classMethods: {
-            generateHash: password => {
-                return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-            }
-        },
-        instanceMethods: {
-            validPassword: (password) => {
-                return bcrypt.compareSync(password, this.password);
-            }
         }
     });
     return User;

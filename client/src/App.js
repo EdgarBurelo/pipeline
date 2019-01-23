@@ -21,24 +21,36 @@ import "./style.css";
         password:""
       }
     };
+  }
+  componentDidMount() {
+    this.logginReview();
+  }
 
-    
+  logginReview() {
+    API.userStatus().then((req,res)=>{
+      console.log(req);
+    });
   }
   logginclickHandler = event => {
     event.preventDefault();
-    
-    console.log(this.state);
+    let username = this.state.user.username;
+    let password = this.state.user.password;
     switch (event.target.name) {
       case "Login":
         console.log(event.target.name);
-        API.login();
+        API.login(username, password).then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            this.setState((prevState) => {
+              prevState.logged = true;
+              return prevState;
+            });
+            console.log("a");
+          }
+        });
         break;
       case "Sign":
         console.log(event.target.name);
-        
-        let username = this.state.user.username;
-        let password = this.state.user.password;
-        console.log(username,password);
         API.signup(username,password);
         break;
       default:
@@ -62,18 +74,20 @@ import "./style.css";
      console.log(this.state);
    };
 
+   logoutHandler = event => {
+    event.preventDefault();
+    API.logout();
+   }
+  
   render() {  
-    
-    //console.log(logged);
   return (
-    
       <Router>
         <Container fluid={true} style={{padding:"0px"}}>
           <Sidebarn status={this.state.logged} />
           <div style={{marginLeft:"150px"}}>
             <Action />
             <Switch >
-            <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
+              <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
               <Route path="/create" component={Creator} />
               <Route path="/admin" component={Admin} />
