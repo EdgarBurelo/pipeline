@@ -58,6 +58,11 @@ export default {
     //Save lead
     saveLead: function(leadData) {
     return axios.post("/api/leads", leadData);
+    },
+
+    //Get workflows
+    getWorkflows: function() {
+      return axios.get("/api/workflows");
     }
 
 
