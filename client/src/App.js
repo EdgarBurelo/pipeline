@@ -37,7 +37,7 @@ import "./style.css";
           prevState.logged = true;
           return prevState;
         });
-        console.log(this.state);
+        //console.log(this.state);
       } 
       
     });
