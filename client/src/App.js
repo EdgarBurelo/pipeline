@@ -39,35 +39,94 @@ import "./style.css";
         });
         //console.log(this.state);
       } 
-      
     });
   }
+
   logginclickHandler = event => {
     event.preventDefault();
+    let evType = event.target.name;
     let username = this.state.userCred.username;
     let password = this.state.userCred.password;
-    switch (event.target.name) {
+    
+    let samePassworFun = () => {
+      let samePass = password === this.state.userCred.passwordRep ? true : false;
+      return samePass;
+    }
+    
+    
+    let isMail = (mail) => {
+      let emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+      return emailRegex.test(mail);
+    }
+
+    let isPassword = (password) => {
+      //let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+      let weakRegex = new RegExp("^(?=.*[a-z])");
+      return weakRegex.test(password);
+    }
+
+    if (isMail(username)) {
+      if(isPassword(password)) {
+        if(!samePassworFun() && this.state.userCred.passwordRep) {
+          console.log("no igual pass");
+        } else if(samePassworFun() && this.state.userCred.passwordRep) {
+          this.eventHandler(evType, username, password);
+        } else {
+          this.eventHandler(evType, username, password);
+        }
+        
+      } else{
+        console.log("Password Regex Validation");
+      }
+    } else {
+      console.log("Emai Regex validation");
+    }
+  }
+
+  eventHandler(evType,username,password) {
+    switch (evType) {
       case "Login":
-        console.log(event.target.name);
-        API.login(username, password).then(res => {
-          console.log(res);
-          if (res.status === 200) {
-            this.setState((prevState) => {
-              prevState.logged = true;
-              return prevState;
-            });
-            console.log("a");
-          }
-        });
+        console.log(evType);
+        this.loginFunc(username, password);
         break;
       case "Sign":
-        console.log(event.target.name);
-        API.signup(username,password);
+        console.log(evType);
+        this.sigunpFunc(username, password);
         break;
       default:
         console.log("default");
         break;
     }
+  }
+
+  loginFunc(username,password) {
+    API.login(username, password).then(res => {
+      console.log(res);
+      let loggedUser = res.data;
+      if (res.status === 200) {
+        this.setState((prevState) => {
+          prevState.logUser = loggedUser;
+          prevState.logged = true;
+          prevState.userCred = {};
+          return prevState;
+        });
+        console.log("logged in",this.state);
+      }
+    });
+  }
+
+  sigunpFunc(username,password) {
+    API.signup(username, password).then(res => {
+      console.log(res);
+      if(res.status === 200) {
+        this.setState((prevState)=>{
+          prevState.logged=true;
+          prevState.userCred = {};
+          return prevState;
+        });
+        console.log("signup");
+      }
+    });
   }
 
    handleInputChange = event => {

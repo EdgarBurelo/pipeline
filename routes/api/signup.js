@@ -4,24 +4,12 @@ const passport = require("passport");
 
 // Matches with "/api/signup"
 router.route("/")
-    .post((req, res, next) => {
-        console.log("endpoingHITm");
-        console.log(req.body);
-        next();
-        
-    },
-    passport.authenticate('signup'),
+    .post(passport.authenticate('signup'),
     (req,res) => {
-
         console.log(`User ${req.user.email} signed up`);
+        let user = req.user.name
+        res.send(user);
         
-        res.json(
-            {
-                status: 'ok',
-                user: {
-                    email: req.user.email
-                }
-            });
     }
     );
 
