@@ -29,15 +29,15 @@ import "./style.css";
 
   logginReview() {
     API.userStatus().then((req,res)=>{
-      if(req.data.company) {
-        //console.log(req.data);
+      console.log(req.data);
+      if(req.data.email) {
         let loggedUser = req.data;
         this.setState(prevState => {
           prevState.logUser = loggedUser;
           prevState.logged = true;
           return prevState;
         });
-        //console.log(this.state);
+        console.log(this.state);
       } 
     });
   }

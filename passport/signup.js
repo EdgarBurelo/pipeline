@@ -18,7 +18,7 @@ module.exports = passport => {
                         password: generateHash(password),
                         profile: "Admin",
                         name: "pedro",
-                        company: "perro",
+                        
                     });
                     return newUser.save();
                 }

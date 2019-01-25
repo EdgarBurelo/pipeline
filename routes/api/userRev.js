@@ -3,7 +3,7 @@ const router = require("express").Router();
 // Matches with "/api/userStatus"
 router.route("/")
     .get((req, res) => {
-        //console.log("lof1", req.session.passport);
+        console.log("lof1", req.session.passport);
         let alreadyLogged = req.session.passport;
         if(alreadyLogged) {
             let user = {};
