@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  const Lead = sequelize.define("Lead", { 
+  const leads = sequelize.define("leads", { 
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -35,21 +35,21 @@ module.exports = function(sequelize, DataTypes) {
 
   });
 
-  Lead.associate = function (models) {
-    models.Lead.belongsTo(models.User);
+  leads.associate = function (models) {
+    models.leads.belongsTo(models.users);
   };
 
-  Lead.associate = function (models) {
-    models.Lead.belongsTo(models.Workflow);
+  leads.associate = function (models) {
+    models.leads.belongsTo(models.workflows);
   };
 
-  Lead.associate = function (models) {
-    models.Lead.belongsTo(models.Company, {
+  leads.associate = function (models) {
+    models.leads.belongsTo(models.companies, {
       foreignKey: {
         allowNull: false
       }
     });
   };
 
-  return Lead;
+  return leads;
 };

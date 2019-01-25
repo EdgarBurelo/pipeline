@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  const Company = sequelize.define("Company", {
+  const companies = sequelize.define("companies", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -12,17 +12,17 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Company.associate = function(models) {
-    models.Company.hasMany(models.Lead);
+  companies.associate = function(models) {
+    models.companies.hasMany(models.leads);
   };
 
-  Company.associate = function(models) {
-    models.Company.hasMany(models.User);
+  companies.associate = function(models) {
+    models.companies.hasMany(models.users);
   };
 
-  Company.associate = function(models) {
-    models.Company.hasMany(models.Workflow);
+  companies.associate = function(models) {
+    models.companies.hasMany(models.workflows);
   };
 
-  return Company;
+  return companies;
 };
