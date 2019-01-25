@@ -3,8 +3,8 @@ const controller = require("../../controllers/adminController");
 
 router.route("/")
 .post(controller.newUser)
-.get(controller.findAll)
-.put(controller.editUser)
+.get(controller.findAll);
 
+router.route("/:id").post(controller.erase);
 
 module.exports = router;

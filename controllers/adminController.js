@@ -22,17 +22,19 @@ module.exports = {
 
     },
 
-    editUser: function (req, res) {
+    erase:  (req, res) => {
 
-        console.log(req.body);
+        console.log("HOLA\n\n\n\n\n",req.params.id);
 
-        db.users.update(req.body, {
+        db.users.destroy({
 
             where: {
 
-                id: req.body.id
+                id: req.params.id
 
-            }
+            },
+
+            force: true
 
         }).then(function (result) {
 

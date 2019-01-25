@@ -39,18 +39,11 @@ export default {
 
     },
 
-    editUser: (fid, fname, femail, fprofile) => {
+    erase: (fid) => {
 
-        return axios.put("/api/admin", {
+        console.log("this is id", fid);
 
-            id: fid,
-            name: fname,
-            email: femail,
-            profile: fprofile,
-            company: "test",
-            password: "test123"
-
-        }).then(res => {
+        return axios.post("/api/admin/" + fid).then(res => {
 
             console.log(res);
 
@@ -60,10 +53,6 @@ export default {
 
         });
 
-    },
-
-    userStatus: () => {
-        return axios.get("/api/userStatus");
     },
 
     userStatus: () => {
