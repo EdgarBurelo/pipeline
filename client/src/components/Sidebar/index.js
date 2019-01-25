@@ -1,16 +1,21 @@
 import React, { Component } from "react";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 
 class Sidebarn extends Component {
     
+    
     renderSidebarElements() {
         if(this.props.status) {
             return(
-                <Menu.Item as='a'>
-                    <Icon name='home' />
-                    Home
-                </Menu.Item>
+                <div>
+                    <Link to="/admin">
+                        <Menu.Item>
+                            <Icon name='book' />
+                            Admin
+                        </Menu.Item>
+                    </Link>
+                </div>
             );
         } else {
             return(

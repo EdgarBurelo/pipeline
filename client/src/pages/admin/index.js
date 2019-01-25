@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container, Icon } from "semantic-ui-react";
 import API from "../../utils/API";
+import NotLogged from "../../components/notLogged";
 
 const userTypes = [
   { text: "Agent", value: "Agent" },
@@ -154,11 +155,13 @@ class Admin extends Component {
           <Table.Cell>
 
             {rows.profile}
+          </Table.Cell>
 
+          <Table.Cell textAlign="center" width="2">
             <Button type="submit" onClick={this.deleteClick}>
+              <Icon name='delete' />
               Delete
             </Button>
-
           </Table.Cell>
 
         </Table.Row>
@@ -166,60 +169,73 @@ class Admin extends Component {
       )
       
     });
+    let isItLog = () => {
+      console.log(this.props.status);
+      let loggedStatus = this.props.status;
+      if(loggedStatus) {
+        return(
+          <div>
+            <Form id="create" style={{ paddingTop: "10px" }}>
+              <Form.Field>
+                <label>Full Name</label>
+                <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
+              </Form.Field>
 
+              <Form.Field>
+                <label>Email Address</label>
+                <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
+              </Form.Field>
+
+              <Form.Field>
+                <label>User Type</label>
+                <Dropdown
+                  placeholder="Select User Type"
+                  selection
+                  options={userTypes}
+                  onChange={this.typeChange}
+                />
+              </Form.Field>
+              <Button type="submit" onClick={this.buttonClick}>
+                Submit
+              </Button>
+            </Form>
+
+            <Table celled striped>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="5">Users</Table.HeaderCell>
+                </Table.Row>
+
+                <Table.Row>
+                  <Table.HeaderCell>#</Table.HeaderCell>
+
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+
+                  <Table.HeaderCell>Email</Table.HeaderCell>
+
+                  <Table.HeaderCell>User Type</Table.HeaderCell>
+                  <Table.HeaderCell></Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+
+                {arrRows}
+
+              </Table.Body>
+
+            </Table>
+          </div>
+        );
+      } else {
+        return(<NotLogged />)
+      }
+    }
+    
     return (
-      <div>
-        <Form id="create">
-          <Form.Field>
-            <label>Full Name</label>
-            <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
-          </Form.Field>
-
-          <Form.Field>
-            <label>Email Address</label>
-            <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
-          </Form.Field>
-
-          <Form.Field>
-            <label>User Type</label>
-            <Dropdown
-              placeholder="Select User Type"
-              selection
-              options={userTypes}
-              onChange={this.typeChange}
-            />
-          </Form.Field>
-          <Button type="submit" onClick={this.buttonClick}>
-            Submit
-          </Button>
-        </Form>
-
-        <Table celled striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell colSpan="4">Users</Table.HeaderCell>
-            </Table.Row>
-
-            <Table.Row>
-              <Table.HeaderCell>#</Table.HeaderCell>
-
-              <Table.HeaderCell>Name</Table.HeaderCell>
-
-              <Table.HeaderCell>Email</Table.HeaderCell>
-
-              <Table.HeaderCell>User Type</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-
-            {arrRows}
-
-          </Table.Body>
-
-          
-        </Table>
-      </div>
+      <Container>
+        {isItLog()}
+      </Container>
     );
   }
 }

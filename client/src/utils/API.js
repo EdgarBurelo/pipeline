@@ -12,10 +12,6 @@ export default {
         return axios.post("/api/signup", {
         "username": username,
         "password": password
-        }).then(res => {
-        console.log("miado");
-        console.log(res);
-
         });
     },
 
@@ -58,7 +54,7 @@ export default {
     userStatus: () => {
         return axios.get("/api/userStatus");
     },
-    
+
     logout: () => {
         return axios.post("/api/logout");
     },
