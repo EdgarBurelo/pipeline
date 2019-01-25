@@ -160,7 +160,7 @@ import "./style.css";
               <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
               <Route path="/create" component={Creator} />
-              <Route path="/admin" component={Admin} />
+              <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
               <Route path="/leads" component={Leads} />
               <Redirect from='/' to='/login' />
             </Switch>

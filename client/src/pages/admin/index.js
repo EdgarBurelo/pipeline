@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container } from "semantic-ui-react";
 import API from "../../utils/API";
+import NotLogged from "../../components/notLogged";
 
 const userTypes = [
   { text: "Agent", value: "Agent" },
@@ -110,58 +111,72 @@ class Admin extends Component {
       )
       
     });
+    let isItLog = () => {
+      console.log(this.props.status);
+      let loggedStatus = this.props.status;
+      if(loggedStatus) {
+        return(
+          <div>
+            <Form style={{ paddingTop: "10px" }}>
+              <Form.Field>
+                <label>Full Name</label>
+                <input placeholder="Full Name" onChange={this.nameChange} />
+              </Form.Field>
 
-    return (
-      <div>
-        <Form>
-          <Form.Field>
-            <label>Full Name</label>
-            <input placeholder="Full Name" onChange={this.nameChange} />
-          </Form.Field>
+              <Form.Field>
+                <label>Email Address</label>
+                <input placeholder="Email Address" onChange={this.emailChange} />
+              </Form.Field>
 
-          <Form.Field>
-            <label>Email Address</label>
-            <input placeholder="Email Address" onChange={this.emailChange} />
-          </Form.Field>
-
-          <Form.Field>
-            <label>User Type</label>
-            <Dropdown
-              placeholder="Select User Type"
-              selection
-              options={userTypes}
-              onChange={this.typeChange}
-            />
-          </Form.Field>
-          <Button type="submit" onClick={this.buttonClick}>
-            Submit
+              <Form.Field>
+                <label>User Type</label>
+                <Dropdown
+                  placeholder="Select User Type"
+                  selection
+                  options={userTypes}
+                  onChange={this.typeChange}
+                />
+              </Form.Field>
+              <Button type="submit" onClick={this.buttonClick}>
+                Submit
           </Button>
-        </Form>
+            </Form>
 
-        <Table celled striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell colSpan="3">Users</Table.HeaderCell>
-            </Table.Row>
+            <Table celled striped>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="3">Users</Table.HeaderCell>
+                </Table.Row>
 
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
 
-              <Table.HeaderCell>Email</Table.HeaderCell>
+                  <Table.HeaderCell>Email</Table.HeaderCell>
 
-              <Table.HeaderCell>User Type</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+                  <Table.HeaderCell>User Type</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
 
-          <Table.Body>
+              <Table.Body>
 
-            {arrRows}
+                {arrRows}
 
-          </Table.Body>
+              </Table.Body>
 
-          
-        </Table>
-      </div>
+
+            </Table>
+          </div>
+        );
+      } else {
+        return(<NotLogged />)
+      }
+    }
+    
+    return (
+      <Container>
+
+        {isItLog()}
+      </Container>
     );
   }
 }
