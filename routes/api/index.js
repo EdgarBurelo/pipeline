@@ -15,6 +15,6 @@ router.use("/admin", admin);
 router.use("/workflow", workflow);
 router.use("/workflows", workflow);
 router.use("/leads", leads);
-router.use("/userStatus",userStatus)
+router.use("/userStatus",userStatus);
 
 module.exports = router;

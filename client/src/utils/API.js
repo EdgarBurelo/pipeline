@@ -35,6 +35,22 @@ export default {
 
     },
 
+    erase: (fid) => {
+
+        console.log("this is id", fid);
+
+        return axios.post("/api/admin/" + fid).then(res => {
+
+            console.log(res);
+
+        }).catch(err => {
+
+            console.log(err);
+
+        });
+
+    },
+
     userStatus: () => {
         return axios.get("/api/userStatus");
     },
