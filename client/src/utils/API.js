@@ -12,15 +12,10 @@ export default {
         return axios.post("/api/signup", {
         "username": username,
         "password": password
-        }).then(res => {
-        console.log("miado");
-        console.log(res);
-
         });
     },
 
     newUser: (fname, femail, fprofile) => {
-
         return axios.post("/api/admin", {
             name: fname,
             email: femail,
@@ -39,9 +34,27 @@ export default {
         });
 
     },
+
+    erase: (fid) => {
+
+        console.log("this is id", fid);
+
+        return axios.post("/api/admin/" + fid).then(res => {
+
+            console.log(res);
+
+        }).catch(err => {
+
+            console.log(err);
+
+        });
+
+    },
+
     userStatus: () => {
         return axios.get("/api/userStatus");
     },
+
     logout: () => {
         return axios.post("/api/logout");
     },
@@ -58,6 +71,11 @@ export default {
     //Save lead
     saveLead: function(leadData) {
     return axios.post("/api/leads", leadData);
+    },
+
+    //Get workflows
+    getWorkflows: function() {
+      return axios.get("/api/workflows");
     }
 
 

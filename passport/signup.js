@@ -16,7 +16,7 @@ module.exports = passport => {
                     let newUser = db.users.build({
                         email: username,
                         password: generateHash(password),
-                        profile: "admin",
+                        profile: "Admin",
                         name: "pedro",
                         company: "perro",
                     });
