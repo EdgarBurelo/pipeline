@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  const Workflow = sequelize.define("workflows", { 
+  const Workflow = sequelize.define("Workflow", { 
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -45,5 +45,14 @@ module.exports = function(sequelize, DataTypes) {
     }
 
   });
+
+  Workflow.associate = function(models) {
+    models.Workflow.belongsTo(models.Company);
+  };
+
+  Workflow.associate = function(models) {
+    models.Workflow.hasMany(models.Lead);
+  };
+
   return Workflow;
 };
