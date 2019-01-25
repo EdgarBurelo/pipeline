@@ -5,21 +5,41 @@ module.exports = {
     findAll: function (req, res) {
         
         db.users.findAll({}).then(function (data) {
+
             res.json(data);
-            console.log("Miuada");
+            
         });
         
     },
 
     newUser: function(req,res) {
 
-        console.log(req.body);
-
         db.users.create(req.body).then(function (result) {
-    
     
             res.json(result);
     
+        });
+
+    },
+
+    erase:  (req, res) => {
+
+        console.log("HOLA\n\n\n\n\n",req.params.id);
+
+        db.users.destroy({
+
+            where: {
+
+                id: req.params.id
+
+            },
+
+            force: true
+
+        }).then(function (result) {
+
+            res.json(result);
+
         });
 
     }

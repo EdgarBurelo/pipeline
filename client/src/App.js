@@ -16,7 +16,8 @@ import "./style.css";
     super(props);
     this.state = {
       logged: false,
-      user:{
+      logUser : {},
+      userCred:{
         username:"",
         password:""
       }
@@ -28,13 +29,23 @@ import "./style.css";
 
   logginReview() {
     API.userStatus().then((req,res)=>{
-      console.log(req);
+      if(req.data.company) {
+        //console.log(req.data);
+        let loggedUser = req.data;
+        this.setState(prevState => {
+          prevState.logUser = loggedUser;
+          prevState.logged = true;
+          return prevState;
+        });
+        //console.log(this.state);
+      } 
+      
     });
   }
   logginclickHandler = event => {
     event.preventDefault();
-    let username = this.state.user.username;
-    let password = this.state.user.password;
+    let username = this.state.userCred.username;
+    let password = this.state.userCred.password;
     switch (event.target.name) {
       case "Login":
         console.log(event.target.name);
@@ -68,7 +79,7 @@ import "./style.css";
      }
      // Updating the input's state
      this.setState((previousState) => {
-       previousState.user[name] = value;
+       previousState.userCred[name] = value;
        return previousState;
      });
      console.log(this.state);
