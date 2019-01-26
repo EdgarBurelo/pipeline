@@ -14,17 +14,9 @@ class Todo extends Component {
     };
   }
 
-  checkLog = () => {
-
-    console.log(this.props.status);
-
-  }
-
   componentDidMount() {
 
     API.userStatus().then(res => {
-
-        //console.log(res.data);
 
         this.setState(prevState => {
 
@@ -34,7 +26,7 @@ class Todo extends Component {
 
         console.log(this.state.current);
 
-    })
+    });
 
   }
 
@@ -43,25 +35,25 @@ class Todo extends Component {
     return(
 
         <Table celled striped>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell colSpan="5">Todos</Table.HeaderCell>
-        </Table.Row>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell colSpan="5">Todos</Table.HeaderCell>
+                </Table.Row>
 
-        <Table.Row>
-          <Table.HeaderCell>#</Table.HeaderCell>
+                <Table.Row>
+                    <Table.HeaderCell>#</Table.HeaderCell>
 
-          <Table.HeaderCell>Task</Table.HeaderCell>
+                    <Table.HeaderCell>Task</Table.HeaderCell>
 
-          <Table.HeaderCell>Status</Table.HeaderCell>
+                    <Table.HeaderCell>Status</Table.HeaderCell>
 
-          <Table.HeaderCell>Date</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
+                    <Table.HeaderCell>Date</Table.HeaderCell>
+                    <Table.HeaderCell></Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
 
       {/* <Table.Body>{arrRows}</Table.Body> */}
-    </Table>
+        </Table>
 
     )
 
