@@ -8,8 +8,6 @@ const userTypes = [
   { text: "Supervisor", value: "Supervisor" }
 ];
 
-let newObj = {};
-
 class Admin extends Component {
   constructor(props) {
     super(props);

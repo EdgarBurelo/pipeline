@@ -7,6 +7,7 @@ import Leads from "./pages/Leads";
 import Sidebarn from "./components/Sidebar";
 import Login from "./pages/login";
 import Admin from "./pages/admin";
+import Todo from "./pages/todo";
 import { Container } from "semantic-ui-react";
 import API from "./utils/API";
 import "./style.css";
@@ -29,7 +30,7 @@ import "./style.css";
 
   logginReview() {
     API.userStatus().then((req,res)=>{
-      console.log(req.data);
+      //console.log(req.data);
       if(req.data.email) {
         let loggedUser = req.data;
         this.setState(prevState => {
@@ -37,7 +38,7 @@ import "./style.css";
           prevState.logged = true;
           return prevState;
         });
-        console.log(this.state);
+        //console.log(this.state);
       } 
     });
   }
@@ -162,6 +163,7 @@ import "./style.css";
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
               <Route path="/leads" component={Leads} />
+              <Route path="/todo" render={props=> <Todo status={this.state.logUser} />} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>
