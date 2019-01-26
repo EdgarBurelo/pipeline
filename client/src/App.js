@@ -116,7 +116,11 @@ import "./style.css";
   }
 
   sigunpFunc(username,password) {
-    API.signup(username, password).then(res => {
+    let name = this.state.userCred.Name;
+    let company = this.state.userCred.Company;
+    console.log(name,company);
+
+    API.signup(username, password,name,company).then(res => {
       console.log(res);
       if(res.status === 200) {
         this.setState((prevState)=>{
