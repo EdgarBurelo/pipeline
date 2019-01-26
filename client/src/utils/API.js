@@ -63,6 +63,10 @@ export default {
         return axios.get("/api/admin");
     },
     
+    getAgents: () => {
+      return axios.get("/api/admin/leads");
+    },
+
     //Save workflow
     saveWorkflow: function (flowData) {
     return axios.post("/api/workflow", flowData);
@@ -76,7 +80,12 @@ export default {
     //Get workflows
     getWorkflows: function() {
       return axios.get("/api/workflows");
-    }
+    },
 
+    //Get one workflow
+    getWorkflow: function(id) {
+      console.log("getting the workflow " + id);
+      return axios.get("/api/workflow/" + id);
+    }
 
 };
