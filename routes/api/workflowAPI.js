@@ -5,5 +5,7 @@ router.route("/")
     .post(controller.save)
     .get(controller.findAll);
 
+router.route("/:id")
+  .get(controller.findOne);
 
 module.exports = router;
