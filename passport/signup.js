@@ -12,40 +12,27 @@ module.exports = passport => {
                 if(user) {
                     return done(null, false);
                 } else {
-                    console.log(req.body.name);
-                    db.users.create({
-                        email: username,
-                        password: generateHash(password),
-                        profile: "Admin",
-                        name: req.body.name,
-                        company:{
-                            company_name: req.body.company
-                        }
-                    },{
-                        include: [{
-                            association: users.companies,
-                        }]
+                    //console.log(req.body.name);
+                    db.companies.create({
+                        company_name: req.body.company
+                    }).then(result => {
+                        //console.log(result.dataValues.id);
+                        let newUser = db.users.build({
+                            email: username,
+                            password: generateHash(password),
+                            profile: "Admin",
+                            name: req.body.name,
+                            companyId: result.dataValues.id
+
+                        });
+                        
+                        return newUser.save().then(result => {
+                            console.log(result);
+                            let user = result.dataValues
+                            done(null, user);
+                        });
                     });
-
-                    // db.companies.create({
-                    //     company_name: req.body.company
-                    // }).then(result => {
-                    //     console.log(result.dataValues.id);
-                    //     let newUser = db.users.build({
-                    //         email: username,
-                    //         password: generateHash(password),
-                    //         profile: "Admin",
-                    //         name: req.body.name,
-
-                    //     });
-                    //     return newUser.save();
-                    // });
-                    
-                    // 
                 }
-            }).then(newUser => {
-                done(null, newUser);
-                return null;
             }).catch(err => {
                 console.log(`Err ${err}`);
                 done(err);
