@@ -8,10 +8,12 @@ export default {
         });
     },
 
-    signup: (username, password) => {
+    signup: (username, password, name, company) => {
         return axios.post("/api/signup", {
         "username": username,
-        "password": password
+        "password": password,
+        "name":name,
+        "company":company
         });
     },
 
