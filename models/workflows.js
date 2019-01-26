@@ -50,9 +50,5 @@ module.exports = function(sequelize, DataTypes) {
     models.workflows.belongsTo(models.companies);
   };
 
-  workflows.associate = function(models) {
-    models.workflows.hasMany(models.leads);
-  };
-
   return workflows;
 };
