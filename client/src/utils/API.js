@@ -17,12 +17,12 @@ export default {
         });
     },
 
-    newUser: (fname, femail, fprofile) => {
+    newUser: (fname, femail, fprofile,idc) => {
         return axios.post("/api/admin", {
             name: fname,
             email: femail,
             profile: fprofile,
-            company: "test",
+            companyId: idc,
             password: "test123"
 
         }).then(res => {
