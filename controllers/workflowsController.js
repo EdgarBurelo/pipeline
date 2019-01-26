@@ -11,6 +11,12 @@ module.exports = {
     db.workflows.findAll().then((data) => {
       res.json(data);
     });
+  },
+
+  findOne: (req, res) => {
+    db.workflows.findOne({where: {id: req.params.id}}).then((data) => {
+      res.json(data)
+    });
   }
 
 };

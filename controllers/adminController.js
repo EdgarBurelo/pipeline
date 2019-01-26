@@ -42,6 +42,20 @@ module.exports = {
 
         });
 
-    }
+    },
+
+    findAgents: function (req, res) {
+        
+      db.users.findAll({
+        where: {
+          profile: "Agent"
+        }
+      }).then(function (data) {
+
+          res.json(data);
+          
+      });
+      
+  },
 
 };

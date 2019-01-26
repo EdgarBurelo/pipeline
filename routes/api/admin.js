@@ -7,4 +7,7 @@ router.route("/")
 
 router.route("/:id").post(controller.erase);
 
+router.route("/leads")
+.get(controller.findAgents);
+
 module.exports = router;
