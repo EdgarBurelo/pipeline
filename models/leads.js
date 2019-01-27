@@ -50,6 +50,12 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null
+    },
+
+    nextContactStep: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: null
     }
 
   });
