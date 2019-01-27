@@ -29,15 +29,15 @@ import "./style.css";
 
   logginReview() {
     API.userStatus().then((req,res)=>{
-      if(req.data.company) {
-        //console.log(req.data);
+      console.log(req.data);
+      if(req.data.email) {
         let loggedUser = req.data;
         this.setState(prevState => {
           prevState.logUser = loggedUser;
           prevState.logged = true;
           return prevState;
         });
-        //console.log(this.state);
+        console.log(this.state);
       } 
     });
   }
@@ -116,7 +116,11 @@ import "./style.css";
   }
 
   sigunpFunc(username,password) {
-    API.signup(username, password).then(res => {
+    let name = this.state.userCred.Name;
+    let company = this.state.userCred.Company;
+    console.log(name,company);
+
+    API.signup(username, password,name,company).then(res => {
       console.log(res);
       if(res.status === 200) {
         this.setState((prevState)=>{

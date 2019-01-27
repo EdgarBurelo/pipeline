@@ -12,7 +12,7 @@ class Login extends Component {
                 <Input fluid type="password" name="password" onChange={this.props.handleInputChange} icon="keyboard" placeholder='password' />
                 <Button onClick={this.props.clickHandlerFn} name="Login" style={{ marginTop: "1.5em",marginBottom: "0.5em", backgroundColor: "#007cb0" }}>
                     Get Started
-                    <Icon name='right arrow' />
+                    
                 </Button>
             </div>
         );

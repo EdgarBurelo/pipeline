@@ -8,6 +8,8 @@ class Signup extends Component {
             <div>
                 <Header as="h5" style={{ marginBottom: "0.3em" }}>Enter your name:</Header>
                 <Input name="Name" onChange={this.props.handleInputChange} fluid icon='address book' placeholder='Your Name' />
+                <Header as="h5" style={{ margin: "0.3em 0" }}>Enter the company name:</Header>
+                <Input name="Company" onChange={this.props.handleInputChange} fluid icon='address card' placeholder='Your Company' />
                 <Header as="h5" style={{ margin: "0.3em 0" }}>Enter your email:</Header>
                 <Input name="username" onChange={this.props.handleInputChange} fluid icon='mail' placeholder='email@mail.com' />
                 <Header as="h5" style={{ margin: "0.3em 0" }}>Enter your password:</Header>

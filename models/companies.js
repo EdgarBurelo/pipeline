@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   const companies = sequelize.define("companies", {
     id: {
       type: DataTypes.INTEGER,
@@ -12,17 +12,18 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  companies.associate = function(models) {
-    models.companies.hasMany(models.leads);
+  companies.associate = function (models) {
+    models.companies.hasMany(models.workflows);
   };
 
-  companies.associate = function(models) {
+  companies.associate = function (models) {
     models.companies.hasMany(models.users);
   };
 
-  companies.associate = function(models) {
-    models.companies.hasMany(models.workflows);
+  companies.associate = function (models) {
+    models.companies.hasMany(models.leads);
   };
+
 
   return companies;
 };

@@ -44,12 +44,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   users.associate = function(models) {
-    models.users.hasMany(models.leads);
+    models.users.belongsTo(models.companies, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
-  users.associate = function(models) {
-    models.users.belongsTo(models.companies);
-  };
  
   return users;
 };
