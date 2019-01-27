@@ -3,6 +3,7 @@ import { Button, Form } from "semantic-ui-react";
 import WorkflowDropdown from "../../components/WorkflowDropdown";
 import AgentsDropdown from "../../components/AgentsDropdown";
 import API from "../../utils/API";
+import moment from "moment";
 
 class Leads extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Leads extends Component {
       assignedTo: undefined,
       nextContactDate: undefined,
       nextContactType: undefined,
+      nextContactStep: undefined,
       companyId: undefined,
       flowList: [],
       agentList: []
@@ -23,15 +25,17 @@ class Leads extends Component {
   }
 
   handleInput = event => {
-    console.log(event.target.getAttribute("id"));
     event.preventDefault();
     let toSet = event.target.getAttribute("id");
     this.setState({ [toSet]: event.target.value });
     if(toSet === "workflowId") {
       API.getWorkflow(event.target.value).then((res) => {
         this.setState({ nextContactType: res.data.action1 });
-      })
-    }
+        this.setState({nextContactStep: "action1"});
+        let date = moment().add(1, "days");
+        this.setState({nextContactDate: date._d});
+      });
+    };
   }
 
   saveLead = event => {
