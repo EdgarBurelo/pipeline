@@ -47,7 +47,11 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   workflows.associate = function(models) {
-    models.workflows.belongsTo(models.companies);
+    models.workflows.belongsTo(models.companies, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return workflows;

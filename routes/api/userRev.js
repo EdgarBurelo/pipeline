@@ -11,7 +11,7 @@ router.route("/")
             user.email = req.user.email;
             user.id = req.user.id;
             user.profile = req.user.profile;
-            user.company = req.user.company;
+            user.company = req.user.companyId;
             res.send(user);
         }
         else {

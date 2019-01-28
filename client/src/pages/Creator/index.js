@@ -15,6 +15,7 @@ class Creator extends Component {
       action2NegDays: undefined,
       action2None: undefined,
       action2NoneDays: undefined,
+      companyId: undefined
       /*    action3PosPos: undefined,
             action3PosNeg: undefined,
             action3PosNone: undefined,
@@ -37,6 +38,19 @@ class Creator extends Component {
     event.preventDefault();
     console.log(this.state);
     API.saveWorkflow(this.state);
+  }
+
+  getCompany = () => {
+    API.userStatus().then((res) => {
+      this.setState((prevState) => {
+        prevState.companyId = res.data.company;
+        return prevState;
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.getCompany();
   }
 
   render() {

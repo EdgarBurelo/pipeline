@@ -14,12 +14,14 @@ class Admin extends Component {
 
     this.state = {
       latest: {},
-      users: []
+      users: [],
+      current: {}
     };
   }
 
   componentDidMount() {
     this.stateUsers();
+    this.userrev();
   }
 
   stateUsers = () => {
@@ -53,13 +55,27 @@ class Admin extends Component {
     console.log(this.state.latest);
 
     //new user created
-    API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type).then(()=>{
+    API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type, this.state.current.company).then(()=>{
 
       this.stateUsers();
 
     });
 
   };
+  
+  userrev() {
+    API.userStatus().then(res => {
+
+      this.setState(prevState => {
+
+        prevState.current = res.data;
+
+      });
+
+      console.log(this.state.current);
+
+    });
+  }
 
   deleteClick = event => {
 
