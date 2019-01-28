@@ -167,7 +167,7 @@ import "./style.css";
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
               <Route path="/leads" component={Leads} />
-              <Route path="/todo" render={props=> <Todo status={this.state.logUser} />} />
+              <Route path="/todo" component={Todo} />} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>

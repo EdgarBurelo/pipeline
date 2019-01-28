@@ -9,7 +9,8 @@ class Todo extends Component {
 
     this.state = {
 
-        current: {}
+        current: {},
+        leads: []
 
     };
   }
@@ -25,6 +26,10 @@ class Todo extends Component {
         });
 
         console.log(this.state.current);
+
+    }).then(() => {
+
+        API.allLeads(this.state.current.id);
 
     });
 

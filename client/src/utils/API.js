@@ -88,6 +88,12 @@ export default {
     getWorkflow: function(id) {
       console.log("getting the workflow " + id);
       return axios.get("/api/workflow/" + id);
+    },
+
+    allLeads: function(id) {
+
+        return axios.get("/api/todo/" + id);
+
     }
 
 };

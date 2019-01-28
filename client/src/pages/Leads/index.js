@@ -101,7 +101,7 @@ class Leads extends Component {
           <label htmlFor="workflow">Choose workflow</label>
           <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflowId"></WorkflowDropdown>
           <label htmlFor="agent">Assign to agent</label>
-          <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="userId"></AgentsDropdown>
+          <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="assignedTo"></AgentsDropdown>
           <Button type='submit' onClick={this.saveLead}>Submit</Button>
         </Form>
       </div>
