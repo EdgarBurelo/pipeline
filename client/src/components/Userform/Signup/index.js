@@ -1,11 +1,20 @@
 import React, { Component } from "react";
-import { Input, Header, Button, Icon } from "semantic-ui-react";
+import { Input, Header, Button, Icon, Message } from "semantic-ui-react";
 
 class Signup extends Component {
+    signUpFail() {
+        //console.log(this.props.error);
+        if (this.props.error.length > 0) {
+            return (
+                <Message error list={this.props.error} header="The following errors were presented:" />
+            );
+        }
+    }
 
     render() {
         return (
             <div>
+                {this.signUpFail()}
                 <Header as="h5" style={{ marginBottom: "0.3em" }}>Enter your name:</Header>
                 <Input name="Name" onChange={this.props.handleInputChange} fluid icon='address book' placeholder='Your Name' />
                 <Header as="h5" style={{ margin: "0.3em 0" }}>Enter the company name:</Header>
