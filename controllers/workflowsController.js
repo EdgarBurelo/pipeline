@@ -8,7 +8,8 @@ module.exports = {
   },
 
   findAll: (req, res) => {
-    db.workflows.findAll().then((data) => {
+    console.log(req.body);
+    db.workflows.findAll({where: {companyId: req.body.companyId}}).then((data) => {
       res.json(data);
     });
   },

@@ -28,12 +28,12 @@ class Leads extends Component {
     event.preventDefault();
     let toSet = event.target.getAttribute("id");
     this.setState({ [toSet]: event.target.value });
-    if(toSet === "workflowId") {
+    if (toSet === "workflowId") {
       API.getWorkflow(event.target.value).then((res) => {
         this.setState({ nextContactType: res.data.action1 });
-        this.setState({nextContactStep: "action1"});
+        this.setState({ nextContactStep: "action1" });
         let date = moment().add(1, "days");
-        this.setState({nextContactDate: date._d});
+        this.setState({ nextContactDate: date._d });
       });
     };
   }
@@ -45,7 +45,7 @@ class Leads extends Component {
   }
 
   getWorkflows = () => {
-    API.getWorkflows().then((res) => {
+    API.getWorkflows(this.state.companyId).then((res) => {
       this.setState((prevState) => {
         prevState.flowList = res.data;
         return prevState;
@@ -55,6 +55,7 @@ class Leads extends Component {
 
   getAgents = () => {
     API.getAgents().then((res) => {
+      console.log(res.data);
       this.setState((prevState) => {
         prevState.agentList = res.data;
         return prevState;
@@ -73,15 +74,16 @@ class Leads extends Component {
 
   componentDidMount() {
     this.getCompany();
-    this.getWorkflows();
+    console.log(this.state.companyId);
     this.getAgents();
+    this.getWorkflows();
   }
 
 
   render() {
     return (
       <div>
-        <Form>
+        <Form style={{ paddingTop: "10px" }}>
           <Form.Field>
             <label>First name</label>
             <input id="firstName" placeholder='First name' onChange={this.handleInput} />
@@ -98,10 +100,14 @@ class Leads extends Component {
             <label>Phone number</label>
             <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
           </Form.Field>
-          <label htmlFor="workflow">Choose workflow</label>
-          <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflowId"></WorkflowDropdown>
-          <label htmlFor="agent">Assign to agent</label>
-          <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="userId"></AgentsDropdown>
+          <Form.Field>
+            <label>Choose workflow</label>
+            <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflowId"></WorkflowDropdown>
+          </Form.Field>
+          <Form.Field>
+            <label>Assign to agent</label>
+            <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="assignedTo"></AgentsDropdown>
+          </Form.Field>
           <Button type='submit' onClick={this.saveLead}>Submit</Button>
         </Form>
       </div>

@@ -80,8 +80,10 @@ export default {
     },
 
     //Get workflows
-    getWorkflows: function() {
-      return axios.get("/api/workflows");
+    getWorkflows: function(companyId) {
+      return axios.get("/api/workflows", {
+        companyId: companyId
+      });
     },
 
     //Get one workflow
