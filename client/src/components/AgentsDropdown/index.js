@@ -1,12 +1,16 @@
 import React from "react";
+import { Dropdown } from "semantic-ui-react";
+
 
 const AgentsDropdown = props => (
   
-  <select id={props.id} onChange={props.onChange}>
-    {props.options.map((item) => (
-      <option key={item.id} value={item.id}>{item.email}</option>
-    ))}
-  </select>
+  <Dropdown id={props.id} 
+    onChange={props.onChange} 
+    placeholder="Choose an agent"
+    fluid search selection options={props.options} 
+    value={props.options.value}
+    >
+  </Dropdown>
 
 );
 

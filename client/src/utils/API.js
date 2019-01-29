@@ -39,8 +39,6 @@ export default {
 
     erase: (fid) => {
 
-        console.log("this is id", fid);
-
         return axios.post("/api/admin/" + fid).then(res => {
 
             console.log(res);
@@ -65,13 +63,13 @@ export default {
         return axios.get("/api/admin");
     },
     
-    getAgents: () => {
-      return axios.get("/api/admin/leads");
+    getAgents: (companyId) => {
+      return axios.get("/api/admin/agents/" + companyId);
     },
 
     //Save workflow
     saveWorkflow: function (flowData) {
-    return axios.post("/api/workflow", flowData);
+    return axios.post("/api/workflows", flowData);
     },
 
     //Save lead
@@ -80,18 +78,18 @@ export default {
     },
 
     //Get workflows
-    getWorkflows: function() {
-      return axios.get("/api/workflows");
+    getWorkflows: function(companyId) {
+      return axios.get("/api/workflows/company/" + companyId);
     },
 
     //Get one workflow
     getWorkflow: function(id) {
-      console.log("getting the workflow " + id);
       return axios.get("/api/workflow/" + id);
     },
 
     allLeads: function(id) {
 
+        
         return axios.get("/api/todo/" + id);
 
     }
