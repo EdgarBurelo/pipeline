@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import {Button, Dropdown, Table, Container, Icon} from "semantic-ui-react";
 
+const statusTypes = [
+    { text: "Positive response", value: "Positive response" },
+    { text: "Negative response", value: "Negative response" },
+    { text: "No response", value: "No response" }
+  ];
+
 class Todo extends Component {
 
   constructor(props) {
@@ -9,11 +15,36 @@ class Todo extends Component {
 
     this.state = {
 
+        latest: {},
         current: {},
-        leads: []
+        leads: [],
 
     };
   }
+
+  submitClick = event => {
+
+    event.preventDefault();
+
+    let click = event.target.parentElement.parentElement.id;
+
+    console.log("CLICK");
+
+  }
+
+  typeChange = event => {
+
+    event.preventDefault();
+
+    let iType = event.target.children[0].innerText;
+
+    this.setState(prevState=>{
+
+      prevState.latest.type = iType;
+
+    });
+
+  };
 
   componentDidMount() {
 
@@ -76,7 +107,54 @@ class Todo extends Component {
 
   render() {
 
-    
+    let arrRows = this.state.leads.map((rows, index) => {
+
+        return (
+
+            <Table.Row key={rows.id}>
+
+                <Table.Cell>
+
+                    {index + 1}
+
+                </Table.Cell>
+
+                <Table.Cell>
+
+                    {rows.nextContactType}
+
+                </Table.Cell>
+
+                <Table.Cell>
+
+                    <Dropdown
+                    placeholder="Select status"
+                    selection
+                    options={statusTypes}
+                    onChange={this.typeChange}
+                    />
+
+                </Table.Cell>
+
+                <Table.Cell>
+
+                    {rows.createdAt}
+
+                </Table.Cell>
+
+                <Table.Cell>
+
+                    <Button type="submit" onClick={this.submitClick}>
+                        Submit
+                    </Button>
+
+                </Table.Cell>
+
+            </Table.Row>
+
+        )
+
+    })
 
     return(
 
@@ -98,7 +176,7 @@ class Todo extends Component {
                 </Table.Row>
             </Table.Header>
 
-      {/* <Table.Body>{arrRows}</Table.Body> */}
+            <Table.Body>{arrRows}</Table.Body>
         </Table>
 
     )
