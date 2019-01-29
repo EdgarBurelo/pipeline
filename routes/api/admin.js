@@ -7,7 +7,7 @@ router.route("/")
 
 router.route("/:id").post(controller.erase);
 
-router.route("/leads")
+router.route("/agents/:companyId")
 .get(controller.findAgents);
 
 module.exports = router;
