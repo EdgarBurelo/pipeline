@@ -28,55 +28,69 @@ class Leads extends Component {
     event.preventDefault();
     let toSet = event.target.getAttribute("id");
     this.setState({ [toSet]: event.target.value });
+  }
+
+  handleDropDown = (event, data) => {
+    event.preventDefault();
+    let toSet = data.id;
+    this.setState({ [toSet]: data.value });
     if (toSet === "workflowId") {
-      API.getWorkflow(event.target.value).then((res) => {
+      API.getWorkflow(data.value).then((res) => {
         this.setState({ nextContactType: res.data.action1 });
         this.setState({ nextContactStep: "action1" });
         let date = moment().add(1, "days");
         this.setState({ nextContactDate: date._d });
       });
     };
+
   }
 
   saveLead = event => {
     event.preventDefault();
-    console.log(this.state);
     API.saveLead(this.state);
+  }
+
+  getCompanyData = () => {
+    API.userStatus().then((res) => {
+      this.setState({companyId: res.data.company}, () => {
+        this.getWorkflows();
+        this.getAgents();
+      });
+    });
   }
 
   getWorkflows = () => {
     API.getWorkflows(this.state.companyId).then((res) => {
-      this.setState((prevState) => {
-        prevState.flowList = res.data;
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.flowName, key: item.id }));
+       this.setState((prevState) => {
+        prevState.flowList = reformatted;
         return prevState;
-      });
+      }); 
     });
   }
 
   getAgents = () => {
-    API.getAgents().then((res) => {
-      console.log(res.data);
+    API.getAgents(this.state.companyId).then((res) => {
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.email, key: item.id }));
       this.setState((prevState) => {
-        prevState.agentList = res.data;
+        prevState.agentList = reformatted;
         return prevState;
       });
     });
   }
 
-  getCompany = () => {
+
+
+  getCompany2 = () => {
     API.userStatus().then((res) => {
-      this.setState((prevState) => {
-        prevState.companyId = res.data.company;
-        return prevState;
-      });
+      return res.data.company;
     });
   }
+
+ 
 
   componentDidMount() {
-    this.getCompany();
-    console.log(this.state.companyId);
-    this.getAgents();
-    this.getWorkflows();
+    this.getCompanyData();
   }
 
 
@@ -102,11 +116,11 @@ class Leads extends Component {
           </Form.Field>
           <Form.Field>
             <label>Choose workflow</label>
-            <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflowId"></WorkflowDropdown>
+            <WorkflowDropdown options={this.state.flowList} onChange={this.handleDropDown} id="workflowId"></WorkflowDropdown>
           </Form.Field>
           <Form.Field>
             <label>Assign to agent</label>
-            <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="assignedTo"></AgentsDropdown>
+            <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
           </Form.Field>
           <Button type='submit' onClick={this.saveLead}>Submit</Button>
         </Form>

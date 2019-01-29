@@ -48,7 +48,8 @@ module.exports = {
         
       db.users.findAll({
         where: {
-          profile: "Agent"
+          profile: "Agent",
+          companyId: req.params.companyId
         }
       }).then(function (data) {
 

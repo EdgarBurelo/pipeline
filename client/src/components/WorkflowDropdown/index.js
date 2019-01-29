@@ -3,12 +3,14 @@ import { Dropdown } from "semantic-ui-react";
 
 const WorkflowDropdown = props => (
   
-  <Dropdown id={props.id} onChange={props.onChange} defaultValue="">
-    
-    {props.options.map((item) => (
-      <option key={item.id} value={item.id}>{item.flowName}</option>
-    ))}
+  <Dropdown id={props.id} 
+  onChange={props.onChange}
+  placeholder="Choose a workflow"
+  fluid search selection options={props.options}
+  value={props.options.value}>
   </Dropdown>
+
+
 
 );
 
