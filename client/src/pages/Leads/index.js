@@ -78,15 +78,6 @@ class Leads extends Component {
       });
     });
   }
-
-
-
-  getCompany2 = () => {
-    API.userStatus().then((res) => {
-      return res.data.company;
-    });
-  }
-
  
 
   componentDidMount() {
