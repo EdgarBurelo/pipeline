@@ -3,7 +3,9 @@ const controller = require("../../controllers/workflowsController");
 
 router.route("/")
     .post(controller.save)
-    .get(controller.findAll);
+
+router.route("/company/:companyId")
+  .get(controller.findAll);
 
 router.route("/:id")
   .get(controller.findOne);
