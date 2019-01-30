@@ -38,6 +38,21 @@ class Leads extends Component {
     };
   }
 
+  handleDropDown = (event, data) => {
+    event.preventDefault();
+    let toSet = data.id;
+    this.setState({ [toSet]: data.value });
+    if (toSet === "workflowId") {
+      API.getWorkflow(data.value).then((res) => {
+        this.setState({ nextContactType: res.data.action1 });
+        this.setState({ nextContactStep: "action1" });
+        let date = moment().add(1, "days");
+        this.setState({ nextContactDate: date._d });
+      });
+    };
+
+  }
+
   saveLead = event => {
     event.preventDefault();
     console.log(this.state);
