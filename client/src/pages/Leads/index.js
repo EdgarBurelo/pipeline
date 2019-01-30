@@ -46,7 +46,7 @@ class Leads extends Component {
 
   getCompanyData = () => {
     API.userStatus().then((res) => {
-      this.setState({ companyId: res.data.company }, () => {
+      this.setState({companyId: res.data.company}, () => {
         this.getWorkflows();
         this.getAgents();
       });
@@ -56,18 +56,29 @@ class Leads extends Component {
   getWorkflows = () => {
     API.getWorkflows(this.state.companyId).then((res) => {
       let reformatted = res.data.map(item => ({ value: item.id, text: item.flowName, key: item.id }));
-      this.setState((prevState) => {
+       this.setState((prevState) => {
         prevState.flowList = reformatted;
+        return prevState;
+      }); 
+    });
+  }
+
+  getAgents = () => {
+    API.getAgents(this.state.companyId).then((res) => {
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.email, key: item.id }));
+      this.setState((prevState) => {
+        prevState.agentList = reformatted;
         return prevState;
       });
     });
   }
-
-
+ 
 
   componentDidMount() {
     this.getCompanyData();
   }
+
+  
 
 
   render() {
