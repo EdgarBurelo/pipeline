@@ -21,7 +21,8 @@ import "./style.css";
       userCred:{
         username:"",
         password:""
-      }
+      },
+      error: []
     };
   }
   componentDidMount() {
@@ -30,7 +31,7 @@ import "./style.css";
 
   logginReview() {
     API.userStatus().then((req,res)=>{
-      console.log(req.data);
+      //console.log(req.data);
       if(req.data.email) {
         let loggedUser = req.data;
         this.setState(prevState => {
@@ -38,7 +39,7 @@ import "./style.css";
           prevState.logged = true;
           return prevState;
         });
-        console.log(this.state);
+        //console.log(this.state);
       } 
     });
   }
@@ -56,42 +57,53 @@ import "./style.css";
     
     
     let isMail = (mail) => {
-      let emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+      let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{1,5}?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm); 
       return emailRegex.test(mail);
     }
 
     let isPassword = (password) => {
       //let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-      let weakRegex = new RegExp("^(?=.*[a-z])");
+      let weakRegex = new RegExp("^(?=.*[a-zA-Z0-9])(?=.{8,})");
       return weakRegex.test(password);
     }
-
-    if (isMail(username)) {
-      if(isPassword(password)) {
-        if(!samePassworFun() && this.state.userCred.passwordRep) {
-          console.log("no igual pass");
-        } else if(samePassworFun() && this.state.userCred.passwordRep) {
-          this.eventHandler(evType, username, password);
-        } else {
-          this.eventHandler(evType, username, password);
-        }
-        
-      } else{
-        console.log("Password Regex Validation");
-      }
-    } else {
-      console.log("Emai Regex validation");
+    let error = [];
+    if(!isMail(username)) {
+      error.push("Enter a valid email address!");
     }
+    if(!isPassword(password)) {
+      error.push("Your password should be at least 8 characters long!");
+    }
+    if(!samePassworFun() && this.state.userCred.passwordRep) {
+      error.push("The password doesn`t match!");
+    }
+    if (error.length > 0) {
+      this.errorHandlerLog(error);
+    } else {
+      this.setState(prevState => {
+        prevState.error = [];
+        return prevState;
+      });
+      //console.log(this.state);
+      this.eventHandler(evType, username, password);
+    }
+  }
+
+  errorHandlerLog(error) {
+    this.setState((prevState) => {
+      prevState.error = error;
+      return prevState;
+    });
+    //console.log(this.state);
   }
 
   eventHandler(evType,username,password) {
     switch (evType) {
       case "Login":
-        console.log(evType);
+        //console.log(evType);
         this.loginFunc(username, password);
         break;
       case "Sign":
-        console.log(evType);
+        //console.log(evType);
         this.sigunpFunc(username, password);
         break;
       default:
@@ -102,9 +114,9 @@ import "./style.css";
 
   loginFunc(username,password) {
     API.login(username, password).then(res => {
-      console.log(res);
-      let loggedUser = res.data;
-      if (res.status === 200) {
+      console.log(res.data);
+      if (res.data.ans) {
+        let loggedUser = res.data.user;
         this.setState((prevState) => {
           prevState.logUser = loggedUser;
           prevState.logged = true;
@@ -112,24 +124,32 @@ import "./style.css";
           return prevState;
         });
         console.log("logged in",this.state);
+      } else {
+        let error = ["The user credentials doesn't match"];
+        this.errorHandlerLog(error);
       }
     });
   }
 
   sigunpFunc(username,password) {
-    let name = this.state.userCred.Name;
-    let company = this.state.userCred.Company;
-    console.log(name,company);
+    let name = this.state.userCred.Name.trim();
+    let company = this.state.userCred.Company.trim();
+    //console.log(name,company);
 
     API.signup(username, password,name,company).then(res => {
-      console.log(res);
-      if(res.status === 200) {
+      console.log(res.data.ans);
+      if (res.data.ans) {
+        let newUser = res.data.user;
         this.setState((prevState)=>{
+          prevState.logUser = newUser;
           prevState.logged=true;
           prevState.userCred = {};
           return prevState;
         });
-        console.log("signup");
+        console.log("signup", this.state);
+      } else {
+        let error = ["There is already a user with this email!"];
+        this.errorHandlerLog(error);
       }
     });
   }
@@ -141,12 +161,15 @@ import "./style.css";
      if (name === "password") {
        value = value.substring(0, 15);
      }
+     if( name === "username") {
+       value = value.toLowerCase();
+     }
      // Updating the input's state
      this.setState((previousState) => {
        previousState.userCred[name] = value;
        return previousState;
      });
-     console.log(this.state);
+     //console.log(this.state);
    };
 
    logoutHandler = event => {
@@ -162,7 +185,7 @@ import "./style.css";
           <div style={{marginLeft:"150px"}}>
             <Action />
             <Switch >
-              <Route path="/login" render={props => <Login clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
+              <Route path="/login" render={props => <Login status={this.state.logged} error={this.state.error} clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
