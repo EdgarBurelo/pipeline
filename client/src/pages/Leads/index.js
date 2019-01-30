@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Container } from "semantic-ui-react";
 import WorkflowDropdown from "../../components/WorkflowDropdown";
 import AgentsDropdown from "../../components/AgentsDropdown";
 import API from "../../utils/API";
@@ -44,19 +44,20 @@ class Leads extends Component {
     API.saveLead(this.state);
   }
 
-  getWorkflows = () => {
-    API.getWorkflows().then((res) => {
-      this.setState((prevState) => {
-        prevState.flowList = res.data;
-        return prevState;
+  getCompanyData = () => {
+    API.userStatus().then((res) => {
+      this.setState({ companyId: res.data.company }, () => {
+        this.getWorkflows();
+        this.getAgents();
       });
     });
   }
 
-  getAgents = () => {
-    API.getAgents().then((res) => {
+  getWorkflows = () => {
+    API.getWorkflows(this.state.companyId).then((res) => {
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.flowName, key: item.id }));
       this.setState((prevState) => {
-        prevState.agentList = res.data;
+        prevState.flowList = reformatted;
         return prevState;
       });
     });
@@ -81,29 +82,35 @@ class Leads extends Component {
   render() {
     return (
       <div>
-        <Form>
-          <Form.Field>
-            <label>First name</label>
-            <input id="firstName" placeholder='First name' onChange={this.handleInput} />
-          </Form.Field>
-          <Form.Field>
-            <label>Last name</label>
-            <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
-          </Form.Field>
-          <Form.Field>
-            <label>Email Address</label>
-            <input id="email" placeholder='Email address' onChange={this.handleInput} />
-          </Form.Field>
-          <Form.Field>
-            <label>Phone number</label>
-            <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
-          </Form.Field>
-          <label htmlFor="workflow">Choose workflow</label>
-          <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflowId"></WorkflowDropdown>
-          <label htmlFor="agent">Assign to agent</label>
-          <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="userId"></AgentsDropdown>
-          <Button type='submit' onClick={this.saveLead}>Submit</Button>
-        </Form>
+        <Container>
+          <Form style={{ paddingTop: "10px" }}>
+            <Form.Field>
+              <label>First name</label>
+              <input id="firstName" placeholder='First name' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Last name</label>
+              <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Email Address</label>
+              <input id="email" placeholder='Email address' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Phone number</label>
+              <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Choose workflow</label>
+              <WorkflowDropdown options={this.state.flowList} onChange={this.handleDropDown} id="workflowId"></WorkflowDropdown>
+            </Form.Field>
+            <Form.Field>
+              <label>Assign to agent</label>
+              <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
+            </Form.Field>
+            <Button type='submit' onClick={this.saveLead}>Submit</Button>
+          </Form>
+        </Container>
       </div>
     );
   };

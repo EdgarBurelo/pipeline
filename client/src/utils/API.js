@@ -87,6 +87,11 @@ export default {
     //Get one workflow
     getWorkflow: function(id) {
       return axios.get("/api/workflow/" + id);
+    },
+
+    //Count leads for a specific workflow
+    countLeads: function(workflowId) {
+      return axios.get("/api/leads/count/" + workflowId);
     }
 
 };

@@ -190,7 +190,7 @@ import "./style.css";
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
               <Route path="/leads" component={Leads} />
-              <Route path="/workflows" component={Workflows} />
+              <Route path="/strategies" component={Workflows} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>

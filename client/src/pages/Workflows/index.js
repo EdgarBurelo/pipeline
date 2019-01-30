@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button, Form, Table } from "semantic-ui-react";
+import { Button, Form, Table, Container } from "semantic-ui-react";
 import API from "../../utils/API";
+import WorkflowTable from "../../components/WorkflowTable";
 
 class Workflows extends Component {
   constructor(props) {
@@ -12,40 +13,50 @@ class Workflows extends Component {
   }
 
   getWorkflows = () => {
-    API.getWorkflows().then((res) => {
+    API.getWorkflows(this.state.companyId).then((res) => {
       this.setState((prevState) => {
         prevState.flowList = res.data;
         return prevState;
+      }, () => {
+        this.getLeadCounts();
       });
     });
   }
 
-  getCompany = () => {
+  getLeadCounts = () => {
+    let flowList = this.state.flowList;
+    flowList.map(function(item, i) {
+      API.countLeads(item.id).then((res) => {
+        console.log(res.data[0].leads_count);
+       item.leads_count = res.data[0].leads_count;
+      });
+      return item;
+    });
+    console.log(flowList);
+    this.setState((prevState) => {
+      prevState.flowList = flowList;
+      return prevState;
+    });
+  }
+
+  getCompanyData = () => {
     API.userStatus().then((res) => {
-      this.setState((prevState) => {
-        prevState.companyId = res.data.company;
-        return prevState;
+      this.setState({ companyId: res.data.company }, () => {
+        this.getWorkflows();
       });
     });
   }
 
   componentDidMount() {
-    this.getCompany();
-    this.getWorkflows(this.state.companyId);
+    this.getCompanyData();
+    
   }
 
   render() {
     return (
-      <Table>
-        <Table.Row>
-          <Table.Cell>Name</Table.Cell>
-          <Table.Cell>Number of leads assigned</Table.Cell>
-          <Table.Cell>Delete</Table.Cell>
-        </Table.Row>
-        <Table.Row>
-
-        </Table.Row>
-      </Table>
+      <Container>
+        <WorkflowTable rows={this.state.flowList}></WorkflowTable>
+      </Container>
 
     );
   }
