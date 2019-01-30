@@ -22,6 +22,26 @@ class Todo extends Component {
     };
   }
 
+  updateLeads () {
+
+    let resp = this.state.latest.type;
+
+    if (resp === "Positive response") {
+
+        console.log("POSITIVE RESPONSE");
+
+    } else if (resp === "Negative response") {
+
+        console.log("NEGATIVE RESPONSE");
+
+    } else {
+
+        console.log("NO RESPONSE");
+
+    }
+
+  }
+
   submitClick = event => {
 
     event.preventDefault();
@@ -29,6 +49,8 @@ class Todo extends Component {
     let click = event.target.parentElement.parentElement.id;
 
     console.log("CLICK", click);
+
+    this.updateLeads();
 
   }
 
@@ -96,6 +118,18 @@ class Todo extends Component {
 
     return this.state.leads.map((rows, index) => {
 
+        let cType;
+
+        if (rows.nextContactType === "email") {
+
+            cType = rows.email;
+
+        } else {
+
+            cType = rows.phone;
+
+        }
+
         return (
 
             <Table.Row key={rows.id} id={rows.id}>
@@ -108,7 +142,13 @@ class Todo extends Component {
 
                 <Table.Cell>
 
-                    {rows.nextContactType}
+                    {rows.nextContactType} <strong>{rows.firstName} {rows.lastName}</strong>
+
+                </Table.Cell>
+
+                <Table.Cell>
+
+                    {cType}
 
                 </Table.Cell>
 
@@ -157,13 +197,15 @@ class Todo extends Component {
 
             <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell colSpan="5">Todos</Table.HeaderCell>
+                    <Table.HeaderCell colSpan="6">Todos</Table.HeaderCell>
                 </Table.Row>
 
                 <Table.Row>
                     <Table.HeaderCell>#</Table.HeaderCell>
 
                     <Table.HeaderCell>Task</Table.HeaderCell>
+
+                    <Table.HeaderCell>Contact Info</Table.HeaderCell>
 
                     <Table.HeaderCell>Status</Table.HeaderCell>
 
@@ -192,3 +234,5 @@ export default Todo;
 //1) Para mostrar los to-dos, hay que jalar todos los leads asignados al agente en cuestión que tengan fecha de "hoy o antes"
 //2) Cuando los marque completados, si ese contacto fue la "action1" (como viene en la tabla de leads, creo que la columna se llama nextcontactaction o algo así), hay que buscar en la tabla de workflows cuál sería la siguiente acción, dependiendo del resultado de esa primera acción, y modificar esa info en la tabla de leads.
 //Si fue alguna de las action2, hay que poner como "null" la fecha de sig contacto de ese lead
+
+//
