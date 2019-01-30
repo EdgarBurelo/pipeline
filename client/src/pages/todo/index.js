@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import {Button, Dropdown, Table, Container, Icon} from "semantic-ui-react";
+import {Button, Dropdown, Table} from "semantic-ui-react";
 
 const statusTypes = [
     { text: "Positive response", value: "Positive response" },
@@ -17,7 +17,7 @@ class Todo extends Component {
 
         latest: {},
         current: {},
-        leads: [],
+        leads: []
 
     };
   }
@@ -28,7 +28,7 @@ class Todo extends Component {
 
     let click = event.target.parentElement.parentElement.id;
 
-    console.log("CLICK");
+    console.log("CLICK", click);
 
   }
 
@@ -48,34 +48,27 @@ class Todo extends Component {
 
   componentDidMount() {
 
-    this.userStatus();
-
-  }
-
-  userStatus() {
-
-    API.userStatus().then(res => {
+    API.userStatus().then((res)=>{
 
         this.setState(prevState => {
 
-            prevState.leads = res.data;
+            prevState.current = res.data;
 
         });
 
-        console.log("STATE sSET", this.state.current);
+        // console.log("ID IS",this.state.current.id);
 
-    }).then(() => {
+        // this.getLeads(this.state.current.id);
 
-        //this.getLeads(this.state.current.id);
         this.getLeads(2);
+
+        console.log("STATE sSET", this.state.current);
 
     });
 
   }
 
   getLeads(id) {
-
-    //console.log("ID IN GET LEADS IS", id);
 
     API.allLeads(id).then(res => {
 
@@ -85,15 +78,9 @@ class Todo extends Component {
 
         } else {
 
-            console.log("ALL LEADS FROM DBV", res.data);
+            this.setState({leads: res.data});
 
-            this.setState(prevState=>{
-
-                prevState.current = res.data;
-
-            });
-
-            console.log(this.state);
+            console.log("STATE WITH LEADS", this.state);
 
         }
 
@@ -105,13 +92,13 @@ class Todo extends Component {
 
   }
 
-  render() {
+  renderRows() {
 
-    let arrRows = this.state.leads.map((rows, index) => {
+    return this.state.leads.map((rows, index) => {
 
         return (
 
-            <Table.Row key={rows.id}>
+            <Table.Row key={rows.id} id={rows.id}>
 
                 <Table.Cell>
 
@@ -154,11 +141,20 @@ class Todo extends Component {
 
         )
 
-    })
+    });
+
+  }
+
+  render() {
+
+    console.log("RENDER STATE", this.state);
+
+    let arrRows = this.renderRows();
 
     return(
 
         <Table celled striped>
+
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell colSpan="5">Todos</Table.HeaderCell>
@@ -176,7 +172,12 @@ class Todo extends Component {
                 </Table.Row>
             </Table.Header>
 
-            <Table.Body>{arrRows}</Table.Body>
+            <Table.Body>
+
+                {arrRows}
+            
+            </Table.Body>
+
         </Table>
 
     )
