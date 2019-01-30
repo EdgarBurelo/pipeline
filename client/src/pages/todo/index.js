@@ -36,13 +36,13 @@ class Todo extends Component {
 
     event.preventDefault();
 
-    let iType = event.target.children[0].innerText;
+    let iType = event.target.innerText;
 
-    this.setState(prevState=>{
+    console.log(iType);
 
-      prevState.latest.type = iType;
+    this.setState({latest: {type: iType}});
 
-    });
+    console.log(this.state);
 
   };
 
@@ -125,7 +125,7 @@ class Todo extends Component {
 
                 <Table.Cell>
 
-                    {rows.createdAt}
+                    {rows.nextContactDate}
 
                 </Table.Cell>
 
