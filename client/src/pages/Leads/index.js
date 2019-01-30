@@ -38,6 +38,21 @@ class Leads extends Component {
     };
   }
 
+  handleDropDown = (event, data) => {
+    event.preventDefault();
+    let toSet = data.id;
+    this.setState({ [toSet]: data.value });
+    if (toSet === "workflowId") {
+      API.getWorkflow(data.value).then((res) => {
+        this.setState({ nextContactType: res.data.action1 });
+        this.setState({ nextContactStep: "action1" });
+        let date = moment().add(1, "days");
+        this.setState({ nextContactDate: date._d });
+      });
+    };
+
+  }
+
   saveLead = event => {
     event.preventDefault();
     console.log(this.state);
@@ -46,7 +61,7 @@ class Leads extends Component {
 
   getCompanyData = () => {
     API.userStatus().then((res) => {
-      this.setState({ companyId: res.data.company }, () => {
+      this.setState({companyId: res.data.company}, () => {
         this.getWorkflows();
         this.getAgents();
       });
@@ -56,27 +71,29 @@ class Leads extends Component {
   getWorkflows = () => {
     API.getWorkflows(this.state.companyId).then((res) => {
       let reformatted = res.data.map(item => ({ value: item.id, text: item.flowName, key: item.id }));
-      this.setState((prevState) => {
+       this.setState((prevState) => {
         prevState.flowList = reformatted;
         return prevState;
-      });
+      }); 
     });
   }
 
-  getCompany = () => {
-    API.userStatus().then((res) => {
+  getAgents = () => {
+    API.getAgents(this.state.companyId).then((res) => {
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.email, key: item.id }));
       this.setState((prevState) => {
-        prevState.companyId = res.data.company;
+        prevState.agentList = reformatted;
         return prevState;
       });
     });
   }
+ 
 
   componentDidMount() {
-    this.getCompany();
-    this.getWorkflows();
-    this.getAgents();
+    this.getCompanyData();
   }
+
+  
 
 
   render() {
