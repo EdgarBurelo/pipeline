@@ -88,7 +88,6 @@ export default {
     },
 
     allLeads: function(id) {
-
         
         return axios.get("/api/todo/" + id);
 

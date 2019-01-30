@@ -22,21 +22,44 @@ class Todo extends Component {
     };
   }
 
-  updateLeads () {
+  getWorkflow(normId) {
+
+    console.log("normID IS", normId);
+
+    let arr = this.state.leads;
+
+    arr.forEach(element => {
+
+        if (element.id == normId) {
+
+            console.log(element.workflowId);
+
+            let wId = element.workflowId;
+
+        }
+        
+    });
+
+  }
+
+  updateLeads (target) {
 
     let resp = this.state.latest.type;
 
     if (resp === "Positive response") {
 
         console.log("POSITIVE RESPONSE");
+        this.getWorkflow(target);
 
     } else if (resp === "Negative response") {
 
         console.log("NEGATIVE RESPONSE");
+        this.getWorkflow(target);
 
     } else {
 
         console.log("NO RESPONSE");
+        this.getWorkflow(target);
 
     }
 
@@ -48,9 +71,9 @@ class Todo extends Component {
 
     let click = event.target.parentElement.parentElement.id;
 
-    console.log("CLICK", click);
+    //console.log("CLICK", click);
 
-    this.updateLeads();
+    this.updateLeads(click);
 
   }
 

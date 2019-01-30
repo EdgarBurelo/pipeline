@@ -3,8 +3,6 @@ const db = require("../models");
 module.exports = {
 
     findAll: function (req, res) {
-
-        //console.log("\n\n\n\n\nTHIS IS ID FOR SEARCH", req.params.id);
         
         db.leads.findAll({
 
