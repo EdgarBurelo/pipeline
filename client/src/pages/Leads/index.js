@@ -63,19 +63,10 @@ class Leads extends Component {
     });
   }
 
-  getCompany = () => {
-    API.userStatus().then((res) => {
-      this.setState((prevState) => {
-        prevState.companyId = res.data.company;
-        return prevState;
-      });
-    });
-  }
+
 
   componentDidMount() {
-    this.getCompany();
-    this.getWorkflows();
-    this.getAgents();
+    this.getCompanyData();
   }
 
 
