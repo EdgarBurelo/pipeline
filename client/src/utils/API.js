@@ -97,6 +97,11 @@ export default {
 
         return axios.put("/api/todo/edit", editData);
 
+    },
+
+    //Count leads for a specific workflow
+    countLeads: function(workflowId) {
+      return axios.get("/api/leads/count/" + workflowId);
     }
 
 };
