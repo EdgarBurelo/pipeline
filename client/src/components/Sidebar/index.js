@@ -11,7 +11,25 @@ class Sidebarn extends Component {
                 <div>
                     <Link to="/admin">
                         <Menu.Item>
-                            <Icon name='book' />
+                            <Icon name='sitemap' />
+                            User Admin
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/create">
+                        <Menu.Item>
+                            <Icon name='edit outline' />
+                            Workflows
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/leads">
+                        <Menu.Item>
+                            <Icon name='address book outline' />
+                            Leads
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/todo">
+                        <Menu.Item>
+                            <Icon name='tasks' />
                             Admin
                         </Menu.Item>
                     </Link>
