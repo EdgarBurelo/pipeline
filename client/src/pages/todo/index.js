@@ -22,9 +22,12 @@ class Todo extends Component {
     };
   }
 
+  //this method first calls on the getWorkflow API method to extract info for the second actions for the agent
   editLeads(id, lId) {
 
     API.getWorkflow(id).then(res=>{
+
+        //after that, an object is built with the results from the workflow
 
         let editObj = {};
 
@@ -41,12 +44,14 @@ class Todo extends Component {
             editObj.step = "action2";
             editObj.date = res.data.action2PosDays;
 
+            //the object is then sent to modify the selected lead
             API.editLeads(editObj).then(editLead=>{
 
                 console.log("EDIT RES", editLead);
 
             }).then(()=>{
 
+                //this method is called again to refresh state with latest leads (including changes) and to rerender component
                 this.getLeads(2);
 
             });
@@ -95,9 +100,8 @@ class Todo extends Component {
 
   }
 
+  //this will find the corresponding workflow for the selected lead to be changed and fire the editLeads method to actually edit it
   getWorkflow(normId) {
-
-    console.log("normID IS", normId);
 
     let arr = this.state.leads;
 
@@ -107,8 +111,6 @@ class Todo extends Component {
 
             let wId = element.workflowId;
 
-            console.log(wId);
-
             this.editLeads(wId, normId);
 
         }
@@ -117,22 +119,18 @@ class Todo extends Component {
 
   }
 
-  updateLeads (target) {
-
-    this.getWorkflow(target)
-
-  }
-
+  //button for confirmation and to update leads in corresponding workflow
   submitClick = event => {
 
     event.preventDefault();
 
     let click = event.target.parentElement.parentElement.id;
 
-    this.updateLeads(click);
+    this.getWorkflow(click);
 
   }
 
+  //event handler that sets state
   typeChange = event => {
 
     event.preventDefault();
@@ -147,6 +145,7 @@ class Todo extends Component {
 
   };
 
+  //both of these API requests fire off when component mounts; first the user's id must be acquired, then it must be used for getting the users' corresponding leads (sqlize association)
   componentDidMount() {
 
     API.userStatus().then((res)=>{
@@ -165,6 +164,7 @@ class Todo extends Component {
 
   }
 
+  //method to get leads, set state and hence, rerender everything; currently HARD CODED until user system is fixed
   getLeads(id) {
 
     API.allLeads(id).then(res => {
@@ -191,6 +191,7 @@ class Todo extends Component {
 
   renderRows() {
 
+    //map for leads array in state w conditional statements 
     return this.state.leads.map((rows, index) => {
 
         let date = rows.nextContactDate;
@@ -292,6 +293,7 @@ class Todo extends Component {
 
   render() {
 
+    //log to check when component rerenders and what the state looks like
     console.log("RENDER STATE", this.state);
 
     let arrRows = this.renderRows();
