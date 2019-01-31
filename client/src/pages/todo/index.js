@@ -193,6 +193,15 @@ class Todo extends Component {
 
     return this.state.leads.map((rows, index) => {
 
+        let drop = <Dropdown
+        placeholder="Select status"
+        selection
+        options={statusTypes}
+        onChange={this.typeChange}
+        />;
+
+        let sub = <Button type="submit" onClick={this.submitClick}>Submit</Button>;
+
         let cType;
 
         if (rows.nextContactType === "email") {
@@ -218,6 +227,10 @@ class Todo extends Component {
         } else {
 
             actionDisp = "CONTACT ARCHIVED";
+
+            drop = null;
+
+            sub = null;
 
         }
 
@@ -245,12 +258,14 @@ class Todo extends Component {
 
                 <Table.Cell>
 
-                    <Dropdown
+                    {drop}
+
+                    {/* <Dropdown
                     placeholder="Select status"
                     selection
                     options={statusTypes}
                     onChange={this.typeChange}
-                    />
+                    /> */}
 
                 </Table.Cell>
 
@@ -262,9 +277,11 @@ class Todo extends Component {
 
                 <Table.Cell>
 
-                    <Button type="submit" onClick={this.submitClick}>
+                    {sub}
+
+                    {/* <Button type="submit" onClick={this.submitClick}>
                         Submit
-                    </Button>
+                    </Button> */}
 
                 </Table.Cell>
 
