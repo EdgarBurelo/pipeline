@@ -18,7 +18,7 @@ class Nav extends Component {
             return (
                 <div className="ml-auto">
                     <Link className="navbar-brand " to="./passChange" ><Icon name="setting" /></Link>
-                    <Button className="navbar-nav " inverted color="red" > Logout</Button>
+                    <Button className="navbar-nav " inverted color="red" onClick={this.props.logoutfn}>Logout</Button>
                 </div>
             );
         }
