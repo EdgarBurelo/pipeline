@@ -123,9 +123,21 @@ class Todo extends Component {
 
             let date = element.nextContactDate;
 
-            //let step = element.nextContactStep;
+            let step = element.nextContactStep;
 
-            this.editLeads(wId, normId, date);
+            if (step === "action1") {
+
+                this.editLeads(wId, normId, date);
+
+            } else if (step === "action2") {
+
+                let nullDate = null;
+
+                this.editLeads(wId, normId, nullDate);
+
+            }
+
+            
 
         }
         
