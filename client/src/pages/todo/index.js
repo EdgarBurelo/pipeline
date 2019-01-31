@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import {Button, Dropdown, Table} from "semantic-ui-react";
+import moment from "moment";
 
 const statusTypes = [
     { text: "Positive response", value: "Positive response" },
@@ -23,7 +24,10 @@ class Todo extends Component {
   }
 
   //this method first calls on the getWorkflow API method to extract info for the second actions for the agent
-  editLeads(id, lId) {
+  editLeads(id, lId, date) {
+
+    // let date = moment().add(1, "days");
+    // this.setState({ nextContactDate: date._d });
 
     API.getWorkflow(id).then(res=>{
 
@@ -39,10 +43,12 @@ class Todo extends Component {
 
             console.log(res.data.action2Pos, res.data.action2PosDays);
 
+            let newDate = moment(date, "DD-MM-YYYY").add('days', res.data.action2PosDays);
+
             editObj.id = lId;
             editObj.type = res.data.action2Pos;
             editObj.step = "action2";
-            editObj.date = res.data.action2PosDays;
+            editObj.date = newDate;
 
             //the object is then sent to modify the selected lead
             API.editLeads(editObj).then(editLead=>{
@@ -60,10 +66,12 @@ class Todo extends Component {
 
             console.log(res.data.action2Neg, res.data.action2NegDays);
 
+            let newDate = moment(date, "DD-MM-YYYY").add('days', res.data.action2NegDays);
+
             editObj.id = lId;
             editObj.type = res.data.action2Neg;
             editObj.step = "action2";
-            editObj.date = res.data.action2NegDays;
+            editObj.date = newDate;
 
             API.editLeads(editObj).then(editLead=>{
 
@@ -79,10 +87,12 @@ class Todo extends Component {
 
             console.log(res.data.action2None, res.data.action2NoneDays);
 
+            let newDate = moment(date, "DD-MM-YYYY").add('days', res.data.action2NoneDays);
+
             editObj.id = lId;
             editObj.type = res.data.action2None;
             editObj.step = "action2";
-            editObj.date = res.data.action2NoneDays;
+            editObj.date = newDate;
 
             API.editLeads(editObj).then(editLead=>{
 
@@ -111,7 +121,11 @@ class Todo extends Component {
 
             let wId = element.workflowId;
 
-            this.editLeads(wId, normId);
+            let date = element.nextContactDate;
+
+            //let step = element.nextContactStep;
+
+            this.editLeads(wId, normId, date);
 
         }
         
