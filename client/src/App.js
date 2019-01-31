@@ -184,7 +184,7 @@ import "./style.css";
         <Container fluid={true} style={{padding:"0px"}}>
           <Sidebarn status={this.state.logged} />
           <div style={{marginLeft:"150px"}}>
-            <Action status={this.state.logged} />
+            <Action user={this.state.logUser} status={this.state.logged} />
             <Switch >
               <Route path="/login" render={props => <Login status={this.state.logged} error={this.state.error} clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
@@ -194,7 +194,7 @@ import "./style.css";
               <Route path="/todo" component={Todo} />} />
               <Route path="/workflows" component={Workflows} />
               <Route path="/strategies" component={Workflows} />
-              <Route path="/passChange" render={props => <PassChange status={this.state.logged} />} />
+              <Route path="/passChange" render={props => <PassChange user={this.state.logUser} status={this.state.logged} />} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>

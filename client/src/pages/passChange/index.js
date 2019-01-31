@@ -70,11 +70,13 @@ class PassChange extends Component {
                 case ("200"):
                     console.log("a");
                     this.successHandler();
+                    this.clearForm();
                     break;
                 case ("401"):
                     // console.log("error");
                     let error = [res.data.msg]
                     this.errorHandlerLog(error);
+                    this.clearForm();
                     break;
                 
             }
@@ -105,15 +107,17 @@ class PassChange extends Component {
         //console.log(this.state);
     };
     
-    
+    clearForm() {
+        document.getElementById("passChangeF").reset();
+    }
 
     logedinRender() {
         if(this.props.status) {
             return(
                 <Container style={{padding: "20px 20%"}}>
                     <Segment raised>
-                        <Header as='h2'>Welcome "user" change your password</Header>
-                        <Form error success>
+                        <Header as='h2'>Welcome {this.props.user.name} change your password</Header>
+                        <Form error success id="passChangeF">
                             <PassFail error={this.state.error} />
                             <PassSuccess success={this.state.success}  />
                             <Form.Field>
