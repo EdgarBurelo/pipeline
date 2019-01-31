@@ -7,6 +7,7 @@ const workflow = require("./workflowAPI");
 const leads = require("./leadsAPI");
 const userStatus = require("./userRev");
 const todo = require("./todo");
+const passChange = require("./passChange");
 
 // example routes
 router.use("/example", example);
@@ -18,5 +19,6 @@ router.use("/workflows", workflow);
 router.use("/leads", leads);
 router.use("/userStatus",userStatus);
 router.use("/todo", todo);
+router.use("/passChange", passChange)
 
 module.exports = router;

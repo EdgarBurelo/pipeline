@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Segment, Container, Form, Message, Button, Header } from "semantic-ui-react";
 import NotLogged from "../../components/notLogged";
+import API from "../../utils/API";
 
 class PassChange extends Component {
     constructor(props) {
@@ -11,8 +12,8 @@ class PassChange extends Component {
                 npassword: "",
                 rnpassword: "",
             },
-            error: []
-
+            error: [],
+            success: false
         };
     }
 
@@ -44,8 +45,11 @@ class PassChange extends Component {
         if(!rnpassword) {
             error.push("Your need to rewirte your new password");
         }
-        if (!samePassworFun(npassword,rnpassword) && rnpassword) {
+        if (!samePassworFun(npassword, rnpassword) && rnpassword) {
             error.push("The password doesn`t match!");
+        }
+        if (samePassworFun(apassword,npassword)) {
+            error.push("The actual password cannot be the same as the new password!");
         }
         if (error.length > 0) {
             this.errorHandlerLog(error);
@@ -60,8 +64,28 @@ class PassChange extends Component {
     
     passChangeFunc(actualPass,newPass) {
         console.log(actualPass,newPass);
+        API.passChange(actualPass,newPass).then((res) => {
+            console.log(res);
+            switch (res.data.stat) {
+                case ("200"):
+                    console.log("a");
+                    this.successHandler();
+                    break;
+                case ("401"):
+                    // console.log("error");
+                    let error = [res.data.msg]
+                    this.errorHandlerLog(error);
+                    break;
+                
+            }
+        });
     }
-
+    successHandler() {
+        this.setState(prevState => {
+            prevState.success = true;
+            return prevState;
+        });
+    }
     errorHandlerLog(error) {
         this.setState((prevState) => {
             prevState.error = error;
@@ -84,13 +108,14 @@ class PassChange extends Component {
     
 
     logedinRender() {
-        if(!this.props.status) {
+        if(this.props.status) {
             return(
                 <Container style={{padding: "20px 20%"}}>
                     <Segment raised>
                         <Header as='h2'>Welcome "user" change your password</Header>
-                        <Form error>
+                        <Form error success>
                             <PassFail error={this.state.error} />
+                            <PassSuccess success={this.state.success}  />
                             <Form.Field>
                                 <label>Write your actual password</label>
                                 <input onChange={this.eventHandler} name="apassword" type="password" placeholder='Actual password' />
@@ -138,6 +163,23 @@ let PassFail = (props) => {
         );
     } else {
         return (
+            <span></span>
+        );
+    }
+}
+
+let PassSuccess = (props) => {
+    console.log(props.success);
+    if(props.success) {
+        return(
+            <Message
+                success
+                header='Success!'
+                content='Your password was changed successfully'
+            />
+        );
+    } else {
+        return(
             <span></span>
         );
     }
