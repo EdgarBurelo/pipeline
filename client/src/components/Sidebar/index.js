@@ -9,7 +9,7 @@ class Sidebarn extends Component {
         if(this.props.status) {
             return(
                 <div>
-                    <Link to="/admin">
+                    <Link to="/todo">
                         <Menu.Item>
                             <Icon name='sitemap' />
                             User Admin

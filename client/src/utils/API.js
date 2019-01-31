@@ -39,8 +39,6 @@ export default {
 
     erase: (fid) => {
 
-        console.log("this is id", fid);
-
         return axios.post("/api/admin/" + fid).then(res => {
 
             console.log(res);
@@ -87,6 +85,23 @@ export default {
     //Get one workflow
     getWorkflow: function(id) {
       return axios.get("/api/workflow/" + id);
+    },
+
+    allLeads: function(id) {
+
+        return axios.get("/api/todo/" + id);
+
+    },
+
+    editLeads: function(editData) {
+
+        return axios.put("/api/todo/edit", editData);
+
+    },
+
+    //Count leads for a specific workflow
+    countLeads: function(workflowId) {
+      return axios.get("/api/leads/count/" + workflowId);
     }
 
 };

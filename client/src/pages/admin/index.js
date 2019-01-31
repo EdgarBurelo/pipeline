@@ -24,6 +24,12 @@ class Admin extends Component {
     this.userrev();
   }
 
+  componentDidUpdate() {
+
+    console.log("UPDATE STAte");
+
+  }
+
   stateUsers = () => {
 
     API.allUsers().then(data => {
@@ -183,6 +189,7 @@ class Admin extends Component {
       )
       
     });
+
     let isItLog = () => {
       console.log(this.props.status);
       let loggedStatus = this.props.status;
