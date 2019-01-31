@@ -7,6 +7,7 @@ import Leads from "./pages/Leads";
 import Sidebarn from "./components/Sidebar";
 import Login from "./pages/login";
 import Admin from "./pages/admin";
+import Todo from "./pages/todo";
 import Workflows from "./pages/Workflows";
 import { Container } from "semantic-ui-react";
 import API from "./utils/API";
@@ -190,6 +191,8 @@ import "./style.css";
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
               <Route path="/leads" component={Leads} />
+              <Route path="/todo" component={Todo} />} />
+              <Route path="/workflows" component={Workflows} />
               <Route path="/strategies" component={Workflows} />
               <Redirect from='/' to='/login' />
             </Switch>
