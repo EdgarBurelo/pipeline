@@ -22,9 +22,11 @@ class Todo extends Component {
     };
   }
 
-  editLeads(id) {
+  editLeads(id, lId) {
 
     API.getWorkflow(id).then(res=>{
+
+        let editObj = {};
 
         console.log(res.data);
 
@@ -34,13 +36,38 @@ class Todo extends Component {
 
             console.log(res.data.action2Pos, res.data.action2PosDays);
 
+            editObj.id = lId;
+            editObj.type = res.data.action2Pos;
+            editObj.step = "action2";
+            editObj.date = res.data.action2PosDays;
+
+            API.editLeads(editObj).then(editLead=>{
+
+                console.log(editLead);
+
+            });
+
         } else if (resp === "Negative response") {
 
             console.log(res.data.action2Neg, res.data.action2NegDays);
 
+            editObj.id = lId;
+            editObj.type = res.data.action2Neg;
+            editObj.step = "action2";
+            editObj.date = res.data.action2NegDays;
+
+            API.editLeads(editObj);
+
         } else {
 
             console.log(res.data.action2None, res.data.action2NoneDays);
+
+            editObj.id = lId;
+            editObj.type = res.data.action2None;
+            editObj.step = "action2";
+            editObj.date = res.data.action2NoneDays;
+
+            API.editLeads(editObj);
 
         }
 
@@ -62,7 +89,7 @@ class Todo extends Component {
 
             console.log(wId);
 
-            this.editLeads(wId);
+            this.editLeads(wId, normId);
 
         }
         

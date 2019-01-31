@@ -93,4 +93,10 @@ export default {
 
     },
 
+    editLeads: function(editData) {
+
+        return axios.put("/api/todo/edit", editData);
+
+    }
+
 };

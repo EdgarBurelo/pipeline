@@ -18,6 +18,26 @@ module.exports = {
             
         });
         
+    },
+
+    editOne: function (req, res) {
+
+        db.leads.update({
+
+            nextContactType: req.body.type,
+            nextContactStep: req.body.step,
+            nextContactDate: req.body.date
+
+        },
+        
+        {where: {id: req.body.id}}
+        
+        ).then(edit=>{
+
+            res.json(edit);
+
+        });
+
     }
 };
 
