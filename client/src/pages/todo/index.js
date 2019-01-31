@@ -43,7 +43,7 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                console.log(editLead);
+                console.log("EDIT", editLead);
 
             });
 
@@ -56,7 +56,11 @@ class Todo extends Component {
             editObj.step = "action2";
             editObj.date = res.data.action2NegDays;
 
-            API.editLeads(editObj);
+            API.editLeads(editObj).then(editLead=>{
+
+                console.log("EDIT", editLead);
+
+            });
 
         } else {
 
@@ -67,7 +71,15 @@ class Todo extends Component {
             editObj.step = "action2";
             editObj.date = res.data.action2NoneDays;
 
-            API.editLeads(editObj);
+            API.editLeads(editObj).then(editLead=>{
+
+                if (editLead === "edit") {
+
+                    this.getLeads(2);
+
+                }
+
+            });
 
         }
 
@@ -185,9 +197,25 @@ class Todo extends Component {
 
             cType = rows.email;
 
-        } else {
+        } else if (rows.nextContactType === "call") {
 
             cType = rows.phone;
+
+        }
+
+        let actionDisp;
+
+        if (rows.nextContactType === "email") {
+
+            actionDisp = rows.nextContactType;
+
+        } else if (rows.nextContactType === "call") {
+
+            actionDisp = rows.nextContactType;
+
+        } else {
+
+            actionDisp = "CONTACT ARCHIVED";
 
         }
 
@@ -203,7 +231,7 @@ class Todo extends Component {
 
                 <Table.Cell>
 
-                    {rows.nextContactType} <strong>{rows.firstName} {rows.lastName}</strong>
+                    {actionDisp} <strong>{rows.firstName} {rows.lastName}</strong>
 
                 </Table.Cell>
 

@@ -31,10 +31,10 @@ module.exports = {
         },
         
         {where: {id: req.body.id}}
-        
-        ).then(edit=>{
 
-            res.json(edit);
+        ).then(()=>{
+
+            res.json("edit");
 
         });
 
