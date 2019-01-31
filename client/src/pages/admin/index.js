@@ -20,34 +20,29 @@ class Admin extends Component {
   }
 
   componentDidMount() {
-    this.stateUsers();
-    this.userrev();
+    this.userCheck();
   }
 
   componentDidUpdate() {
 
-    console.log("UPDATE STAte");
+    console.log("UPDATE STAte", this.state);
 
   }
 
-  stateUsers = () => {
+  stateUsers = (comp) => {
 
-    API.allUsers().then(data => {
+    API.getAgents(comp).then(data => {
 
         let stateArr = data.data;
 
-        console.log(this.state.latest);
+        console.log("STATE ARR", stateArr);
 
-        this.setState(prevState => {
-          prevState.users = stateArr;
-          prevState.latest = {};
-
-          return prevState;
+        this.setState({
+          users: stateArr,
+          latest: {}
         });
 
         this.clearAll();
-
-        console.log(this.state.latest);
 
       }).catch(err => {
         console.log(err);
@@ -58,27 +53,26 @@ class Admin extends Component {
     
     event.preventDefault();
 
-    console.log(this.state.latest);
-
     //new user created
     API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type, this.state.current.company).then(()=>{
 
-      this.stateUsers();
+      this.stateUsers(this.state.current.company);
 
     });
 
   };
   
-  userrev() {
+  userCheck() {
+
     API.userStatus().then(res => {
 
-      this.setState(prevState => {
+      this.setState({
 
-        prevState.current = res.data;
+        current: res.data
 
       });
 
-      console.log(this.state.current);
+      this.stateUsers(this.state.current.company);
 
     });
   }
@@ -93,7 +87,7 @@ class Admin extends Component {
 
     API.erase(num).then(()=>{
 
-      this.stateUsers();
+      this.stateUsers(this.state.current.company);
 
     });
 
@@ -142,7 +136,7 @@ class Admin extends Component {
 
   clearAll = () => {
 
-    document.getElementById("create").reset();
+    document.getElementsByClassName("create").text(" ");
 
   }
 
@@ -191,18 +185,18 @@ class Admin extends Component {
     });
 
     let isItLog = () => {
-      console.log(this.props.status);
+      
       let loggedStatus = this.props.status;
       if(loggedStatus) {
         return(
           <div>
-            <Form id="create" style={{ paddingTop: "10px" }}>
-              <Form.Field>
+            <Form style={{ paddingTop: "10px" }}>
+              <Form.Field className="create">
                 <label>Full Name</label>
                 <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field className="create">
                 <label>Email Address</label>
                 <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
               </Form.Field>
