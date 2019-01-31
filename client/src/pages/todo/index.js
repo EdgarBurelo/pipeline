@@ -43,11 +43,11 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                if (editLead == "edit") {
+                console.log("EDIT RES", editLead);
 
-                    this.getLeads(2);
+            }).then(()=>{
 
-                }
+                this.getLeads(2);
 
             });
 
@@ -62,11 +62,11 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                if (editLead == "edit") {
+                console.log("EDIT RES", editLead);
 
-                    this.getLeads(2);
+            }).then(()=>{
 
-                }
+                this.getLeads(2);
 
             });
 
@@ -81,11 +81,11 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                if (editLead == "edit") {
+                console.log("EDIT RES", editLead);
 
-                    this.getLeads(2);
+            }).then(()=>{
 
-                }
+                this.getLeads(2);
 
             });
 
