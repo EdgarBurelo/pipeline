@@ -22,6 +22,32 @@ class Todo extends Component {
     };
   }
 
+  editLeads(id) {
+
+    API.getWorkflow(id).then(res=>{
+
+        console.log(res.data);
+
+        let resp = this.state.latest.type;
+
+        if (resp === "Positive response") {
+
+            console.log(res.data.action2Pos, res.data.action2PosDays);
+
+        } else if (resp === "Negative response") {
+
+            console.log(res.data.action2Neg, res.data.action2NegDays);
+
+        } else {
+
+            console.log(res.data.action2None, res.data.action2NoneDays);
+
+        }
+
+    });
+
+  }
+
   getWorkflow(normId) {
 
     console.log("normID IS", normId);
@@ -32,9 +58,11 @@ class Todo extends Component {
 
         if (element.id == normId) {
 
-            console.log(element.workflowId);
-
             let wId = element.workflowId;
+
+            console.log(wId);
+
+            this.editLeads(wId);
 
         }
         
@@ -44,24 +72,7 @@ class Todo extends Component {
 
   updateLeads (target) {
 
-    let resp = this.state.latest.type;
-
-    if (resp === "Positive response") {
-
-        console.log("POSITIVE RESPONSE");
-        this.getWorkflow(target);
-
-    } else if (resp === "Negative response") {
-
-        console.log("NEGATIVE RESPONSE");
-        this.getWorkflow(target);
-
-    } else {
-
-        console.log("NO RESPONSE");
-        this.getWorkflow(target);
-
-    }
+    this.getWorkflow(target)
 
   }
 
