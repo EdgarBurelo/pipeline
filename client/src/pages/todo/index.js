@@ -43,7 +43,7 @@ class Todo extends Component {
 
             console.log(res.data.action2Pos, res.data.action2PosDays);
 
-            let newDate = moment(date, "DD-MM-YYYY").add('days', res.data.action2PosDays);
+            let newDate = moment(date, "YYYY-MM-DD").add('days', res.data.action2PosDays);
 
             editObj.id = lId;
             editObj.type = res.data.action2Pos;
@@ -66,7 +66,7 @@ class Todo extends Component {
 
             console.log(res.data.action2Neg, res.data.action2NegDays);
 
-            let newDate = moment(date, "DD-MM-YYYY").add('days', res.data.action2NegDays);
+            let newDate = moment(date, "YYYY-MM-DD").add('days', res.data.action2NegDays);
 
             editObj.id = lId;
             editObj.type = res.data.action2Neg;
@@ -87,7 +87,7 @@ class Todo extends Component {
 
             console.log(res.data.action2None, res.data.action2NoneDays);
 
-            let newDate = moment(date, "DD-MM-YYYY").add('days', res.data.action2NoneDays);
+            let newDate = moment(date, "YYYY-MM-DD").add('days', res.data.action2NoneDays);
 
             editObj.id = lId;
             editObj.type = res.data.action2None;
