@@ -43,7 +43,11 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                console.log("EDIT", editLead);
+                if (editLead == "edit") {
+
+                    this.getLeads(2);
+
+                }
 
             });
 
@@ -58,7 +62,11 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                console.log("EDIT", editLead);
+                if (editLead == "edit") {
+
+                    this.getLeads(2);
+
+                }
 
             });
 
@@ -73,7 +81,7 @@ class Todo extends Component {
 
             API.editLeads(editObj).then(editLead=>{
 
-                if (editLead === "edit") {
+                if (editLead == "edit") {
 
                     this.getLeads(2);
 
@@ -121,8 +129,6 @@ class Todo extends Component {
 
     let click = event.target.parentElement.parentElement.id;
 
-    //console.log("CLICK", click);
-
     this.updateLeads(click);
 
   }
@@ -150,10 +156,6 @@ class Todo extends Component {
             prevState.current = res.data;
 
         });
-
-        // console.log("ID IS",this.state.current.id);
-
-        // this.getLeads(this.state.current.id);
 
         this.getLeads(2);
 
