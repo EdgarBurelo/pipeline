@@ -9,7 +9,7 @@ class Sidebarn extends Component {
         if(this.props.status) {
             return(
                 <div>
-                    <Link to="/todo">
+                    <Link to="/admin">
                         <Menu.Item>
                             <Icon name='sitemap' />
                             User Admin
@@ -18,7 +18,7 @@ class Sidebarn extends Component {
                     <Link to="/create">
                         <Menu.Item>
                             <Icon name='edit outline' />
-                            Workflows
+                            Workflows creator
                         </Menu.Item>
                     </Link>
                     <Link to="/leads">
@@ -30,7 +30,13 @@ class Sidebarn extends Component {
                     <Link to="/todo">
                         <Menu.Item>
                             <Icon name='tasks' />
-                            Admin
+                            To Do
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/workflows">
+                        <Menu.Item>
+                            <Icon name='building outline' />
+                            Workflows Assign
                         </Menu.Item>
                     </Link>
                 </div>
