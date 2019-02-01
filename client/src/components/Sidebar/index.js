@@ -9,10 +9,34 @@ class Sidebarn extends Component {
         if(this.props.status) {
             return(
                 <div>
+                    <Link to="/admin">
+                        <Menu.Item>
+                            <Icon name='sitemap' />
+                            User Admin
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/create">
+                        <Menu.Item>
+                            <Icon name='edit outline' />
+                            Workflows creator
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/leads">
+                        <Menu.Item>
+                            <Icon name='address book outline' />
+                            Leads
+                        </Menu.Item>
+                    </Link>
                     <Link to="/todo">
                         <Menu.Item>
-                            <Icon name='book' />
-                            Admin
+                            <Icon name='tasks' />
+                            To Do
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/workflows">
+                        <Menu.Item>
+                            <Icon name='building outline' />
+                            Workflows Assign
                         </Menu.Item>
                     </Link>
                 </div>

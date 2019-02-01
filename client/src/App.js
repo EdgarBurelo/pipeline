@@ -9,6 +9,7 @@ import Login from "./pages/login";
 import Admin from "./pages/admin";
 import Todo from "./pages/todo";
 import Workflows from "./pages/Workflows";
+import PassChange from "./pages/passChange";
 import { Container } from "semantic-ui-react";
 import API from "./utils/API";
 import "./style.css";
@@ -55,7 +56,6 @@ import "./style.css";
       let samePass = password === this.state.userCred.passwordRep ? true : false;
       return samePass;
     }
-    
     
     let isMail = (mail) => {
       let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{1,5}?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm); 
@@ -175,7 +175,16 @@ import "./style.css";
 
    logoutHandler = event => {
     event.preventDefault();
-    API.logout();
+    API.logout().then((res)=> {
+      //console.log(res);
+      if(res.data.status === "201") {
+        this.setState(prevState => {
+          prevState.logged = false;
+          prevState.logUser = {};
+          return prevState;
+        });
+      }
+    });
    }
   
   render() {  
@@ -184,7 +193,7 @@ import "./style.css";
         <Container fluid={true} style={{padding:"0px"}}>
           <Sidebarn status={this.state.logged} />
           <div style={{marginLeft:"150px"}}>
-            <Action />
+            <Action user={this.state.logUser} status={this.state.logged} logoutfn={this.logoutHandler} />
             <Switch >
               <Route path="/login" render={props => <Login status={this.state.logged} error={this.state.error} clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
@@ -194,6 +203,7 @@ import "./style.css";
               <Route path="/todo" component={Todo} />} />
               <Route path="/workflows" component={Workflows} />
               <Route path="/strategies" component={Workflows} />
+              <Route path="/passChange" render={props => <PassChange user={this.state.logUser} status={this.state.logged} />} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>

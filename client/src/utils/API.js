@@ -94,6 +94,12 @@ export default {
     //Count leads for a specific workflow
     countLeads: function(workflowId) {
       return axios.get("/api/leads/count/" + workflowId);
+    },
+    passChange: (actualPassword,newPassword) => {
+        return axios.post("/api/passChange",{
+            actualPassword,
+            newPassword
+        });
     }
 
 };
