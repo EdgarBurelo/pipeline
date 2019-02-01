@@ -4,6 +4,15 @@ import "../Creator/style.css"
 import API from "../../utils/API";
 import ActionsDropdown from "../../components/ActionsDropdown";
 
+let activeButtonStyle = {
+  backgroundColor: "#0aabe2",
+  color: "white"
+}
+
+let inactiveButtonStyle = {
+  backgroundColor: "gray",
+  color: "lightgray"
+}
 class Creator extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +43,7 @@ class Creator extends Component {
     event.preventDefault();
     let toDo = event.target.getAttribute("data-action");
     this.setState({ [toDo]: event.target.value });
+    console.log(this.state.action1);
   }
 
   handleDropDown = (event, data) => {
@@ -94,10 +104,10 @@ class Creator extends Component {
                 <Grid.Row>
                   <Grid.Column></Grid.Column>
                   <Grid.Column>
-                    <Button className="chosenButton" value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
+                    <Button style={activeButtonStyle} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
                   </Grid.Column>
                   <Grid.Column>
-                    <Button className="chosenButton" value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
+                    <Button style={activeButtonStyle} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
                   </Grid.Column>
                   <Grid.Column></Grid.Column>
                 </Grid.Row>
@@ -107,16 +117,30 @@ class Creator extends Component {
                   <Grid.Row>
                     <p>What's your first action?</p>
                   </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Column></Grid.Column>
-                    <Grid.Column>
-                      <Button className={this.state.action1 === "call" ? "chosenButton" : "disabledButton"} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <Button className={this.state.action1 === "email" ? "chosenButton" : "disabledButton"} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
-                    </Grid.Column>
-                    <Grid.Column></Grid.Column>
-                  </Grid.Row>
+                  {this.state.action1 === "call" ?
+                    <Grid.Row>
+                      <Grid.Column></Grid.Column>
+                      <Grid.Column>
+                        <Button style={activeButtonStyle} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Button style={inactiveButtonStyle} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
+                      </Grid.Column>
+                      <Grid.Column></Grid.Column>
+                    </Grid.Row>
+                    :
+                    <Grid.Row>
+                      <Grid.Column></Grid.Column>
+                      <Grid.Column>
+                        <Button style={inactiveButtonStyle} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <Button style={activeButtonStyle} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
+                      </Grid.Column>
+                      <Grid.Column></Grid.Column>
+                    </Grid.Row>
+                  }
+
                   <Grid.Row><h3>What to do next if the answer is...</h3></Grid.Row>
                 </Grid>
 
@@ -169,9 +193,14 @@ class Creator extends Component {
               </div>
 
             }
+            
             <Grid textAlign='center'>
               <Grid.Row>
-                <Button className="chosenButton" onClick={this.saveWorkflow}>Save</Button>
+                {((this.state.action2Neg === undefined || this.state.action2Neg === "call" || this.state.action2Neg === "email") && (this.state.action2NegDays === undefined || this.state.action2NegDays === "")) || ((this.state.action2None === undefined || this.state.action2None === "call" || this.state.action2None === "email") && (this.state.action2NoneDays === undefined || this.state.action2NoneDays === "")) || ((this.state.action2Pos === undefined || this.state.action2Pos === "call" || this.state.action2Pos === "email") && (this.state.action2PosDays === undefined || this.state.action2PosDays === "")) ?
+                <Button disabled style={inactiveButtonStyle} onClick={this.saveWorkflow}>Save</Button>
+                :
+                <Button style={activeButtonStyle} onClick={this.saveWorkflow}>Save</Button>
+              }
               </Grid.Row>
             </Grid>
           </div>

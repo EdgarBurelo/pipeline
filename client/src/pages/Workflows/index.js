@@ -65,7 +65,7 @@ class Workflows extends Component {
           Strategies
         </Header>
         <Header as="p" block textAlign="right">
-        <a href="/leads">+ Create new strategy</a>
+        <a href="/create">+ Create new strategy</a>
         </Header>
         <WorkflowTable rows={this.state.flowList} onClick={this.onClick}></WorkflowTable>
       </Container>
