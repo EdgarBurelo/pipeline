@@ -78,6 +78,9 @@ class PassChange extends Component {
                     this.errorHandlerLog(error);
                     this.clearForm();
                     break;
+                default:
+                console.log("def");
+                break;
                 
             }
         });

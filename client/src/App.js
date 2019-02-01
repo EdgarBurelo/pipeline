@@ -200,7 +200,7 @@ import "./style.css";
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
               <Route path="/leads" component={Leads} />
-              <Route path="/todo" component={Todo} />} />
+              <Route path="/todo" component={Todo} /> />
               <Route path="/workflows" component={Workflows} />
               <Route path="/strategies" component={Workflows} />
               <Route path="/passChange" render={props => <PassChange user={this.state.logUser} status={this.state.logged} />} />
