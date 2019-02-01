@@ -58,7 +58,7 @@ class Todo extends Component {
             }).then(()=>{
 
                 //this method is called again to refresh state with latest leads (including changes) and to rerender component
-                this.getLeads(2);
+                this.getLeads(this.state.current.id);
 
             });
 
@@ -79,7 +79,7 @@ class Todo extends Component {
 
             }).then(()=>{
 
-                this.getLeads(2);
+                this.getLeads(this.state.current.id);
 
             });
 
@@ -100,7 +100,7 @@ class Todo extends Component {
 
             }).then(()=>{
 
-                this.getLeads(2);
+                this.getLeads(this.state.current.id);
 
             });
 
@@ -182,7 +182,7 @@ class Todo extends Component {
 
         });
 
-        this.getLeads(2);
+        this.getLeads(this.state.current.id);
 
         console.log("STATE sSET", this.state.current);
 
