@@ -22,8 +22,7 @@ export default {
             name: fname,
             email: femail,
             profile: fprofile,
-            companyId: idc,
-            password: "test123"
+            companyId: idc
 
         }).then(res => {
 
@@ -38,8 +37,6 @@ export default {
     },
 
     erase: (fid) => {
-
-        console.log("this is id", fid);
 
         return axios.post("/api/admin/" + fid).then(res => {
 
@@ -65,29 +62,59 @@ export default {
         return axios.get("/api/admin");
     },
     
-    getAgents: () => {
-      return axios.get("/api/admin/leads");
+    getAgents: (companyId) => {
+      return axios.get("/api/admin/agents/" + companyId);
     },
 
     //Save workflow
-    saveWorkflow: function (flowData) {
-    return axios.post("/api/workflow", flowData);
+    saveWorkflow: (flowData) => {
+    return axios.post("/api/workflows", flowData);
     },
 
     //Save lead
-    saveLead: function(leadData) {
+    saveLead: (leadData) => {
     return axios.post("/api/leads", leadData);
     },
 
     //Get workflows
-    getWorkflows: function() {
-      return axios.get("/api/workflows");
+    getWorkflows: (companyId) => {
+      return axios.get("/api/workflows/company/" + companyId);
     },
 
     //Get one workflow
-    getWorkflow: function(id) {
-      console.log("getting the workflow " + id);
+    getWorkflow: (id) => {
       return axios.get("/api/workflow/" + id);
+    },
+
+    //Get leads who are assigned to a specific agent
+    allLeads: (id) => {
+
+        return axios.get("/api/todo/" + id);
+
+    },
+
+    editLeads: (editData) => {
+
+        return axios.put("/api/todo/edit", editData);
+
+    },
+
+    //Count leads for a specific workflow
+    countLeads: (workflowId) => {
+      return axios.get("/api/leads/count/" + workflowId);
+    },
+
+    //Change password
+    passChange: (actualPassword,newPassword) => {
+        return axios.post("/api/passChange",{
+            actualPassword,
+            newPassword
+        });
+    },
+
+    //Get all leads belonging to a specific company
+    getCompanyLeads: (companyId) => {
+      return axios.get("/api/leads/" + companyId);
     }
 
 };

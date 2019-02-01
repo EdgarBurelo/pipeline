@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, Container, Message, Header } from "semantic-ui-react";
 import WorkflowDropdown from "../../components/WorkflowDropdown";
 import AgentsDropdown from "../../components/AgentsDropdown";
 import API from "../../utils/API";
+import moment from "moment";
 
 class Leads extends Component {
   constructor(props) {
@@ -16,90 +17,127 @@ class Leads extends Component {
       assignedTo: undefined,
       nextContactDate: undefined,
       nextContactType: undefined,
+      nextContactStep: undefined,
       companyId: undefined,
       flowList: [],
-      agentList: []
+      agentList: [],
+      formState: undefined
     }
   }
 
   handleInput = event => {
-    console.log(event.target.getAttribute("id"));
     event.preventDefault();
     let toSet = event.target.getAttribute("id");
     this.setState({ [toSet]: event.target.value });
     if(toSet === "workflowId") {
       API.getWorkflow(event.target.value).then((res) => {
         this.setState({ nextContactType: res.data.action1 });
-      })
-    }
+        this.setState({nextContactStep: "action1"});
+        let date = moment().add(1, "days");
+        this.setState({nextContactDate: date._d});
+      });
+    };
+  }
+
+  handleDropDown = (event, data) => {
+    event.preventDefault();
+    let toSet = data.id;
+    this.setState({ [toSet]: data.value });
+    if (toSet === "workflowId") {
+      API.getWorkflow(data.value).then((res) => {
+        this.setState({ nextContactType: res.data.action1 });
+        this.setState({ nextContactStep: "action1" });
+        let date = moment().add(1, "days");
+        this.setState({ nextContactDate: date._d });
+      });
+    };
+
   }
 
   saveLead = event => {
     event.preventDefault();
     console.log(this.state);
     API.saveLead(this.state);
+    this.clearForm();
+  }
+
+  clearForm = () => {
+      document.getElementById("leadForm").reset();
+  }
+
+  getCompanyData = () => {
+    API.userStatus().then((res) => {
+      this.setState({companyId: res.data.company}, () => {
+        this.getWorkflows();
+        this.getAgents();
+      });
+    });
   }
 
   getWorkflows = () => {
-    API.getWorkflows().then((res) => {
-      this.setState((prevState) => {
-        prevState.flowList = res.data;
+    API.getWorkflows(this.state.companyId).then((res) => {
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.flowName, key: item.id }));
+       this.setState((prevState) => {
+        prevState.flowList = reformatted;
         return prevState;
-      });
+      }); 
     });
   }
 
   getAgents = () => {
-    API.getAgents().then((res) => {
+    API.getAgents(this.state.companyId).then((res) => {
+      let reformatted = res.data.map(item => ({ value: item.id, text: item.email, key: item.id }));
       this.setState((prevState) => {
-        prevState.agentList = res.data;
+        prevState.agentList = reformatted;
         return prevState;
       });
     });
   }
-
-  getCompany = () => {
-    API.userStatus().then((res) => {
-      this.setState((prevState) => {
-        prevState.companyId = res.data.company;
-        return prevState;
-      });
-    });
-  }
+ 
 
   componentDidMount() {
-    this.getCompany();
-    this.getWorkflows();
-    this.getAgents();
+    this.getCompanyData();
   }
+
+  
 
 
   render() {
     return (
       <div>
-        <Form>
-          <Form.Field>
-            <label>First name</label>
-            <input id="firstName" placeholder='First name' onChange={this.handleInput} />
-          </Form.Field>
-          <Form.Field>
-            <label>Last name</label>
-            <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
-          </Form.Field>
-          <Form.Field>
-            <label>Email Address</label>
-            <input id="email" placeholder='Email address' onChange={this.handleInput} />
-          </Form.Field>
-          <Form.Field>
-            <label>Phone number</label>
-            <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
-          </Form.Field>
-          <label htmlFor="workflow">Choose workflow</label>
-          <WorkflowDropdown options={this.state.flowList} onChange={this.handleInput} id="workflowId"></WorkflowDropdown>
-          <label htmlFor="agent">Assign to agent</label>
-          <AgentsDropdown options={this.state.agentList} onChange={this.handleInput} id="userId"></AgentsDropdown>
-          <Button type='submit' onClick={this.saveLead}>Submit</Button>
-        </Form>
+        <Container  style={{ paddingTop: "10px" }}>
+        <Header as='h2' block>
+          Add Lead
+        </Header>
+          <Form style={{ paddingTop: "10px" }} id="leadForm">
+            <Form.Field>
+              <label>First name</label>
+              <input id="firstName" placeholder='First name' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Last name</label>
+              <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Email Address</label>
+              <input id="email" placeholder='Email address' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Phone number</label>
+              <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
+            </Form.Field>
+            <Form.Field>
+              <label>Choose strategy</label>
+              <WorkflowDropdown options={this.state.flowList} onChange={this.handleDropDown} id="workflowId"></WorkflowDropdown>
+            </Form.Field>
+            <Form.Field>
+              <label>Assign to agent</label>
+              <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
+            </Form.Field>
+            <Message success header='Lead saved' content="You can add another if you'd like!" />
+            <Button type='submit' onClick={this.saveLead}>Submit</Button>
+          </Form>
+        </Container>
       </div>
     );
   };

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Icon, Menu, Sidebar } from 'semantic-ui-react';
+import { Icon, Menu, Sidebar, Header, Divider } from 'semantic-ui-react';
 
 class Sidebarn extends Component {
     
@@ -8,11 +8,41 @@ class Sidebarn extends Component {
     renderSidebarElements() {
         if(this.props.status) {
             return(
-                <div>
+                <div >
+                    <Header as="h2" icon inverted >
+                        <Menu.Item>
+                            <Icon name='code branch' />
+                        </Menu.Item>
+                    </Header>
+                    <Divider horizontal inverted > Actions</Divider>
                     <Link to="/admin">
                         <Menu.Item>
-                            <Icon name='book' />
-                            Admin
+                            <Icon name='sitemap' />
+                            User Admin
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/create">
+                        <Menu.Item>
+                            <Icon name='edit outline' />
+                            Strategy builder
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/manage-leads">
+                        <Menu.Item>
+                            <Icon name='address book outline' />
+                            Leads
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/strategies">
+                        <Menu.Item>
+                            <Icon name='chess rook' />
+                            Strategies
+                        </Menu.Item>
+                    </Link>
+                    <Link to="/todo">
+                        <Menu.Item>
+                            <Icon name='tasks' />
+                            Tasks
                         </Menu.Item>
                     </Link>
                 </div>

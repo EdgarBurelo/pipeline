@@ -40,7 +40,13 @@ module.exports = (sequelize, DataTypes) => {
       // validate: {
       //     isAlphanumeric: true
       // }
+    },
+
+    supervisor: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
+    
   });
 
   users.associate = function(models) {

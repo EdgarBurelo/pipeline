@@ -1,20 +1,43 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Button, Icon } from "semantic-ui-react";
 
-const Nav = props => {
-    return (
-        <nav className="navbar sticky-top navbar-expand-lg navbar-dark" style={{ backgroundColor: "#0c0c17"}} >
-            <Link className="navbar-brand" to="./login" >CRM</Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup">
-                <span className="navbar-toggler-icon"></span>
-            </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+class Nav extends Component {
+    nameRender() {
+        if (this.props.status) {
+            let name = this.props.user.name;
+            return(
+                <span className="navbar-text">{name}</span>
+            );
+        } 
+    }
+
+    buttonRender() {
+        if (this.props.status) {
+            
+            return (
+                <div className="ml-auto">
+                    <Link className="navbar-brand " to="./passChange" ><Icon name="setting" /></Link>
+                    <Button className="navbar-nav " inverted color="red" onClick={this.props.logoutfn}>Logout</Button>
+                </div>
+            );
+        }
+    }
+
+    render() {
+        return (
+            <nav className="navbar sticky-top navbar-expand-lg navbar-dark" style={{ backgroundColor: "#0c0c17"}} >
+                <Link className="navbar-brand" to="./login" >CRM</Link>
                 
-           </div>
-           
-        </nav>
+                {this.nameRender()}
+                {this.buttonRender()}
+                
+            </nav>
 
-    );
+        );
+    }
 }
+
+
 
 export default Nav;

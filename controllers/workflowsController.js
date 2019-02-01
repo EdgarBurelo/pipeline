@@ -1,4 +1,5 @@
 const db = require("../models");
+const sequelize = import('')
 
 module.exports = {
   save: (req, res) => {
@@ -8,7 +9,9 @@ module.exports = {
   },
 
   findAll: (req, res) => {
-    db.workflows.findAll().then((data) => {
+    db.workflows.findAll({
+      where: {companyId: req.params.companyId}
+    }).then((data) => {
       res.json(data);
     });
   },
