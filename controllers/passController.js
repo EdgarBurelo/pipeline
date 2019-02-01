@@ -8,7 +8,7 @@ module.exports = {
         let actualPassword = req.body.actualPassword;
         let newPassword = req.body.newPassword;
         db.users.findOne({
-            id: req.session.passport.user
+            where: { id: req.session.passport.user }
         }).then(user => {
             console.log(user);
             if (!isValidPassword(user,actualPassword)) {
