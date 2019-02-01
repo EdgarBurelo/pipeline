@@ -68,9 +68,11 @@ class Admin extends Component {
     
     event.preventDefault();
 
-    if (this.state.emailCheck && this.state.type !== " " && this.state.name !== " ") {
+    if (this.state.emailCheck && this.state.email !== " " && this.state.type !== " " && this.state.name !== " ") {
 
       API.newUser(this.state.name, this.state.email, this.state.type, this.state.current.company).then(()=>{
+
+        this.setState({success: true});
 
         this.stateUsers(this.state.current.company);
   
@@ -125,7 +127,8 @@ class Admin extends Component {
 
     this.setState({
 
-      name: iName
+      name: iName,
+      success: false
 
     });
 
@@ -186,25 +189,23 @@ class Admin extends Component {
 
   render() {
 
-    // let Success = (props) => {
+    let Success = (props) => {
 
-    //   //if (props.name) {
+      if (props.success === true) {
+    
+        return (
+          <Message positive header="User successfully created." />
+        );
 
-    //     return (
+      } else {
+    
+        return (
+          <span></span>
+        );
 
-    //       <Segment>
+      }
 
-    //         <Dimmer active>
-    //           <Loader />
-    //         </Dimmer>
-
-    //       </Segment>
-          
-    //     )
-        
-    //   //}
-
-    // }
+    }
 
     let ErrCheck = props => {
 
@@ -322,12 +323,10 @@ class Admin extends Component {
               
               <Button type="submit" onClick={this.buttonClick}>
                 Submit
-
-                {/* <Success name={this.state.name}></Success> */}
-
               </Button>
             </Form>
 
+            <Success success={this.state.success}></Success>
             <EmailCheck error={this.state.emailCheck} />
             <ErrCheck error={this.state.err} />
 
