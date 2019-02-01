@@ -188,20 +188,20 @@ class Admin extends Component {
 
       console.log("PROP ERROR", props.error);
     
-      if (props.error) {
-
-        console.log("IT's true run span");
-    
-        return (
-          <span></span>
-        );
-          
-      } else {
+      if (props.error === false) {
 
         console.log("WAHWAHWAH");
     
         return (
           <Message error header="Please enter a valid email address." />
+        );
+        
+      } else {
+
+        console.log("IT's true run span");
+    
+        return (
+          <span></span>
         );
         
       }
@@ -266,8 +266,6 @@ class Admin extends Component {
                 <input placeholder="Email Address" onChange={this.emailChange} />
               </Form.Field>
 
-              <EmailCheck error={this.state.emailCheck} />
-
               <Form.Field>
                 <label>User Type</label>
                 <Dropdown
@@ -282,6 +280,8 @@ class Admin extends Component {
                 Submit
               </Button>
             </Form>
+
+            <EmailCheck error={this.state.emailCheck} />
 
             <Table celled striped>
               <Table.Header>
