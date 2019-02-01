@@ -116,7 +116,7 @@ import LeadsMgr from './pages/LeadsMgr';
 
   loginFunc(username,password) {
     API.login(username, password).then(res => {
-      console.log(res.data);
+      //console.log(res.data);
       if (res.data.ans) {
         let loggedUser = res.data.user;
         this.setState((prevState) => {
@@ -125,7 +125,7 @@ import LeadsMgr from './pages/LeadsMgr';
           prevState.userCred = {};
           return prevState;
         });
-        console.log("logged in",this.state);
+        //console.log("logged in",this.state);
       } else {
         let error = ["The user credentials doesn't match"];
         this.errorHandlerLog(error);
@@ -139,7 +139,7 @@ import LeadsMgr from './pages/LeadsMgr';
     //console.log(name,company);
 
     API.signup(username, password,name,company).then(res => {
-      console.log(res.data.ans);
+      //console.log(res.data.ans);
       if (res.data.ans) {
         let newUser = res.data.user;
         this.setState((prevState)=>{
@@ -148,7 +148,7 @@ import LeadsMgr from './pages/LeadsMgr';
           prevState.userCred = {};
           return prevState;
         });
-        console.log("signup", this.state);
+        //console.log("signup", this.state);
       } else {
         let error = ["There is already a user with this email!"];
         this.errorHandlerLog(error);

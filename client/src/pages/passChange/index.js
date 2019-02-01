@@ -63,12 +63,12 @@ class PassChange extends Component {
     }
     
     passChangeFunc(actualPass,newPass) {
-        console.log(actualPass,newPass);
+        //console.log(actualPass,newPass);
         API.passChange(actualPass,newPass).then((res) => {
-            console.log(res);
+            //console.log(res);
             switch (res.data.stat) {
                 case ("200"):
-                    console.log("a");
+                    //console.log("a");
                     this.successHandler();
                     this.clearForm();
                     break;
@@ -79,7 +79,7 @@ class PassChange extends Component {
                     this.clearForm();
                     break;
                 default:
-                console.log("def");
+                //console.log("def");
                 break;
                 
             }
@@ -163,7 +163,7 @@ class PassChange extends Component {
 }
 
 let PassFail = (props) => {
-    console.log(props.error);
+    //console.log(props.error);
     if (props.error.length > 0) {
         return (
             <Message error list={props.error} header="The following errors were presented:" />
@@ -176,7 +176,7 @@ let PassFail = (props) => {
 }
 
 let PassSuccess = (props) => {
-    console.log(props.success);
+    //console.log(props.success);
     if(props.success) {
         return(
             <Message
