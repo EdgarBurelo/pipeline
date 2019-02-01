@@ -6,7 +6,9 @@ router.route("/")
 
 router.route("/count/:workflowId")
     .get(controller.count);
-    
+
+router.route("/:companyId")
+    .get(controller.findAll);
 
 
 module.exports = router;
