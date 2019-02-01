@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table, Container, Icon, Message } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container, Icon, Message, Dimmer, Loader, Segment } from "semantic-ui-react";
 import API from "../../utils/API";
 import NotLogged from "../../components/notLogged";
 
@@ -17,6 +17,7 @@ class Admin extends Component {
       email: undefined,
       emailCheck: undefined,
       err: undefined,
+      success: undefined,
       type: undefined,
       users: [],
       current: {}
@@ -42,7 +43,8 @@ class Admin extends Component {
         console.log("STATE ARR", stateArr);
 
         this.setState({
-          users: stateArr
+          users: stateArr,
+          err: undefined
         });
 
         if (this.state.name === undefined && this.state.email === undefined && this.state.type === undefined) {
@@ -184,6 +186,48 @@ class Admin extends Component {
 
   render() {
 
+    // let Success = (props) => {
+
+    //   //if (props.name) {
+
+    //     return (
+
+    //       <Segment>
+
+    //         <Dimmer active>
+    //           <Loader />
+    //         </Dimmer>
+
+    //       </Segment>
+          
+    //     )
+        
+    //   //}
+
+    // }
+
+    let ErrCheck = props => {
+
+      if (props.error === true) {
+
+        console.log("WAHWAHWAH");
+    
+        return (
+          <Message error header="Please fill out all fields and select an option from the dropdown menu." />
+        );
+
+      } else {
+
+        console.log("IT's true run span");
+    
+        return (
+          <span></span>
+        );
+
+      }
+
+    }
+
     let EmailCheck = (props) => {
 
       console.log("PROP ERROR", props.error);
@@ -278,10 +322,14 @@ class Admin extends Component {
               
               <Button type="submit" onClick={this.buttonClick}>
                 Submit
+
+                {/* <Success name={this.state.name}></Success> */}
+
               </Button>
             </Form>
 
             <EmailCheck error={this.state.emailCheck} />
+            <ErrCheck error={this.state.err} />
 
             <Table celled striped>
               <Table.Header>
