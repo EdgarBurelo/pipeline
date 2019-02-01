@@ -123,11 +123,11 @@ class Todo extends Component {
 
             let step = element.nextContactStep;
 
-            if (step === "action1") {
+            if (step === "action1" || "action2") {
 
                 this.editLeads(wId, normId, date);
 
-            } else if (step === "action2") {
+            } else {
 
                 let nullDate = null;
 
@@ -229,33 +229,26 @@ class Todo extends Component {
 
         let cType;
 
+        let actionDisp;
+
+        //this conditional checks what the next action is and renders the relevant contact info
         if (rows.nextContactType === "email") {
+
+            actionDisp = rows.nextContactType;
 
             cType = rows.email;
 
         } else if (rows.nextContactType === "call") {
 
+            actionDisp = rows.nextContactType;
+
             cType = rows.phone;
 
         } else {
 
-            cType = rows.phone + ", " + rows.email;
-
-        }
-
-        let actionDisp;
-
-        if (rows.nextContactType === "email") {
-
-            actionDisp = rows.nextContactType;
-
-        } else if (rows.nextContactType === "call") {
-
-            actionDisp = rows.nextContactType;
-
-        } else {
-
             actionDisp = "CONTACT ARCHIVED: ";
+
+            cType = rows.phone + ", " + rows.email;
 
             drop = null;
 
@@ -371,11 +364,3 @@ isLoggedIn() {
 }
 
 export default Todo;
-
-//task, fecha en la que se marco como hecho, resultado (dropdown), button
-
-//1) Para mostrar los to-dos, hay que jalar todos los leads asignados al agente en cuestión que tengan fecha de "hoy o antes"
-//2) Cuando los marque completados, si ese contacto fue la "action1" (como viene en la tabla de leads, creo que la columna se llama nextcontactaction o algo así), hay que buscar en la tabla de workflows cuál sería la siguiente acción, dependiendo del resultado de esa primera acción, y modificar esa info en la tabla de leads.
-//Si fue alguna de las action2, hay que poner como "null" la fecha de sig contacto de ese lead
-
-//
