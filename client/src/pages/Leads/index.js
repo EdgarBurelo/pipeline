@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Container, Message } from "semantic-ui-react";
+import { Button, Form, Container, Message, Header } from "semantic-ui-react";
 import WorkflowDropdown from "../../components/WorkflowDropdown";
 import AgentsDropdown from "../../components/AgentsDropdown";
 import API from "../../utils/API";
@@ -105,7 +105,10 @@ class Leads extends Component {
   render() {
     return (
       <div>
-        <Container>
+        <Container  style={{ paddingTop: "10px" }}>
+        <Header as='h2' block>
+          Add Lead
+        </Header>
           <Form style={{ paddingTop: "10px" }} id="leadForm">
             <Form.Field>
               <label>First name</label>

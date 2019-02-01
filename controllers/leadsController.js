@@ -15,6 +15,14 @@ module.exports = {
     }).then(function(data) {
       res.json(data);
     });
+  },
+
+  findAll: function(req, res) {
+    db.leads.findAll({
+      where: {companyId: req.params.companyId}
+    }).then(function(data) {
+      res.json(data);
+    });
   }
 
 };

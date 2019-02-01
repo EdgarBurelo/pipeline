@@ -9,7 +9,6 @@ module.exports = {
   },
 
   findAll: (req, res) => {
-    console.log(req.body);
     db.workflows.findAll({
       where: {companyId: req.params.companyId}
     }).then((data) => {
