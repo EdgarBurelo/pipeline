@@ -24,14 +24,6 @@ export default {
             profile: fprofile,
             companyId: idc
 
-        }).then(res => {
-
-            console.log(res);
-
-        }).catch(err => {
-
-            console.log(err);
-
         });
 
     },
