@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Table, Container } from "semantic-ui-react";
+import {Container } from "semantic-ui-react";
 import API from "../../utils/API";
 import WorkflowTable from "../../components/WorkflowTable";
 
@@ -8,7 +8,8 @@ class Workflows extends Component {
     super(props);
     this.state = {
       flowList: [],
-      companyId: undefined
+      companyId: undefined,
+      click: "hi"
     }
   }
 
@@ -28,7 +29,7 @@ class Workflows extends Component {
     flowList.map(function(item, i) {
       API.countLeads(item.id).then((res) => {
         console.log(res.data[0].leads_count);
-       item.leads_count = res.data[0].leads_count;
+       item.leadscount = res.data[0].leads_count;
       });
       return item;
     });
@@ -47,6 +48,10 @@ class Workflows extends Component {
     });
   }
 
+  onClick = () => {
+    this.setState({click: this.state.click + 1})
+  }
+
   componentDidMount() {
     this.getCompanyData();
     
@@ -54,8 +59,8 @@ class Workflows extends Component {
 
   render() {
     return (
-      <Container>
-        <WorkflowTable rows={this.state.flowList}></WorkflowTable>
+      <Container style={{ paddingTop: "10px" }}>
+        <WorkflowTable rows={this.state.flowList} onClick={this.onClick}></WorkflowTable>
       </Container>
 
     );

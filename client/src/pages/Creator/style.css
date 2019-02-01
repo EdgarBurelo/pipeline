@@ -1,5 +1,6 @@
 #flowName {
-  border:none;
+  text-align: center;
+  border: none;
   background-image: linear-gradient(to right, gray 33%, rgba(255,255,255,0) 0%);
   background-position: bottom;
   background-size: 8px 1px;
@@ -8,7 +9,12 @@
   width: 80%;
 }
 
-button {
+.chosenButton {
   background-color: #0aabe2;
   color: white;
+}
+
+.disabledButton {
+  background-color:gray;
+  color:black;
 }
