@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import {Button, Dropdown, Table} from "semantic-ui-react";
+import NotLogged from "../../components/notLogged";
+import {Button, Dropdown, Table, Container} from "semantic-ui-react";
 import moment from "moment";
 
 const statusTypes = [
@@ -305,44 +306,58 @@ class Todo extends Component {
 
   }
 
+isLoggedIn() {
+    //console.log(this.props.status);
+    if(this.props.status) {
+        let arrRows = this.renderRows();
+        return(
+            <Table celled striped>
+
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell colSpan="6">Todos</Table.HeaderCell>
+                    </Table.Row>
+
+                    <Table.Row>
+                        <Table.HeaderCell>#</Table.HeaderCell>
+
+                        <Table.HeaderCell>Task</Table.HeaderCell>
+
+                        <Table.HeaderCell>Contact Info</Table.HeaderCell>
+
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+
+                        <Table.HeaderCell>Date</Table.HeaderCell>
+                        <Table.HeaderCell></Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+
+                    {arrRows}
+
+                </Table.Body>
+
+            </Table>
+        );
+    } else {
+        return(
+            <NotLogged />
+        );
+    }
+}
+
   render() {
 
     //log to check when component rerenders and what the state looks like
     console.log("RENDER STATE", this.state);
 
-    let arrRows = this.renderRows();
+    
 
     return(
-
-        <Table celled striped>
-
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell colSpan="6">Todos</Table.HeaderCell>
-                </Table.Row>
-
-                <Table.Row>
-                    <Table.HeaderCell>#</Table.HeaderCell>
-
-                    <Table.HeaderCell>Task</Table.HeaderCell>
-
-                    <Table.HeaderCell>Contact Info</Table.HeaderCell>
-
-                    <Table.HeaderCell>Status</Table.HeaderCell>
-
-                    <Table.HeaderCell>Date</Table.HeaderCell>
-                    <Table.HeaderCell></Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-
-                {arrRows}
-            
-            </Table.Body>
-
-        </Table>
-
+        <Container fluid style={{marginTop: "10px"}}>
+            {this.isLoggedIn()}
+        </Container>
     )
 
   }
