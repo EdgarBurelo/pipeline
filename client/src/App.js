@@ -200,10 +200,10 @@ import LeadsMgr from './pages/LeadsMgr';
               <Route path="/about" component={About} />
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
-              <Route path="/leads" component={Leads} />
-              <Route path="/todo" component={Todo} /> />
-              <Route path="/strategies" component={Workflows} />
-              <Route path="/manage-leads" component={LeadsMgr} />
+              <Route path="/leads" render={props => <Leads status={this.state.logged} />} />
+              <Route path="/todo" render={props => <Todo status={this.state.logged} />} />
+              <Route path="/strategies" render={props => <Workflows status={this.state.logged} />} />
+              <Route path="/manage-leads" render={props => <LeadsMgr status={this.state.logged} />} />
               <Route path="/passChange" render={props => <PassChange user={this.state.logUser} status={this.state.logged} />} />
               <Redirect from='/' to='/login' />
             </Switch>

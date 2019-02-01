@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import NotLogged from "../../components/notLogged";
 import { Container, Header } from "semantic-ui-react";
 import API from "../../utils/API";
 import WorkflowTable from "../../components/WorkflowTable";
@@ -57,18 +59,32 @@ class Workflows extends Component {
 
   }
 
+  isLoggedIn() {
+    console.log(this.props.status);
+    if (this.props.status) {
+      return(
+        <div>
+          <Header as='h2' block>
+            Strategies
+        </Header>
+          <Header as="p" block textAlign="right">
+            <Link to="/create">+ Create new strategy</Link>
+          </Header>
+          <WorkflowTable rows={this.state.flowList} onClick={this.onClick}></WorkflowTable>
+        </div>
+      );
+    } else {
+      return(
+        <NotLogged />
+      );
+    }
+  }
+
   render() {
     return (
-
-      <Container style={{ paddingTop: "10px" }}>
-        <Header as='h2' block>
-          Strategies
-        </Header>
-        <Header as="p" block textAlign="right">
-        <a href="/create">+ Create new strategy</a>
-        </Header>
-        <WorkflowTable rows={this.state.flowList} onClick={this.onClick}></WorkflowTable>
-      </Container>
+    <Container style={{ paddingTop: "10px" }}>
+      {this.isLoggedIn()}
+    </Container>
 
     );
   }
