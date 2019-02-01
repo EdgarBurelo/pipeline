@@ -26,9 +26,6 @@ class Todo extends Component {
   //this method first calls on the getWorkflow API method to extract info for the second actions for the agent
   editLeads(id, lId, date) {
 
-    // let date = moment().add(1, "days");
-    // this.setState({ nextContactDate: date._d });
-
     API.getWorkflow(id).then(res=>{
 
         //after that, an object is built with the results from the workflow
@@ -58,7 +55,7 @@ class Todo extends Component {
             }).then(()=>{
 
                 //this method is called again to refresh state with latest leads (including changes) and to rerender component
-                this.getLeads(2);
+                this.getLeads(this.state.current.id);
 
             });
 
@@ -79,7 +76,7 @@ class Todo extends Component {
 
             }).then(()=>{
 
-                this.getLeads(2);
+                this.getLeads(this.state.current.id);
 
             });
 
@@ -100,7 +97,7 @@ class Todo extends Component {
 
             }).then(()=>{
 
-                this.getLeads(2);
+                this.getLeads(this.state.current.id);
 
             });
 
@@ -136,8 +133,6 @@ class Todo extends Component {
                 this.editLeads(wId, normId, nullDate);
 
             }
-
-            
 
         }
         
@@ -182,7 +177,7 @@ class Todo extends Component {
 
         });
 
-        this.getLeads(2);
+        this.getLeads(this.state.current.id);
 
         console.log("STATE sSET", this.state.current);
 

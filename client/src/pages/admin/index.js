@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table, Container, Icon } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container, Icon, Message } from "semantic-ui-react";
 import API from "../../utils/API";
 import NotLogged from "../../components/notLogged";
 
@@ -15,6 +15,8 @@ class Admin extends Component {
     this.state = {
       name: undefined,
       email: undefined,
+      emailCheck: undefined,
+      err: undefined,
       type: undefined,
       users: [],
       current: {}
@@ -64,12 +66,21 @@ class Admin extends Component {
     
     event.preventDefault();
 
-    //new user created
-    API.newUser(this.state.name, this.state.email, this.state.type, this.state.current.company).then(()=>{
+    if (this.state.emailCheck && this.state.type !== " " && this.state.name !== " ") {
 
-      this.stateUsers(this.state.current.company);
+      API.newUser(this.state.name, this.state.email, this.state.type, this.state.current.company).then(()=>{
 
-    });
+        this.stateUsers(this.state.current.company);
+  
+      });
+
+    } else {
+
+      console.log("ERRORS BUB");
+
+      this.setState({err: true});
+
+    }
 
   };
   
@@ -133,11 +144,18 @@ class Admin extends Component {
 
       this.setState({
 
-        email: iEmail
+        email: iEmail,
+        emailCheck: true
   
       });
 
     } else {
+
+      this.setState({
+
+        emailCheck: false
+  
+      });
 
       console.log(isMail(iEmail));
 
@@ -162,9 +180,32 @@ class Admin extends Component {
 
     document.getElementById("form").reset();
 
-  }
+  };
 
   render() {
+
+    let EmailCheck = (props) => {
+
+      console.log("PROP ERROR", props.error);
+    
+      if (props.error) {
+
+        console.log("IT's true run span");
+    
+        return (
+          <span></span>
+        );
+          
+      } else {
+
+        console.log("WAHWAHWAH");
+    
+        return (
+          <Message error header="Please enter a valid email address." />
+        );
+        
+      }
+    }
 
     let arrRows = this.state.users.map((rows, index) => {
 
@@ -225,6 +266,8 @@ class Admin extends Component {
                 <input placeholder="Email Address" onChange={this.emailChange} />
               </Form.Field>
 
+              <EmailCheck error={this.state.emailCheck} />
+
               <Form.Field>
                 <label>User Type</label>
                 <Dropdown
@@ -234,6 +277,7 @@ class Admin extends Component {
                   onChange={this.typeChange}
                 />
               </Form.Field>
+              
               <Button type="submit" onClick={this.buttonClick}>
                 Submit
               </Button>
