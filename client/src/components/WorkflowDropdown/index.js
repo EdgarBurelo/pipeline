@@ -5,7 +5,7 @@ const WorkflowDropdown = props => (
   
   <Dropdown id={props.id} 
   onChange={props.onChange}
-  placeholder="Choose a workflow"
+  placeholder="Choose a strategy"
   fluid search selection options={props.options}
   value={props.options.value}>
   </Dropdown>
