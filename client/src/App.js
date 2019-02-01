@@ -192,7 +192,7 @@ import LeadsMgr from './pages/LeadsMgr';
   return (
       <Router>
         <Container fluid={true} style={{padding:"0px"}}>
-          <Sidebarn status={this.state.logged} />
+          <Sidebarn status={this.state.logged} user={this.state.logUser}/>
           <div style={{marginLeft:"150px"}}>
             <Action user={this.state.logUser} status={this.state.logged} logoutfn={this.logoutHandler} />
             <Switch >
