@@ -13,7 +13,9 @@ class Admin extends Component {
     super(props);
 
     this.state = {
-      latest: {},
+      name: undefined,
+      email: undefined,
+      type: undefined,
       users: [],
       current: {}
     };
@@ -38,11 +40,22 @@ class Admin extends Component {
         console.log("STATE ARR", stateArr);
 
         this.setState({
-          users: stateArr,
-          latest: {}
+          users: stateArr
         });
 
-        this.clearAll();
+        if (this.state.name === undefined && this.state.email === undefined && this.state.type === undefined) {
+
+          console.log("STATE AFTER ALL USERS POP", this.state.name, this.state.email, this.state.type);
+
+        } else {
+
+          console.log("STATE LATEST OBJ DELETED BRO", this.state.name, this.state.email, this.state.type);
+
+          this.clearAll();
+
+        }
+
+        
 
       }).catch(err => {
         console.log(err);
@@ -54,7 +67,7 @@ class Admin extends Component {
     event.preventDefault();
 
     //new user created
-    API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type, this.state.current.company).then(()=>{
+    API.newUser(this.state.name, this.state.email, this.state.type, this.state.current.company).then(()=>{
 
       this.stateUsers(this.state.current.company);
 
@@ -99,9 +112,9 @@ class Admin extends Component {
 
     let iName = event.target.value;
 
-    this.setState(prevState=>{
+    this.setState({
 
-      prevState.latest.name = iName
+      name: iName
 
     });
 
@@ -113,9 +126,9 @@ class Admin extends Component {
 
     let iEmail = event.target.value;
 
-    this.setState(prevState=>{
+    this.setState({
 
-      prevState.latest.email = iEmail
+      email: iEmail
 
     });
 
@@ -126,9 +139,9 @@ class Admin extends Component {
 
     let iType = event.target.children[0].innerText;
 
-    this.setState(prevState=>{
+    this.setState({
 
-      prevState.latest.type = iType
+      type: iType
 
     });
 
@@ -136,7 +149,7 @@ class Admin extends Component {
 
   clearAll = () => {
 
-    document.getElementsByClassName("create").text(" ");
+    document.getElementById("form").reset();
 
   }
 
@@ -190,15 +203,15 @@ class Admin extends Component {
       if(loggedStatus) {
         return(
           <div>
-            <Form style={{ paddingTop: "10px" }}>
-              <Form.Field className="create">
+            <Form id="form" style={{ paddingTop: "10px" }}>
+              <Form.Field>
                 <label>Full Name</label>
-                <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
+                <input placeholder="Full Name" onChange={this.nameChange} />
               </Form.Field>
 
-              <Form.Field className="create">
+              <Form.Field>
                 <label>Email Address</label>
-                <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
+                <input placeholder="Email Address" onChange={this.emailChange} />
               </Form.Field>
 
               <Form.Field>
