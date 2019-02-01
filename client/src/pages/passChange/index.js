@@ -96,7 +96,7 @@ class PassChange extends Component {
             prevState.error = error;
             return prevState;
         });
-        console.log(this.state);
+        //console.log(this.state);
     }
 
     eventHandler = event => {
