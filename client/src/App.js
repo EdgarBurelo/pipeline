@@ -175,7 +175,16 @@ import "./style.css";
 
    logoutHandler = event => {
     event.preventDefault();
-    API.logout();
+    API.logout().then((res)=> {
+      //console.log(res);
+      if(res.data.status === "201") {
+        this.setState(prevState => {
+          prevState.logged = false;
+          prevState.logUser = {};
+          return prevState;
+        });
+      }
+    });
    }
   
   render() {  
@@ -184,7 +193,7 @@ import "./style.css";
         <Container fluid={true} style={{padding:"0px"}}>
           <Sidebarn status={this.state.logged} />
           <div style={{marginLeft:"150px"}}>
-            <Action user={this.state.logUser} status={this.state.logged} />
+            <Action user={this.state.logUser} status={this.state.logged} logoutfn={this.logoutHandler} />
             <Switch >
               <Route path="/login" render={props => <Login status={this.state.logged} error={this.state.error} clickHandlerFn={this.logginclickHandler} handleInputChange={this.handleInputChange}/>} />
               <Route path="/about" component={About} />
