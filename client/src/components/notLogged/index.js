@@ -8,8 +8,8 @@ class NotLogged extends Component {
             <Message color='red' style={{marginTop:"10px", textAlign:"center"}} 
                 header={`You're not logged`}
                 list={[
-                    'You must loggin fist to access to this functionallity',
-                    <Link key="1" to="/login">Go to Login page to access with your credentials</Link>,
+                    'You must login first to access to this functionality',
+                    <Link key="1" to="/login">Go to the Login page to access this your credentials</Link>,
                 ]}
             />
         );
