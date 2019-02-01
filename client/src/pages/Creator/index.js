@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Grid } from 'semantic-ui-react'
+import { Grid, Container, Form, Button } from 'semantic-ui-react'
 import "../Creator/style.css"
 import API from "../../utils/API";
+import ActionsDropdown from "../../components/ActionsDropdown";
 
 class Creator extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      options: [{ text: "Call", value: "call" }, { text: "E-mail", value: "email" }, { text: "Archive contact", value: "archive" }],
       flowName: undefined,
       action1: undefined,
       action2Pos: undefined,
@@ -34,10 +36,21 @@ class Creator extends Component {
     this.setState({ [toDo]: event.target.value });
   }
 
+  handleDropDown = (event, data) => {
+    event.preventDefault();
+    let toDo = data.id;
+    console.log(toDo);
+    console.log(data.value);
+    this.setState({ [toDo]: data.value });
+
+  }
+
   saveWorkflow = event => {
     event.preventDefault();
     console.log(this.state);
-    API.saveWorkflow(this.state);
+    API.saveWorkflow(this.state).then(() => {
+      this.props.history.push('/strategies');
+    });
   }
 
   getCompany = () => {
@@ -55,21 +68,38 @@ class Creator extends Component {
 
   render() {
     return (
-      <div className="container">
-        <Grid textAlign='center'>
-          <Grid.Row>
-            <Grid.Column>
-              <h3>Set up your strategy for:</h3>
-            </Grid.Column>
-          </Grid.Row>
-          <form>
+      <Container>
+        <Form>
+          <Grid columns={1} textAlign='center'>
+            <Grid.Row>
+              <Grid.Column>
+                <h3>Set up your strategy for:</h3>
+              </Grid.Column>
+            </Grid.Row>
             <Grid.Row>
               <Grid.Column>
                 <input id="flowName" placeholder="Name your strategy" data-action="flowName" onChange={this.handleChoice}></input>
               </Grid.Column>
             </Grid.Row>
-            {this.state.flowName ? <div>
-              {this.state.action1 === undefined ?
+          </Grid>
+          {this.state.flowName ? <div>
+            {this.state.action1 === undefined ?
+              <Grid columns={4} textAlign='center'>
+                <Grid.Row>
+                  <p>What's your first action?</p>
+                </Grid.Row>
+                <Grid.Row>
+                  <Grid.Column></Grid.Column>
+                  <Grid.Column>
+                    <Button className="chosenButton" value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <Button className="chosenButton" value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
+                  </Grid.Column>
+                  <Grid.Column></Grid.Column>
+                </Grid.Row>
+              </Grid> :
+              <div>
                 <Grid columns={4} textAlign='center'>
                   <Grid.Row>
                     <p>What's your first action?</p>
@@ -77,106 +107,77 @@ class Creator extends Component {
                   <Grid.Row>
                     <Grid.Column></Grid.Column>
                     <Grid.Column>
-                      <button className="btn action1 mr-3" value="call" data-action="action1" onClick={this.handleChoice} >Call</button>
+                    <Button className={this.state.action1 === "call" ? "chosenButton" : "disabledButton"} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
                     </Grid.Column>
                     <Grid.Column>
-                      <button className="btn action1 mr-3" value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</button>
+                    <Button className={this.state.action1 === "email" ? "chosenButton" : "disabledButton"} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
                     </Grid.Column>
                     <Grid.Column></Grid.Column>
                   </Grid.Row>
-                </Grid> :
-                <div>
-                  <Grid columns={4} textAlign='center'>
-                    <Grid.Row>
-                      <p>What's your first action?</p>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Column></Grid.Column>
-                      <Grid.Column>
-                        <button className="btn action1 mr-3" value="call" data-action="action1" onClick={this.handleChoice} >Call</button>
-                      </Grid.Column>
-                      <Grid.Column>
-                        <button className="btn action1 mr-3" value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</button>
-                      </Grid.Column>
-                      <Grid.Column></Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row><h3>What to do next if the answer is...</h3></Grid.Row>
-                  </Grid>
+                  <Grid.Row><h3>What to do next if the answer is...</h3></Grid.Row>
+                </Grid>
 
-                  <Grid columns={3} textAlign='center'>
-                    <Grid.Row>
-                      <Grid.Column>
-                        <p>Positive?</p>
-                        <select onChange={this.handleChoice} data-action="action2Pos" defaultValue="">
-                          <option value="" disabled>Select one:</option>
-                          <option value="archive">Archive contact</option>
-                          <option value="call">Call</option>
-                          <option value="email">E-mail</option>
-                        </select>
-                        {this.state.action2Pos && this.state.action2Pos !== 'archive' ?
-                          <div>
-                            <label htmlFor="days">In how many days?</label>
-                            <input type="number" name="days" onChange={this.handleChoice} data-action="action2PosDays">
-                            </input>
-                          </div>
-                          : null
-                        }
-                      </Grid.Column>
-                      <Grid.Column>
+                <Grid columns={3} textAlign='center'>
+                  <Grid.Row>
+                    <Grid.Column>
+                      <p>Positive?</p>
+                      <ActionsDropdown onChange={this.handleDropDown} id="action2Pos" options={this.state.options}>
+                      </ActionsDropdown>
+                      {this.state.action2Pos && this.state.action2Pos !== 'archive' ?
+                        <div>
+                          <label htmlFor="days">In how many days?</label>
+                          <input type="number" name="days" onChange={this.handleChoice} data-action="action2PosDays">
+                          </input>
+                        </div>
+                        : null
+                      }
+                    </Grid.Column>
+                    <Grid.Column>
 
-                        <p>Negative?</p>
-                        <select onChange={this.handleChoice} data-action="action2Neg" defaultValue="">
-                          <option value="" disabled>Select one:</option>
-                          <option value="call">Call</option>
-                          <option value="email">E-mail</option>
-                          <option value="archive">Archive contact</option>
-                        </select>
-                        {this.state.action2Neg && this.state.action2Neg !== 'archive' ?
-                          <div>
-                            <label htmlFor="days">In how many days?</label>
-                            <input type="number" name="days" onChange={this.handleChoice} data-action="action2NegDays">
-                            </input>
-                          </div>
-                          : null
-                        }
+                      <p>Negative?</p>
+                      <ActionsDropdown onChange={this.handleDropDown} id="action2Neg" options={this.state.options}>
+                      </ActionsDropdown>
+                      {this.state.action2Neg && this.state.action2Neg !== 'archive' ?
+                        <div>
+                          <label htmlFor="days">In how many days?</label>
+                          <input type="number" name="days" onChange={this.handleChoice} data-action="action2NegDays">
+                          </input>
+                        </div>
+                        : null
+                      }
 
-                      </Grid.Column>
-                      <Grid.Column>
-                        <p>No answer?</p>
-                        <select onChange={this.handleChoice} data-action="action2None" defaultValue="">
-                          <option value="" disabled>Select one:</option>
-                          <option value="call">Call</option>
-                          <option value="email">E-mail</option>
-                          <option value="archive">Archive contact</option>
-                        </select>
-                        {this.state.action2None && this.state.action2None !== 'archive' ?
-                          <div>
-                            <label htmlFor="days">In how many days?</label>
-                            <input type="number" name="days" onChange={this.handleChoice} data-action="action2NoneDays">
-                            </input>
-                          </div>
-                          : null
-                        }
-                      </Grid.Column>
+                    </Grid.Column>
+                    <Grid.Column>
+                      <p>No answer?</p>
+                      <ActionsDropdown onChange={this.handleDropDown} id="action2None" options={this.state.options}>
+                      </ActionsDropdown>
+                      {this.state.action2None && this.state.action2None !== 'archive' ?
+                        <div>
+                          <label htmlFor="days">In how many days?</label>
+                          <input type="number" name="days" onChange={this.handleChoice} data-action="action2NoneDays">
+                          </input>
+                        </div>
+                        : null
+                      }
+                    </Grid.Column>
 
-                    </Grid.Row>
-                  </Grid>
-                </div>
+                  </Grid.Row>
+                </Grid>
+              </div>
 
-              }
-              <Grid textAlign='center'>
-                <Grid.Row>
-                  <button className="btn" onClick={this.saveWorkflow}>Save</button>
-                </Grid.Row>
-              </Grid>
-            </div>
+            }
+            <Grid textAlign='center'>
+              <Grid.Row>
+                <Button className="chosenButton" onClick={this.saveWorkflow}>Save</Button>
+              </Grid.Row>
+            </Grid>
+          </div>
 
 
-              : null}
+            : null}
 
-          </form>
-        </Grid>
-      </div>
+        </Form>
+      </Container>
 
     );
   }
