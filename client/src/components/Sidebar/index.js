@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Icon, Menu, Sidebar } from 'semantic-ui-react';
+import { Icon, Menu, Sidebar, Header, Divider } from 'semantic-ui-react';
 
 class Sidebarn extends Component {
     
@@ -8,7 +8,13 @@ class Sidebarn extends Component {
     renderSidebarElements() {
         if(this.props.status) {
             return(
-                <div>
+                <div >
+                    <Header as="h2" icon inverted >
+                        <Menu.Item>
+                            <Icon name='code branch' />
+                        </Menu.Item>
+                    </Header>
+                    <Divider horizontal inverted > Actions</Divider>
                     <Link to="/admin">
                         <Menu.Item>
                             <Icon name='sitemap' />
@@ -18,25 +24,25 @@ class Sidebarn extends Component {
                     <Link to="/create">
                         <Menu.Item>
                             <Icon name='edit outline' />
-                            Workflows creator
+                            Strategy builder
                         </Menu.Item>
                     </Link>
-                    <Link to="/leads">
+                    <Link to="/manage-leads">
                         <Menu.Item>
                             <Icon name='address book outline' />
                             Leads
                         </Menu.Item>
                     </Link>
+                    <Link to="/strategies">
+                        <Menu.Item>
+                            <Icon name='chess rook' />
+                            Strategies
+                        </Menu.Item>
+                    </Link>
                     <Link to="/todo">
                         <Menu.Item>
                             <Icon name='tasks' />
-                            To Do
-                        </Menu.Item>
-                    </Link>
-                    <Link to="/workflows">
-                        <Menu.Item>
-                            <Icon name='building outline' />
-                            Workflows Assign
+                            Tasks
                         </Menu.Item>
                     </Link>
                 </div>

@@ -1,4 +1,5 @@
 const db = require("../models");
+const bcrypt = require("bcrypt");
 
 module.exports = {
 
@@ -12,9 +13,11 @@ module.exports = {
         
     },
 
-    newUser: function(req,res) {
-
-        db.users.create(req.body).then(function (result) {
+    newUser: (req,res) => {
+        let newUsr = req.body;
+        newUsr.password = generateHash("test1234");
+        
+        db.users.create(newUsr).then(function (result) {
     
             res.json(result);
     
@@ -60,3 +63,7 @@ module.exports = {
   },
 
 };
+
+let generateHash = (password) => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+}

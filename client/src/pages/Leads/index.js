@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Container } from "semantic-ui-react";
+import { Button, Form, Container, Message, Header } from "semantic-ui-react";
 import WorkflowDropdown from "../../components/WorkflowDropdown";
 import AgentsDropdown from "../../components/AgentsDropdown";
 import API from "../../utils/API";
@@ -20,7 +20,8 @@ class Leads extends Component {
       nextContactStep: undefined,
       companyId: undefined,
       flowList: [],
-      agentList: []
+      agentList: [],
+      formState: undefined
     }
   }
 
@@ -57,6 +58,11 @@ class Leads extends Component {
     event.preventDefault();
     console.log(this.state);
     API.saveLead(this.state);
+    this.clearForm();
+  }
+
+  clearForm = () => {
+      document.getElementById("leadForm").reset();
   }
 
   getCompanyData = () => {
@@ -99,8 +105,11 @@ class Leads extends Component {
   render() {
     return (
       <div>
-        <Container>
-          <Form style={{ paddingTop: "10px" }}>
+        <Container  style={{ paddingTop: "10px" }}>
+        <Header as='h2' block>
+          Add Lead
+        </Header>
+          <Form style={{ paddingTop: "10px" }} id="leadForm">
             <Form.Field>
               <label>First name</label>
               <input id="firstName" placeholder='First name' onChange={this.handleInput} />
@@ -118,13 +127,14 @@ class Leads extends Component {
               <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
             </Form.Field>
             <Form.Field>
-              <label>Choose workflow</label>
+              <label>Choose strategy</label>
               <WorkflowDropdown options={this.state.flowList} onChange={this.handleDropDown} id="workflowId"></WorkflowDropdown>
             </Form.Field>
             <Form.Field>
               <label>Assign to agent</label>
               <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
             </Form.Field>
+            <Message success header='Lead saved' content="You can add another if you'd like!" />
             <Button type='submit' onClick={this.saveLead}>Submit</Button>
           </Form>
         </Container>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table, Container, Icon, Message, Dimmer, Loader, Segment } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container, Icon, Message } from "semantic-ui-react";
 import API from "../../utils/API";
 import NotLogged from "../../components/notLogged";
 
