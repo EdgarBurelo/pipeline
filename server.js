@@ -26,10 +26,10 @@ app.use(express.static("client/build"));
 let initPassport = require('./passport/init');
 initPassport(passport);
 
-app.use((req, res, next) => {
-    console.log('req.session', req.session);
-    return next();
-});
+// app.use((req, res, next) => {
+//     console.log('req.session', req.session);
+//     return next();
+// });
 
 app.use(routes);
 

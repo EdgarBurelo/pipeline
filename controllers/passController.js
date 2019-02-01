@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 
 module.exports = {
     passUpdate: (req,res) => {
-        console.log("session:",req.session.passport.user);
-        console.log("body", req.body);
+        //console.log("session:",req.session.passport.user);
+        //console.log("body", req.body);
         let actualPassword = req.body.actualPassword;
         let newPassword = req.body.newPassword;
         db.users.findOne({

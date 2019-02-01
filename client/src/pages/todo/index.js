@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import {Button, Dropdown, Table} from "semantic-ui-react";
+import NotLogged from "../../components/notLogged";
+import {Button, Dropdown, Table, Container} from "semantic-ui-react";
 import moment from "moment";
 
 const statusTypes = [
@@ -25,9 +26,6 @@ class Todo extends Component {
 
   //this method first calls on the getWorkflow API method to extract info for the second actions for the agent
   editLeads(id, lId, date) {
-
-    // let date = moment().add(1, "days");
-    // this.setState({ nextContactDate: date._d });
 
     API.getWorkflow(id).then(res=>{
 
@@ -125,19 +123,17 @@ class Todo extends Component {
 
             let step = element.nextContactStep;
 
-            if (step === "action1") {
+            if (step === "action1" || "action2") {
 
                 this.editLeads(wId, normId, date);
 
-            } else if (step === "action2") {
+            } else {
 
                 let nullDate = null;
 
                 this.editLeads(wId, normId, nullDate);
 
             }
-
-            
 
         }
         
@@ -233,33 +229,26 @@ class Todo extends Component {
 
         let cType;
 
+        let actionDisp;
+
+        //this conditional checks what the next action is and renders the relevant contact info
         if (rows.nextContactType === "email") {
+
+            actionDisp = rows.nextContactType;
 
             cType = rows.email;
 
         } else if (rows.nextContactType === "call") {
 
+            actionDisp = rows.nextContactType;
+
             cType = rows.phone;
 
         } else {
 
-            cType = rows.phone + ", " + rows.email;
-
-        }
-
-        let actionDisp;
-
-        if (rows.nextContactType === "email") {
-
-            actionDisp = rows.nextContactType;
-
-        } else if (rows.nextContactType === "call") {
-
-            actionDisp = rows.nextContactType;
-
-        } else {
-
             actionDisp = "CONTACT ARCHIVED: ";
+
+            cType = rows.phone + ", " + rows.email;
 
             drop = null;
 
@@ -317,55 +306,61 @@ class Todo extends Component {
 
   }
 
+isLoggedIn() {
+    //console.log(this.props.status);
+    if(this.props.status) {
+        let arrRows = this.renderRows();
+        return(
+            <Table celled striped>
+
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell colSpan="6">Todos</Table.HeaderCell>
+                    </Table.Row>
+
+                    <Table.Row>
+                        <Table.HeaderCell>#</Table.HeaderCell>
+
+                        <Table.HeaderCell>Task</Table.HeaderCell>
+
+                        <Table.HeaderCell>Contact Info</Table.HeaderCell>
+
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+
+                        <Table.HeaderCell>Date</Table.HeaderCell>
+                        <Table.HeaderCell></Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+
+                    {arrRows}
+
+                </Table.Body>
+
+            </Table>
+        );
+    } else {
+        return(
+            <NotLogged />
+        );
+    }
+}
+
   render() {
 
     //log to check when component rerenders and what the state looks like
     console.log("RENDER STATE", this.state);
 
-    let arrRows = this.renderRows();
+    
 
     return(
-
-        <Table celled striped>
-
-            <Table.Header>
-                <Table.Row>
-                    <Table.HeaderCell colSpan="6">Todos</Table.HeaderCell>
-                </Table.Row>
-
-                <Table.Row>
-                    <Table.HeaderCell>#</Table.HeaderCell>
-
-                    <Table.HeaderCell>Task</Table.HeaderCell>
-
-                    <Table.HeaderCell>Contact Info</Table.HeaderCell>
-
-                    <Table.HeaderCell>Status</Table.HeaderCell>
-
-                    <Table.HeaderCell>Date</Table.HeaderCell>
-                    <Table.HeaderCell></Table.HeaderCell>
-                </Table.Row>
-            </Table.Header>
-
-            <Table.Body>
-
-                {arrRows}
-            
-            </Table.Body>
-
-        </Table>
-
+        <Container fluid style={{marginTop: "10px"}}>
+            {this.isLoggedIn()}
+        </Container>
     )
 
   }
 }
 
 export default Todo;
-
-//task, fecha en la que se marco como hecho, resultado (dropdown), button
-
-//1) Para mostrar los to-dos, hay que jalar todos los leads asignados al agente en cuestión que tengan fecha de "hoy o antes"
-//2) Cuando los marque completados, si ese contacto fue la "action1" (como viene en la tabla de leads, creo que la columna se llama nextcontactaction o algo así), hay que buscar en la tabla de workflows cuál sería la siguiente acción, dependiendo del resultado de esa primera acción, y modificar esa info en la tabla de leads.
-//Si fue alguna de las action2, hay que poner como "null" la fecha de sig contacto de ese lead
-
-//
