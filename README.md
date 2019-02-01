@@ -18,6 +18,6 @@ A supervisor can add new agents and give them leads. They may also define multip
 
 Pipeline was built for Tec de Monterrey's full-stack web development bootcamp. The project required React.js, Node.js, Express.js and a Sequelize ORM (connected to a mySQL database) to meet the grading criteria. It also required clean code and clean design. 
 
-Pipeline was built by [Edgar Burelo](https://github.com/EdgarBurelo), [Claudia Taylor](https://github.com/claudiact6) and [Raghava Lakshminarayana](https://github.com/raglaks)".  
+Pipeline was built by [Edgar Burelo](https://github.com/EdgarBurelo), [Claudia Taylor](https://github.com/claudiact6) and [Raghava Lakshminarayana](https://github.com/raglaks).  
 
 

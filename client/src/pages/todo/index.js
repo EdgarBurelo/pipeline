@@ -122,11 +122,11 @@ class Todo extends Component {
 
             let step = element.nextContactStep;
 
-            if (step === "action1") {
+            if (step === "action1" || "action2") {
 
                 this.editLeads(wId, normId, date);
 
-            } else if (step === "action2") {
+            } else {
 
                 let nullDate = null;
 
