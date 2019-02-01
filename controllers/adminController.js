@@ -51,7 +51,7 @@ module.exports = {
         
       db.users.findAll({
         where: {
-          profile: "Agent",
+          $or: [{profile: "Agent"}, {profile: "Supervisor"}],
           companyId: req.params.companyId
         }
       }).then(function (data) {

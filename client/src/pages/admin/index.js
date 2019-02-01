@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table, Container, Icon, Header } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container, Icon, Message } from "semantic-ui-react";
 import API from "../../utils/API";
 import NotLogged from "../../components/notLogged";
 
@@ -13,72 +13,92 @@ class Admin extends Component {
     super(props);
 
     this.state = {
-      latest: {},
+      name: undefined,
+      email: undefined,
+      emailCheck: undefined,
+      err: undefined,
+      success: undefined,
+      type: undefined,
       users: [],
       current: {}
     };
   }
 
   componentDidMount() {
-    this.stateUsers();
-    this.userrev();
+    this.userCheck();
   }
 
   componentDidUpdate() {
 
-    console.log("UPDATE STAte");
+    console.log("UPDATE STAte", this.state);
 
   }
 
-  stateUsers = () => {
+  stateUsers = (comp) => {
 
-    API.allUsers().then(data => {
+    API.getAgents(comp).then(data => {
 
-      let stateArr = data.data;
+        let stateArr = data.data;
 
-      console.log(this.state.latest);
+        console.log("STATE ARR", stateArr);
 
-      this.setState(prevState => {
-        prevState.users = stateArr;
-        prevState.latest = {};
+        this.setState({
+          users: stateArr,
+          err: undefined
+        });
 
-        return prevState;
+        if (this.state.name === undefined && this.state.email === undefined && this.state.type === undefined) {
+
+          console.log("STATE AFTER ALL USERS POP", this.state.name, this.state.email, this.state.type);
+
+        } else {
+
+          console.log("STATE LATEST OBJ DELETED BRO", this.state.name, this.state.email, this.state.type);
+
+          this.clearAll();
+
+        }
+
+      }).catch(err => {
+        console.log(err);
       });
-
-      this.clearAll();
-
-      console.log(this.state.latest);
-
-    }).catch(err => {
-      console.log(err);
-    });
   };
 
   buttonClick = event => {
-
+    
     event.preventDefault();
 
-    console.log(this.state.latest);
+    if (this.state.emailCheck && this.state.email !== " " && this.state.type !== " " && this.state.name !== " ") {
 
-    //new user created
-    API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type, this.state.current.company).then(() => {
+      API.newUser(this.state.name, this.state.email, this.state.type, this.state.current.company).then(()=>{
 
-      this.stateUsers();
+        this.setState({success: true});
 
-    });
+        this.stateUsers(this.state.current.company);
+  
+      });
+
+    } else {
+
+      console.log("ERRORS BUB");
+
+      this.setState({err: true});
+
+    }
 
   };
+  
+  userCheck() {
 
-  userrev() {
     API.userStatus().then(res => {
 
-      this.setState(prevState => {
+      this.setState({
 
-        prevState.current = res.data;
+        current: res.data
 
       });
 
-      console.log(this.state.current);
+      this.stateUsers(this.state.current.company);
 
     });
   }
@@ -91,9 +111,9 @@ class Admin extends Component {
 
     let num = parseInt(click);
 
-    API.erase(num).then(() => {
+    API.erase(num).then(()=>{
 
-      this.stateUsers();
+      this.stateUsers(this.state.current.company);
 
     });
 
@@ -105,9 +125,10 @@ class Admin extends Component {
 
     let iName = event.target.value;
 
-    this.setState(prevState => {
+    this.setState({
 
-      prevState.latest.name = iName
+      name: iName,
+      success: false
 
     });
 
@@ -119,11 +140,31 @@ class Admin extends Component {
 
     let iEmail = event.target.value;
 
-    this.setState(prevState => {
+    let isMail = (mail) => {
+      let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{1,5}?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm); 
+      return emailRegex.test(mail);
+    }
 
-      prevState.latest.email = iEmail
+    if (isMail(iEmail)) {
 
-    });
+      this.setState({
+
+        email: iEmail,
+        emailCheck: true
+  
+      });
+
+    } else {
+
+      this.setState({
+
+        emailCheck: false
+  
+      });
+
+      console.log(isMail(iEmail));
+
+    }
 
   };
 
@@ -132,9 +173,9 @@ class Admin extends Component {
 
     let iType = event.target.children[0].innerText;
 
-    this.setState(prevState => {
+    this.setState({
 
-      prevState.latest.type = iType
+      type: iType
 
     });
 
@@ -142,11 +183,74 @@ class Admin extends Component {
 
   clearAll = () => {
 
-    document.getElementById("create").reset();
+    document.getElementById("form").reset();
 
-  }
+  };
 
   render() {
+
+    let Success = (props) => {
+
+      if (props.success === true) {
+    
+        return (
+          <Message positive header="User successfully created." />
+        );
+
+      } else {
+    
+        return (
+          <span></span>
+        );
+
+      }
+
+    }
+
+    let ErrCheck = props => {
+
+      if (props.error === true) {
+
+        console.log("WAHWAHWAH");
+    
+        return (
+          <Message error header="Please fill out all fields and select an option from the dropdown menu." />
+        );
+
+      } else {
+
+        console.log("IT's true run span");
+    
+        return (
+          <span></span>
+        );
+
+      }
+
+    }
+
+    let EmailCheck = (props) => {
+
+      console.log("PROP ERROR", props.error);
+    
+      if (props.error === false) {
+
+        console.log("WAHWAHWAH");
+    
+        return (
+          <Message error header="Please enter a valid email address." />
+        );
+        
+      } else {
+
+        console.log("IT's true run span");
+    
+        return (
+          <span></span>
+        );
+        
+      }
+    }
 
     let arrRows = this.state.users.map((rows, index) => {
 
@@ -187,77 +291,77 @@ class Admin extends Component {
         </Table.Row>
 
       )
-
+      
     });
 
     let isItLog = () => {
-      console.log(this.props.status);
+      
       let loggedStatus = this.props.status;
-      if (loggedStatus) {
-        return (
+      if(loggedStatus) {
+        return(
           <div>
-            <Container style={{ paddingTop: "10px" }}>
-              <Header as='h2' block>
-                User Management
-              </Header>
-              <Form id="create">
-                <Form.Field>
-                  <label>Full Name</label>
-                  <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
-                </Form.Field>
+            <Form id="form" style={{ paddingTop: "10px" }}>
+              <Form.Field>
+                <label>Full Name</label>
+                <input placeholder="Full Name" onChange={this.nameChange} />
+              </Form.Field>
 
-                <Form.Field>
-                  <label>Email Address</label>
-                  <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
-                </Form.Field>
+              <Form.Field>
+                <label>Email Address</label>
+                <input placeholder="Email Address" onChange={this.emailChange} />
+              </Form.Field>
 
-                <Form.Field>
-                  <label>User Type</label>
-                  <Dropdown
-                    placeholder="Select User Type"
-                    selection
-                    options={userTypes}
-                    onChange={this.typeChange}
-                  />
-                </Form.Field>
-                <Button type="submit" onClick={this.buttonClick}>
-                  Submit
+              <Form.Field>
+                <label>User Type</label>
+                <Dropdown
+                  placeholder="Select User Type"
+                  selection
+                  options={userTypes}
+                  onChange={this.typeChange}
+                />
+              </Form.Field>
+              
+              <Button type="submit" onClick={this.buttonClick}>
+                Submit
               </Button>
-              </Form>
+            </Form>
 
-              <Table celled striped>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell colSpan="5">Users</Table.HeaderCell>
-                  </Table.Row>
+            <Success success={this.state.success}></Success>
+            <EmailCheck error={this.state.emailCheck} />
+            <ErrCheck error={this.state.err} />
 
-                  <Table.Row>
-                    <Table.HeaderCell>#</Table.HeaderCell>
+            <Table celled striped>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell colSpan="5">Users</Table.HeaderCell>
+                </Table.Row>
 
-                    <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.Row>
+                  <Table.HeaderCell>#</Table.HeaderCell>
 
-                    <Table.HeaderCell>Email</Table.HeaderCell>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
 
-                    <Table.HeaderCell>User Type</Table.HeaderCell>
-                    <Table.HeaderCell></Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
+                  <Table.HeaderCell>Email</Table.HeaderCell>
 
-                <Table.Body>
+                  <Table.HeaderCell>User Type</Table.HeaderCell>
+                  <Table.HeaderCell></Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
 
-                  {arrRows}
+              <Table.Body>
 
-                </Table.Body>
+                {arrRows}
 
-              </Table>
-            </Container>
+              </Table.Body>
+
+            </Table>
           </div>
         );
       } else {
-        return (<NotLogged />)
+        return(<NotLogged />)
       }
     }
-
+    
     return (
       <Container>
         {isItLog()}
