@@ -48,7 +48,7 @@ class Login extends Component {
                         marginTop: '1em',
                     }} >
                         <Icon name="send" />
-                        You're logged In!
+                        You're logged in!
                     </Header>
                 </Segment>
             );

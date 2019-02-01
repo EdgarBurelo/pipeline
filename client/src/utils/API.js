@@ -22,8 +22,7 @@ export default {
             name: fname,
             email: femail,
             profile: fprofile,
-            companyId: idc,
-            password: "test123"
+            companyId: idc
 
         }).then(res => {
 

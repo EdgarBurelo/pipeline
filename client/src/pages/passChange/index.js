@@ -78,6 +78,9 @@ class PassChange extends Component {
                     this.errorHandlerLog(error);
                     this.clearForm();
                     break;
+                default:
+                console.log("def");
+                break;
                 
             }
         });
@@ -93,7 +96,7 @@ class PassChange extends Component {
             prevState.error = error;
             return prevState;
         });
-        console.log(this.state);
+        //console.log(this.state);
     }
 
     eventHandler = event => {
