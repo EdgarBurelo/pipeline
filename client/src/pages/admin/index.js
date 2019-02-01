@@ -55,8 +55,6 @@ class Admin extends Component {
 
         }
 
-        
-
       }).catch(err => {
         console.log(err);
       });
@@ -126,11 +124,24 @@ class Admin extends Component {
 
     let iEmail = event.target.value;
 
-    this.setState({
+    let isMail = (mail) => {
+      let emailRegex = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{1,5}?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm); 
+      return emailRegex.test(mail);
+    }
 
-      email: iEmail
+    if (isMail(iEmail)) {
 
-    });
+      this.setState({
+
+        email: iEmail
+  
+      });
+
+    } else {
+
+      console.log(isMail(iEmail));
+
+    }
 
   };
 
