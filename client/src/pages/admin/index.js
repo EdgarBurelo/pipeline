@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form, Dropdown, Table, Container, Icon } from "semantic-ui-react";
+import { Button, Form, Dropdown, Table, Container, Icon, Header } from "semantic-ui-react";
 import API from "../../utils/API";
 import NotLogged from "../../components/notLogged";
 
@@ -34,41 +34,41 @@ class Admin extends Component {
 
     API.allUsers().then(data => {
 
-        let stateArr = data.data;
+      let stateArr = data.data;
 
-        console.log(this.state.latest);
+      console.log(this.state.latest);
 
-        this.setState(prevState => {
-          prevState.users = stateArr;
-          prevState.latest = {};
+      this.setState(prevState => {
+        prevState.users = stateArr;
+        prevState.latest = {};
 
-          return prevState;
-        });
-
-        this.clearAll();
-
-        console.log(this.state.latest);
-
-      }).catch(err => {
-        console.log(err);
+        return prevState;
       });
+
+      this.clearAll();
+
+      console.log(this.state.latest);
+
+    }).catch(err => {
+      console.log(err);
+    });
   };
 
   buttonClick = event => {
-    
+
     event.preventDefault();
 
     console.log(this.state.latest);
 
     //new user created
-    API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type, this.state.current.company).then(()=>{
+    API.newUser(this.state.latest.name, this.state.latest.email, this.state.latest.type, this.state.current.company).then(() => {
 
       this.stateUsers();
 
     });
 
   };
-  
+
   userrev() {
     API.userStatus().then(res => {
 
@@ -91,7 +91,7 @@ class Admin extends Component {
 
     let num = parseInt(click);
 
-    API.erase(num).then(()=>{
+    API.erase(num).then(() => {
 
       this.stateUsers();
 
@@ -105,7 +105,7 @@ class Admin extends Component {
 
     let iName = event.target.value;
 
-    this.setState(prevState=>{
+    this.setState(prevState => {
 
       prevState.latest.name = iName
 
@@ -119,7 +119,7 @@ class Admin extends Component {
 
     let iEmail = event.target.value;
 
-    this.setState(prevState=>{
+    this.setState(prevState => {
 
       prevState.latest.email = iEmail
 
@@ -132,7 +132,7 @@ class Admin extends Component {
 
     let iType = event.target.children[0].innerText;
 
-    this.setState(prevState=>{
+    this.setState(prevState => {
 
       prevState.latest.type = iType
 
@@ -187,72 +187,77 @@ class Admin extends Component {
         </Table.Row>
 
       )
-      
+
     });
 
     let isItLog = () => {
       console.log(this.props.status);
       let loggedStatus = this.props.status;
-      if(loggedStatus) {
-        return(
+      if (loggedStatus) {
+        return (
           <div>
-            <Form id="create" style={{ paddingTop: "10px" }}>
-              <Form.Field>
-                <label>Full Name</label>
-                <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
-              </Form.Field>
+            <Container style={{ paddingTop: "10px" }}>
+              <Header as='h2' block>
+                User Management
+              </Header>
+              <Form id="create">
+                <Form.Field>
+                  <label>Full Name</label>
+                  <input placeholder="Full Name" value={this.state.latest.name} onChange={this.nameChange} />
+                </Form.Field>
 
-              <Form.Field>
-                <label>Email Address</label>
-                <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
-              </Form.Field>
+                <Form.Field>
+                  <label>Email Address</label>
+                  <input placeholder="Email Address" value={this.state.latest.email} onChange={this.emailChange} />
+                </Form.Field>
 
-              <Form.Field>
-                <label>User Type</label>
-                <Dropdown
-                  placeholder="Select User Type"
-                  selection
-                  options={userTypes}
-                  onChange={this.typeChange}
-                />
-              </Form.Field>
-              <Button type="submit" onClick={this.buttonClick}>
-                Submit
+                <Form.Field>
+                  <label>User Type</label>
+                  <Dropdown
+                    placeholder="Select User Type"
+                    selection
+                    options={userTypes}
+                    onChange={this.typeChange}
+                  />
+                </Form.Field>
+                <Button type="submit" onClick={this.buttonClick}>
+                  Submit
               </Button>
-            </Form>
+              </Form>
 
-            <Table celled striped>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="5">Users</Table.HeaderCell>
-                </Table.Row>
+              <Table celled striped>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan="5">Users</Table.HeaderCell>
+                  </Table.Row>
 
-                <Table.Row>
-                  <Table.HeaderCell>#</Table.HeaderCell>
+                  <Table.Row>
+                    <Table.HeaderCell>#</Table.HeaderCell>
 
-                  <Table.HeaderCell>Name</Table.HeaderCell>
+                    <Table.HeaderCell>Name</Table.HeaderCell>
 
-                  <Table.HeaderCell>Email</Table.HeaderCell>
+                    <Table.HeaderCell>Email</Table.HeaderCell>
 
-                  <Table.HeaderCell>User Type</Table.HeaderCell>
-                  <Table.HeaderCell></Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
+                    <Table.HeaderCell>User Type</Table.HeaderCell>
+                    <Table.HeaderCell></Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
 
-              <Table.Body>
+                <Table.Body>
 
-                {arrRows}
+                  {arrRows}
 
-              </Table.Body>
+                </Table.Body>
 
-            </Table>
+              </Table>
+            </Container>
           </div>
         );
       } else {
-        return(<NotLogged />)
+        return (<NotLogged />)
       }
     }
-    
+
     return (
       <Container>
         {isItLog()}

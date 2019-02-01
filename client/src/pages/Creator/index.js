@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Grid, Container, Form, Button } from 'semantic-ui-react'
+import { Grid, Container, Form, Button, Header } from 'semantic-ui-react'
 import "../Creator/style.css"
 import API from "../../utils/API";
 import ActionsDropdown from "../../components/ActionsDropdown";
@@ -68,7 +68,10 @@ class Creator extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ paddingTop: "10px" }}>
+        <Header as='h2' block>
+          Strategy Builder
+        </Header>
         <Form>
           <Grid columns={1} textAlign='center'>
             <Grid.Row>
@@ -107,10 +110,10 @@ class Creator extends Component {
                   <Grid.Row>
                     <Grid.Column></Grid.Column>
                     <Grid.Column>
-                    <Button className={this.state.action1 === "call" ? "chosenButton" : "disabledButton"} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
+                      <Button className={this.state.action1 === "call" ? "chosenButton" : "disabledButton"} value="call" data-action="action1" onClick={this.handleChoice} >Call</Button>
                     </Grid.Column>
                     <Grid.Column>
-                    <Button className={this.state.action1 === "email" ? "chosenButton" : "disabledButton"} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
+                      <Button className={this.state.action1 === "email" ? "chosenButton" : "disabledButton"} value="email" data-action="action1" onClick={this.handleChoice} onFocus={this.focusChoice}>Email</Button>
                     </Grid.Column>
                     <Grid.Column></Grid.Column>
                   </Grid.Row>

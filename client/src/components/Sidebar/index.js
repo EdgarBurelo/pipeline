@@ -18,25 +18,25 @@ class Sidebarn extends Component {
                     <Link to="/create">
                         <Menu.Item>
                             <Icon name='edit outline' />
-                            Workflows creator
+                            Strategy builder
                         </Menu.Item>
                     </Link>
-                    <Link to="/leads">
+                    <Link to="/manage-leads">
                         <Menu.Item>
                             <Icon name='address book outline' />
                             Leads
                         </Menu.Item>
                     </Link>
+                    <Link to="/strategies">
+                        <Menu.Item>
+                            <Icon name='building outline' />
+                            Strategies
+                        </Menu.Item>
+                    </Link>
                     <Link to="/todo">
                         <Menu.Item>
                             <Icon name='tasks' />
-                            To Do
-                        </Menu.Item>
-                    </Link>
-                    <Link to="/workflows">
-                        <Menu.Item>
-                            <Icon name='building outline' />
-                            Workflows Assign
+                            Tasks
                         </Menu.Item>
                     </Link>
                 </div>
