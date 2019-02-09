@@ -79,7 +79,7 @@ class Creator extends Component {
   componentDidMount() {
     this.getCompany();
   }
-
+  
   render() {
     return (
       <Container style={{ paddingTop: "10px" }}>

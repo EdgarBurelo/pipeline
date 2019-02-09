@@ -4,6 +4,7 @@ import WorkflowDropdown from "../../components/WorkflowDropdown";
 import AgentsDropdown from "../../components/AgentsDropdown";
 import API from "../../utils/API";
 import moment from "moment";
+import NotLogged from "../../components/notLogged";
 
 class Leads extends Component {
   constructor(props) {
@@ -100,43 +101,56 @@ class Leads extends Component {
   }
 
   
-
+isLoggedIn() {
+  console.log(this.props.status);
+  if (this.props.status) {
+    return(
+      <div>
+        <Header as='h2' block>
+          Add Lead
+        </Header>
+        <Form style={{ paddingTop: "10px" }} id="leadForm">
+          <Form.Field>
+            <label>First name</label>
+            <input id="firstName" placeholder='First name' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Last name</label>
+            <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Email Address</label>
+            <input id="email" placeholder='Email address' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Phone number</label>
+            <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
+          </Form.Field>
+          <Form.Field>
+            <label>Choose strategy</label>
+            <WorkflowDropdown options={this.state.flowList} onChange={this.handleDropDown} id="workflowId"></WorkflowDropdown>
+          </Form.Field>
+          <Form.Field>
+            <label>Assign to agent</label>
+            <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
+          </Form.Field>
+          <Message success header='Lead saved' content="You can add another if you'd like!" />
+          <Button type='submit' onClick={this.saveLead}>Submit</Button>
+        </Form>
+      </div>
+    );
+  } else {
+    return(
+      <NotLogged />
+    );
+  }
+}
 
   render() {
     return (
       <div>
-        <Container  style={{ paddingTop: "10px" }}>
-        <Header as='h2' block>
-          Add Lead
-        </Header>
-          <Form style={{ paddingTop: "10px" }} id="leadForm">
-            <Form.Field>
-              <label>First name</label>
-              <input id="firstName" placeholder='First name' onChange={this.handleInput} />
-            </Form.Field>
-            <Form.Field>
-              <label>Last name</label>
-              <input id="lastName" placeholder='Last name' onChange={this.handleInput} />
-            </Form.Field>
-            <Form.Field>
-              <label>Email Address</label>
-              <input id="email" placeholder='Email address' onChange={this.handleInput} />
-            </Form.Field>
-            <Form.Field>
-              <label>Phone number</label>
-              <input id="phone" placeholder='1234567890' onChange={this.handleInput} />
-            </Form.Field>
-            <Form.Field>
-              <label>Choose strategy</label>
-              <WorkflowDropdown options={this.state.flowList} onChange={this.handleDropDown} id="workflowId"></WorkflowDropdown>
-            </Form.Field>
-            <Form.Field>
-              <label>Assign to agent</label>
-              <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
-            </Form.Field>
-            <Message success header='Lead saved' content="You can add another if you'd like!" />
-            <Button type='submit' onClick={this.saveLead}>Submit</Button>
-          </Form>
+        <Container style={{ paddingTop: "10px" }}>
+          {this.isLoggedIn()}
         </Container>
       </div>
     );

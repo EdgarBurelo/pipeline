@@ -116,7 +116,7 @@ import LeadsMgr from './pages/LeadsMgr';
 
   loginFunc(username,password) {
     API.login(username, password).then(res => {
-      console.log(res.data);
+      //console.log(res.data);
       if (res.data.ans) {
         let loggedUser = res.data.user;
         this.setState((prevState) => {
@@ -125,7 +125,7 @@ import LeadsMgr from './pages/LeadsMgr';
           prevState.userCred = {};
           return prevState;
         });
-        console.log("logged in",this.state);
+        //console.log("logged in",this.state);
       } else {
         let error = ["The user credentials doesn't match"];
         this.errorHandlerLog(error);
@@ -139,7 +139,7 @@ import LeadsMgr from './pages/LeadsMgr';
     //console.log(name,company);
 
     API.signup(username, password,name,company).then(res => {
-      console.log(res.data.ans);
+      //console.log(res.data.ans);
       if (res.data.ans) {
         let newUser = res.data.user;
         this.setState((prevState)=>{
@@ -148,7 +148,7 @@ import LeadsMgr from './pages/LeadsMgr';
           prevState.userCred = {};
           return prevState;
         });
-        console.log("signup", this.state);
+        //console.log("signup", this.state);
       } else {
         let error = ["There is already a user with this email!"];
         this.errorHandlerLog(error);
@@ -192,7 +192,7 @@ import LeadsMgr from './pages/LeadsMgr';
   return (
       <Router>
         <Container fluid={true} style={{padding:"0px"}}>
-          <Sidebarn status={this.state.logged} />
+          <Sidebarn status={this.state.logged} user={this.state.logUser}/>
           <div style={{marginLeft:"150px"}}>
             <Action user={this.state.logUser} status={this.state.logged} logoutfn={this.logoutHandler} />
             <Switch >
@@ -200,10 +200,10 @@ import LeadsMgr from './pages/LeadsMgr';
               <Route path="/about" component={About} />
               <Route path="/create" component={Creator} />
               <Route path="/admin" render={props=> <Admin status={this.state.logged} />} />
-              <Route path="/leads" component={Leads} />
-              <Route path="/todo" component={Todo} /> />
-              <Route path="/strategies" component={Workflows} />
-              <Route path="/manage-leads" component={LeadsMgr} />
+              <Route path="/leads" render={props => <Leads status={this.state.logged} />} />
+              <Route path="/todo" render={props => <Todo status={this.state.logged} />} />
+              <Route path="/strategies" render={props => <Workflows status={this.state.logged} />} />
+              <Route path="/manage-leads" render={props => <LeadsMgr status={this.state.logged} />} />
               <Route path="/passChange" render={props => <PassChange user={this.state.logUser} status={this.state.logged} />} />
               <Redirect from='/' to='/login' />
             </Switch>
