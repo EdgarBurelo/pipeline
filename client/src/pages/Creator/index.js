@@ -52,6 +52,10 @@ class Creator extends Component {
     console.log(toDo);
     console.log(data.value);
     this.setState({ [toDo]: data.value });
+    if(data.value === "archive") {
+      let actionDays = toDo + "Days";
+      this.setState({ [actionDays]: 0 });
+    }
 
   }
 
