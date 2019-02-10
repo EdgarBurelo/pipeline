@@ -52,6 +52,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
+    models.workflows.hasMany(models.leads);
   };
 
   return workflows;
