@@ -10,7 +10,6 @@ module.exports = {
 
   count: function(req, res) {
     db.leads.findAll({
-      attributes: [[sequelize.fn('COUNT', sequelize.col('workflowId')), 'leads_count']],
       where: {workflowId: req.params.workflowId}
     }).then(function(data) {
       res.json(data);
@@ -19,7 +18,12 @@ module.exports = {
 
   findAll: function(req, res) {
     db.leads.findAll({
-      where: {companyId: req.params.companyId}
+      where: {companyId: req.params.companyId},
+      include: [{
+        model: db.users
+      },{
+        model: db.workflows
+      }]
     }).then(function(data) {
       res.json(data);
     });

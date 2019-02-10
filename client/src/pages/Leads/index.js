@@ -15,7 +15,7 @@ class Leads extends Component {
       email: undefined,
       phone: undefined,
       workflowId: undefined,
-      assignedTo: undefined,
+      userId: undefined,
       nextContactDate: undefined,
       nextContactType: undefined,
       nextContactStep: undefined,
@@ -132,7 +132,7 @@ isLoggedIn() {
           </Form.Field>
           <Form.Field>
             <label>Assign to agent</label>
-            <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="assignedTo"></AgentsDropdown>
+            <AgentsDropdown options={this.state.agentList} onChange={this.handleDropDown} id="userId"></AgentsDropdown>
           </Form.Field>
           <Message success header='Lead saved' content="You can add another if you'd like!" />
           <Button type='submit' onClick={this.saveLead}>Submit</Button>

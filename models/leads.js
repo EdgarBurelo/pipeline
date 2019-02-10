@@ -34,12 +34,6 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
 
-    assignedTo: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      defaultValue: null
-    },
-
     nextContactDate: {
       type: DataTypes.DATEONLY,
       allowNull: true,
@@ -60,25 +54,19 @@ module.exports = function (sequelize, DataTypes) {
 
   });
 
-  //Each lead is the property of one company/usergroup
   leads.associate = function (models) {
+    //Each lead is the property of one company/usergroup
     models.leads.belongsTo(models.companies, {
       foreignKey: {
         allowNull: false
       }
-    }
-    );
-  };
-
-  //Each lead can be assigned to an agent
-  leads.associate = function (models) {
+    });
+    //Each lead can be assigned to an agent
     models.leads.belongsTo(models.users);
-  };
-
-  //Each lead can be assigned to a workflow (if it's not, no one will contact them)
-  leads.associate = function (models) {
+    //Each lead can be assigned to a workflow (if it's not, no one will contact them)
     models.leads.belongsTo(models.workflows);
   };
+
 
   return leads;
 };
