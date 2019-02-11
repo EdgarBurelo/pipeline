@@ -8,7 +8,7 @@ module.exports = {
 
             where: {
 
-                assignedTo: req.params.id
+                userId: req.params.id
 
             }
 
