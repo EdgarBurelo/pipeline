@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+    models.users.hasMany(models.leads);
   };
 
  
