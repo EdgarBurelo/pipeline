@@ -10,15 +10,9 @@ module.exports = {
 
   findAll: (req, res) => {
     db.workflows.findAll({
-      attributes: {
-        where: { companyId: req.params.companyId },
-        include: [[sequelize.fn("COUNT", sequelize.col("leads.workflowId")), "leadsCount"]]
-      },
-      include: [{
-        model: db.leads,
-        attributes: ['workflowId']
-      }], 
-      group: ["workflows.id", "leads.id"]
+      attributes: ["id","flowName"],
+      where: { companyId: req.params.companyId },
+      include: [db.leads]
     }).then((data) => {
       res.json(data);
     });
