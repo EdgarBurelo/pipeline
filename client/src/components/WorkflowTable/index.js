@@ -10,10 +10,10 @@ const WorkflowTable = props => (
       </Table.Row>
     </Table.Header>
     <Table.Body>
-    {props.rows.map(({ id, flowName, leadsCount }) => (
+    {props.rows.map(({ id, flowName, leads }) => (
             <Table.Row key={id}>
               <Table.Cell>{flowName}</Table.Cell>
-              <Table.Cell>{leadsCount}</Table.Cell>
+              <Table.Cell>{leads.length}</Table.Cell>
             </Table.Row>
           ))}
     </Table.Body>
